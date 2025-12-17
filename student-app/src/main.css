@@ -1,0 +1,5 @@
+body.light-mode .modal-content input {
+  background: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}

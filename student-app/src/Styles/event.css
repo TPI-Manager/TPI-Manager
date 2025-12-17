@@ -1,0 +1,276 @@
+/* ========================= Global ========================= */
+:root {
+  --bg-color: #fefefe;
+  --card-bg: rgba(255,255,255,0.85);
+  --text-color: #111;
+  --primary-color: #2563eb;
+  --success-color: #4caf50;
+  --danger-color: #e53935;
+  --upcoming-color: #ff9800;
+  --inactive-color: #ccc;
+  --modal-bg: rgba(255,255,255,0.95);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6,p,span,label {
+  color: var(--text-color);
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* ========================= Event Card ========================= */
+.event-card {
+  background: var(--card-bg);
+  border-left: 6px solid var(--primary-color);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+  color: var(--text-color);
+}
+
+/* 🔥 Status Based Colors */
+.event-card[data-status="active"] {
+  border-left-color: var(--success-color);
+  opacity: 1;
+}
+
+.event-card[data-status="upcoming"] {
+  border-left-color: var(--upcoming-color);
+  opacity: 0.95;
+}
+
+.event-card[data-status="expired"] {
+  border-left-color: var(--danger-color);
+  opacity: 0.6;
+}
+
+.event-card[data-status="inactive"] {
+  border-left-color: var(--inactive-color);
+  opacity: 0.5;
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+}
+
+/* Title & Body */
+.event-card h3,
+.event-card p,
+.event-card span {
+  word-break: break-word;
+  white-space: pre-wrap;
+  color: var(--text-color);
+}
+
+/* Vote buttons */
+.vote-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.vote-buttons button {
+  border: 1px solid var(--primary-color);
+  background: #fff;
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.vote-buttons button:disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+/* Admin buttons */
+.admin-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.admin-buttons button {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+}
+
+.admin-buttons .htcho8 {
+  background: var(--primary-color);
+}
+
+.admin-buttons .hhoty8 {
+  background: var(--danger-color);
+}
+
+/* ========================= Modal ========================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  padding: 20px;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content h3,
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  color: var(--text-color);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ========================= Responsive ========================= */
+@media (max-width: 768px) {
+  .event-card {
+    padding: 14px 16px;
+  }
+  .vote-buttons button {
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 16px;
+  }
+  .event-card {
+    padding: 12px 14px;
+  }
+  .vote-buttons {
+    flex-direction: column;
+  }
+  .admin-buttons {
+    flex-direction: column;
+  }
+}
+/* ========================= Filters / Dropdown Options ========================= */
+.event-filters {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  overflow-x: auto;      /* horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* smooth scroll for mobile */
+  scrollbar-width: thin; /* Firefox scrollbar */
+}
+
+.event-filters::-webkit-scrollbar {
+  height: 6px;           /* horizontal scrollbar height */
+}
+
+.event-filters::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.event-filters::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 3px;
+}
+
+.event-filters select {
+  flex: 0 0 auto;        /* prevent shrinking */
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #000;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-width: 140px;
+}
+
+.event-filters select:hover {
+  border-color: var(--primary-color);
+}
+
+.event-filters select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+}
+
+/* Option styles */
+.event-filters select option {
+  padding: 8px 12px;
+  background: #fff;
+  color: #000;
+}
+
+/* Active option highlight */
+.event-filters select option:checked {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Mobile: horizontal scroll, no wrap */
+@media (max-width: 768px) {
+  .event-filters {
+    flex-wrap: nowrap;   /* all options in one line */
+  }
+}
+/* Horizontal Scrollbar Customization - Web/Desktop */
+.event-filters {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* Chrome, Edge, Safari */
+.event-filters::-webkit-scrollbar {
+  height: 6px; /* Horizontal scrollbar height */
+}
+
+.event-filters::-webkit-scrollbar-track {
+  background: transparent; /* scrollbar background */
+}
+
+.event-filters::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* thumb color */
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Firefox */
+.event-filters {
+  scrollbar-color: rgba(0,0,0,0.3) transparent;
+  scrollbar-width: thin;
+}
+
+/* Mobile: horizontal scroll, no wrap */
+@media (max-width: 768px) {
+  .event-filters {
+    flex-wrap: nowrap;  
+  }
+}

@@ -1,0 +1,262 @@
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --bg-light: #f9f9f9;
+  --bg-dark: #1e1e2f;
+  --card-light: #fff;
+  --card-dark: #2b2b3b;
+  --text-light: #111;
+  --text-dark: #fff;
+  --accent: #25d366;
+  --input-bg-light: #fff;
+  --input-bg-dark: #2b2b3b;
+  --border-light: #ccc;
+  --border-dark: #444;
+  --shadow: rgba(0,0,0,0.1);
+  --transition: 0.3s;
+}
+
+/* =========================
+   BODY THEMES
+========================= */
+body.light { background: var(--bg-light); color: var(--text-light); }
+body.dark { background: var(--bg-dark); color: var(--text-dark); }
+
+/* =========================
+   ASK PAGE
+========================= */
+.ask-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.ask-page.dark { background: var(--bg-dark); color: var(--text-dark); }
+.ask-page.light { background: var(--bg-light); color: var(--text-light); }
+
+/* Header */
+.ask-page__header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: color var(--transition);
+}
+
+/* Filters */
+.ask-page__filters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.ask-page__filters select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  background: var(--input-bg-light);
+  color: var(--text-light);
+  transition: background var(--transition), color var(--transition), border var(--transition);
+}
+body.dark .ask-page__filters select {
+  background: var(--input-bg-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+}
+
+/* ASK BOX */
+.ask-page__ask-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ask-page__input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 12px;
+  border-radius: 25px;
+  border: 1px solid var(--border-light);
+  outline: none;
+  transition: all var(--transition);
+}
+.ask-page__ask-btn {
+  padding: 10px 20px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+.ask-page__ask-btn:hover { background: #1ebe50; }
+
+/* QUESTIONS LIST */
+.ask-page__list { display: flex; flex-direction: column; gap: 15px; }
+
+/* QUESTION CARD */
+.ask-page__card {
+  background: var(--card-light);
+  border-radius: 12px;
+  padding: 12px 15px;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+  cursor: default;
+}
+body.dark .ask-page__card { background: var(--card-dark); }
+.ask-page__card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow); }
+
+.ask-page__card h4 { margin-bottom: 6px; font-size: 1.1rem; font-weight: 500; }
+.ask-page__card small { font-size: 0.8rem; color: gray; display: block; margin-bottom: 8px; }
+
+/* Question image */
+.ask-page__card img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.ask-page__card img:hover { transform: scale(1.05); box-shadow: 0 4px 10px var(--shadow); }
+
+/* ANSWERS */
+.ask-page__answers div { margin-bottom: 5px; font-size: 0.9rem; }
+
+/* ANSWER BOX */
+.ask-page__answer-box {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  transition: all var(--transition);
+}
+.ask-page__answer-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  outline: none;
+  transition: all var(--transition);
+}
+body.dark .ask-page__answer-input {
+  border: 1px solid var(--border-dark);
+  background: var(--input-bg-dark);
+  color: var(--text-dark);
+}
+.ask-page__answer-btn {
+  padding: 8px 16px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.ask-page__answer-btn:hover { background: #1ebe50; }
+
+/* Answer toggle */
+.ask-page__answer-toggle {
+  margin-top: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+.ask-page__answer-toggle:hover { background: var(--accent); color: #fff; }
+body.dark .ask-page__answer-toggle { border: 1px solid var(--border-dark); }
+
+/* IMAGE OVERLAY */
+.image-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.image-overlay.active { opacity: 1; pointer-events: all; }
+.image-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.image-overlay img:hover { transform: scale(1.02); }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .ask-page__ask-input { flex-direction: column; align-items: stretch; }
+  .ask-page__input { width: 100%; }
+  .ask-page__card img { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .ask-page__ask-btn, .ask-page__answer-btn, .ask-page__answer-toggle { width: 100%; }
+}
+/* =========================
+   IMAGE OVERLAY
+========================= */
+.image-overlay {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0; */
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.image-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.image-overlay__content {
+  max-width: 90%;
+  max-height: 90%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.image-overlay.active .image-overlay__content {
+  transform: scale(1);
+}
+
+.image-overlay__content img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.image-overlay__content img:hover {
+  transform: scale(1.02);
+}

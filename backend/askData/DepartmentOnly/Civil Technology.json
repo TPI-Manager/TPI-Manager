@@ -1,0 +1,23 @@
+[
+  {
+    "id": "26f8a202-9e49-4865-9a83-6f18629a25e3",
+    "text": "ertrtyrtyrttf",
+    "senderId": "1235656",
+    "answers": [],
+    "createdAt": "2025-12-16T07:39:52.743Z"
+  },
+  {
+    "id": "71ac1211-81f9-4642-a951-99e05ccdbc8b",
+    "text": "yhfsdhhfdffbfhbfhbffffiuiffudhgfujfgdhf",
+    "senderId": "1235656",
+    "answers": [
+      {
+        "id": "623f3ff7-4093-42a8-8954-b4e32edf577f",
+        "text": "t45",
+        "senderId": "2222222",
+        "createdAt": "2025-12-16T09:22:19.821Z"
+      }
+    ],
+    "createdAt": "2025-12-16T07:40:17.298Z"
+  }
+]

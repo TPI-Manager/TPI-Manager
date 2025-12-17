@@ -1,0 +1,26 @@
+{
+  "id": "1765727847518",
+  "title": "hil",
+  "type": "notice",
+  "body": "ipop8",
+  "startTime": "2025-12-14T21:59",
+  "endTime": "2025-12-14T22:02",
+  "options": [],
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
+  "department": "CST",
+  "semester": "1st",
+  "shift": "Morning",
+  "createdBy": "1235655",
+  "createdAt": "2025-12-14T15:57:27.518Z",
+  "votes": {},
+  "votedStudents": [],
+  "createdByName": ""
+}

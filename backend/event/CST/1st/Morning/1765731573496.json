@@ -1,0 +1,26 @@
+{
+  "id": "1765731573496",
+  "title": "UYIYU",
+  "type": "notice",
+  "body": " N NVB",
+  "startTime": "2025-12-14T22:01",
+  "endTime": "2025-12-14T22:04",
+  "options": [],
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
+  "department": "CST",
+  "semester": "1st",
+  "shift": "Morning",
+  "createdBy": "1235655",
+  "createdAt": "2025-12-14T16:59:33.497Z",
+  "votes": {},
+  "votedStudents": [],
+  "createdByName": ""
+}

@@ -1,0 +1,6018 @@
+[
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "dfs",
+    "images": [],
+    "id": 1765864060166,
+    "createdAt": "2025-12-16T05:47:40.166Z",
+    "seenBy": [
+      "3333333",
+      "1231231",
+      "1231234",
+      "0000001"
+    ],
+    "reactions": [
+      {
+        "userId": "3333333",
+        "reaction": "❤️"
+      },
+      {
+        "userId": "1231231",
+        "reaction": "❤️"
+      }
+    ],
+    "replies": [
+      {
+        "type": "department",
+        "department": "CST",
+        "semester": "1st",
+        "shift": "Day",
+        "senderId": "3333333",
+        "text": "rtgtr",
+        "images": [],
+        "replyToId": "3333333"
+      },
+      {
+        "type": "department",
+        "department": "CST",
+        "semester": "1st",
+        "shift": "Day",
+        "senderId": "3333333",
+        "text": "gfhf",
+        "images": [],
+        "replyToId": "3333333"
+      },
+      {
+        "type": "department",
+        "department": "CST",
+        "semester": "1st",
+        "shift": "Day",
+        "senderId": "1231231",
+        "text": "uytu",
+        "images": [],
+        "replyToId": "3333333"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "1231231",
+    "text": "gff",
+    "images": [],
+    "id": 1765864404356,
+    "createdAt": "2025-12-16T05:53:24.356Z",
+    "seenBy": [
+      "1231231",
+      "3333333",
+      "1231234",
+      "0000001"
+    ],
+    "reactions": [
+      {
+        "userId": "0000001",
+        "reaction": "😂"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [],
+    "id": 1765868348801,
+    "createdAt": "2025-12-16T06:59:08.801Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [],
+    "id": 1765868358172,
+    "createdAt": "2025-12-16T06:59:18.172Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [],
+    "id": 1765869753757,
+    "createdAt": "2025-12-16T07:22:33.757Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "mbkcm",
+    "images": [],
+    "id": 1765870472913,
+    "createdAt": "2025-12-16T07:34:32.913Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfngklj",
+    "images": [],
+    "id": 1765870500712,
+    "createdAt": "2025-12-16T07:35:00.712Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jfn",
+    "images": [],
+    "id": 1765870501657,
+    "createdAt": "2025-12-16T07:35:01.657Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jbg",
+    "images": [],
+    "id": 1765870502664,
+    "createdAt": "2025-12-16T07:35:02.664Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "kkgn",
+    "images": [],
+    "id": 1765870504088,
+    "createdAt": "2025-12-16T07:35:04.088Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "ng",
+    "images": [],
+    "id": 1765870505440,
+    "createdAt": "2025-12-16T07:35:05.440Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jdcg",
+    "images": [],
+    "id": 1765870506489,
+    "createdAt": "2025-12-16T07:35:06.489Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765870507400,
+    "createdAt": "2025-12-16T07:35:07.400Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "kjxfk",
+    "images": [],
+    "id": 1765870508378,
+    "createdAt": "2025-12-16T07:35:08.378Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "kjgo",
+    "images": [],
+    "id": 1765870509203,
+    "createdAt": "2025-12-16T07:35:09.203Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "ikigj'",
+    "images": [],
+    "id": 1765870510503,
+    "createdAt": "2025-12-16T07:35:10.503Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "nkgjk",
+    "images": [],
+    "id": 1765870512591,
+    "createdAt": "2025-12-16T07:35:12.591Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jkg",
+    "images": [],
+    "id": 1765870513456,
+    "createdAt": "2025-12-16T07:35:13.456Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jk",
+    "images": [],
+    "id": 1765870514566,
+    "createdAt": "2025-12-16T07:35:14.566Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "xfk",
+    "images": [],
+    "id": 1765870515391,
+    "createdAt": "2025-12-16T07:35:15.391Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [],
+    "id": 1765877208766,
+    "createdAt": "2025-12-16T09:26:48.766Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [],
+    "id": 1765877435515,
+    "createdAt": "2025-12-16T09:30:35.515Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "etr",
+    "images": [],
+    "id": 1765877623673,
+    "createdAt": "2025-12-16T09:33:43.673Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [],
+    "id": 1765899523360,
+    "createdAt": "2025-12-16T15:38:43.360Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [],
+    "id": 1765899690226,
+    "createdAt": "2025-12-16T15:41:30.226Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "sdrfwef",
+    "images": [],
+    "id": 1765900719393,
+    "createdAt": "2025-12-16T15:58:39.393Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [],
+    "id": 1765900723499,
+    "createdAt": "2025-12-16T15:58:43.499Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ],
+    "reactions": [
+      {
+        "userId": "0000001",
+        "reaction": "🤖"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [],
+    "id": 1765900942102,
+    "createdAt": "2025-12-16T16:02:22.102Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [
+      "1765901022257-388476465.png"
+    ],
+    "id": 1765901022276,
+    "createdAt": "2025-12-16T16:03:42.276Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "sxdas",
+    "images": [],
+    "id": 1765901029174,
+    "createdAt": "2025-12-16T16:03:49.174Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "sdcsd",
+    "images": [],
+    "id": 1765901036040,
+    "createdAt": "2025-12-16T16:03:56.040Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [
+      "1765901041700-96685596.png"
+    ],
+    "id": 1765901041708,
+    "createdAt": "2025-12-16T16:04:01.708Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ],
+    "reactions": [
+      {
+        "userId": "3333333",
+        "reaction": "😂"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "",
+    "images": [
+      "1765903063044-565991988.png"
+    ],
+    "id": 1765903063068,
+    "createdAt": "2025-12-16T16:37:43.068Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906015062,
+    "createdAt": "2025-12-16T17:26:55.062Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906015412,
+    "createdAt": "2025-12-16T17:26:55.412Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906015748,
+    "createdAt": "2025-12-16T17:26:55.748Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906016083,
+    "createdAt": "2025-12-16T17:26:56.083Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906016396,
+    "createdAt": "2025-12-16T17:26:56.396Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906016724,
+    "createdAt": "2025-12-16T17:26:56.724Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906017060,
+    "createdAt": "2025-12-16T17:26:57.060Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906017363,
+    "createdAt": "2025-12-16T17:26:57.363Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906017659,
+    "createdAt": "2025-12-16T17:26:57.659Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906017939,
+    "createdAt": "2025-12-16T17:26:57.939Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906018211,
+    "createdAt": "2025-12-16T17:26:58.211Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906018468,
+    "createdAt": "2025-12-16T17:26:58.468Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906018724,
+    "createdAt": "2025-12-16T17:26:58.724Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906019014,
+    "createdAt": "2025-12-16T17:26:59.014Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906019253,
+    "createdAt": "2025-12-16T17:26:59.253Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906019523,
+    "createdAt": "2025-12-16T17:26:59.523Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906019764,
+    "createdAt": "2025-12-16T17:26:59.764Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906020036,
+    "createdAt": "2025-12-16T17:27:00.036Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906020300,
+    "createdAt": "2025-12-16T17:27:00.300Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906020557,
+    "createdAt": "2025-12-16T17:27:00.557Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906020820,
+    "createdAt": "2025-12-16T17:27:00.820Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906021060,
+    "createdAt": "2025-12-16T17:27:01.060Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906021324,
+    "createdAt": "2025-12-16T17:27:01.324Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906021611,
+    "createdAt": "2025-12-16T17:27:01.611Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906021884,
+    "createdAt": "2025-12-16T17:27:01.884Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906022124,
+    "createdAt": "2025-12-16T17:27:02.124Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906022413,
+    "createdAt": "2025-12-16T17:27:02.413Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906022628,
+    "createdAt": "2025-12-16T17:27:02.628Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "ff",
+    "images": [],
+    "id": 1765906023163,
+    "createdAt": "2025-12-16T17:27:03.163Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906023461,
+    "createdAt": "2025-12-16T17:27:03.461Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906023732,
+    "createdAt": "2025-12-16T17:27:03.732Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906024012,
+    "createdAt": "2025-12-16T17:27:04.012Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906024293,
+    "createdAt": "2025-12-16T17:27:04.293Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906024611,
+    "createdAt": "2025-12-16T17:27:04.611Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906024884,
+    "createdAt": "2025-12-16T17:27:04.884Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906025173,
+    "createdAt": "2025-12-16T17:27:05.173Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906025429,
+    "createdAt": "2025-12-16T17:27:05.429Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906025692,
+    "createdAt": "2025-12-16T17:27:05.692Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906025979,
+    "createdAt": "2025-12-16T17:27:05.979Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906026251,
+    "createdAt": "2025-12-16T17:27:06.251Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906026508,
+    "createdAt": "2025-12-16T17:27:06.508Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906027036,
+    "createdAt": "2025-12-16T17:27:07.036Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906027337,
+    "createdAt": "2025-12-16T17:27:07.337Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906027608,
+    "createdAt": "2025-12-16T17:27:07.608Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906027881,
+    "createdAt": "2025-12-16T17:27:07.881Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906028148,
+    "createdAt": "2025-12-16T17:27:08.148Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906028465,
+    "createdAt": "2025-12-16T17:27:08.465Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906028752,
+    "createdAt": "2025-12-16T17:27:08.752Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906029056,
+    "createdAt": "2025-12-16T17:27:09.056Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906029312,
+    "createdAt": "2025-12-16T17:27:09.312Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906029624,
+    "createdAt": "2025-12-16T17:27:09.624Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906029904,
+    "createdAt": "2025-12-16T17:27:09.904Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906030224,
+    "createdAt": "2025-12-16T17:27:10.224Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906030553,
+    "createdAt": "2025-12-16T17:27:10.553Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906030824,
+    "createdAt": "2025-12-16T17:27:10.824Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906031128,
+    "createdAt": "2025-12-16T17:27:11.128Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906031429,
+    "createdAt": "2025-12-16T17:27:11.429Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906031720,
+    "createdAt": "2025-12-16T17:27:11.720Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906031984,
+    "createdAt": "2025-12-16T17:27:11.984Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906032303,
+    "createdAt": "2025-12-16T17:27:12.303Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906033745,
+    "createdAt": "2025-12-16T17:27:13.745Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dffd",
+    "images": [],
+    "id": 1765906034289,
+    "createdAt": "2025-12-16T17:27:14.289Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906034515,
+    "createdAt": "2025-12-16T17:27:14.515Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906034672,
+    "createdAt": "2025-12-16T17:27:14.672Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906034864,
+    "createdAt": "2025-12-16T17:27:14.864Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906035036,
+    "createdAt": "2025-12-16T17:27:15.036Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "sf",
+    "images": [],
+    "id": 1765906035207,
+    "createdAt": "2025-12-16T17:27:15.207Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906035383,
+    "createdAt": "2025-12-16T17:27:15.383Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906035560,
+    "createdAt": "2025-12-16T17:27:15.560Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "v",
+    "images": [],
+    "id": 1765906035742,
+    "createdAt": "2025-12-16T17:27:15.742Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906035932,
+    "createdAt": "2025-12-16T17:27:15.932Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906036096,
+    "createdAt": "2025-12-16T17:27:16.096Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906036264,
+    "createdAt": "2025-12-16T17:27:16.264Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906036434,
+    "createdAt": "2025-12-16T17:27:16.434Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906036600,
+    "createdAt": "2025-12-16T17:27:16.600Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906036768,
+    "createdAt": "2025-12-16T17:27:16.768Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hrfg",
+    "images": [],
+    "id": 1765906036959,
+    "createdAt": "2025-12-16T17:27:16.959Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906037130,
+    "createdAt": "2025-12-16T17:27:17.130Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906037328,
+    "createdAt": "2025-12-16T17:27:17.328Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906037546,
+    "createdAt": "2025-12-16T17:27:17.546Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906037704,
+    "createdAt": "2025-12-16T17:27:17.704Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906037919,
+    "createdAt": "2025-12-16T17:27:17.919Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906038072,
+    "createdAt": "2025-12-16T17:27:18.072Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906038267,
+    "createdAt": "2025-12-16T17:27:18.267Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906038435,
+    "createdAt": "2025-12-16T17:27:18.435Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906038608,
+    "createdAt": "2025-12-16T17:27:18.608Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906038783,
+    "createdAt": "2025-12-16T17:27:18.783Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906039083,
+    "createdAt": "2025-12-16T17:27:19.083Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906039168,
+    "createdAt": "2025-12-16T17:27:19.168Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "ghh",
+    "images": [],
+    "id": 1765906039353,
+    "createdAt": "2025-12-16T17:27:19.353Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906039544,
+    "createdAt": "2025-12-16T17:27:19.544Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906039915,
+    "createdAt": "2025-12-16T17:27:19.915Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906040099,
+    "createdAt": "2025-12-16T17:27:20.099Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hh",
+    "images": [],
+    "id": 1765906040296,
+    "createdAt": "2025-12-16T17:27:20.296Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906040474,
+    "createdAt": "2025-12-16T17:27:20.474Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hfg",
+    "images": [],
+    "id": 1765906040747,
+    "createdAt": "2025-12-16T17:27:20.747Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906040860,
+    "createdAt": "2025-12-16T17:27:20.860Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906041011,
+    "createdAt": "2025-12-16T17:27:21.011Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906041192,
+    "createdAt": "2025-12-16T17:27:21.192Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906041356,
+    "createdAt": "2025-12-16T17:27:21.356Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906041560,
+    "createdAt": "2025-12-16T17:27:21.560Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfgh",
+    "images": [],
+    "id": 1765906041746,
+    "createdAt": "2025-12-16T17:27:21.746Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gf",
+    "images": [],
+    "id": 1765906041944,
+    "createdAt": "2025-12-16T17:27:21.944Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906042116,
+    "createdAt": "2025-12-16T17:27:22.116Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906042301,
+    "createdAt": "2025-12-16T17:27:22.301Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hdf",
+    "images": [],
+    "id": 1765906042509,
+    "createdAt": "2025-12-16T17:27:22.509Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906042651,
+    "createdAt": "2025-12-16T17:27:22.651Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906042843,
+    "createdAt": "2025-12-16T17:27:22.843Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gfd",
+    "images": [],
+    "id": 1765906043109,
+    "createdAt": "2025-12-16T17:27:23.109Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906043192,
+    "createdAt": "2025-12-16T17:27:23.192Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906043400,
+    "createdAt": "2025-12-16T17:27:23.400Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906043584,
+    "createdAt": "2025-12-16T17:27:23.584Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906043748,
+    "createdAt": "2025-12-16T17:27:23.748Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906043909,
+    "createdAt": "2025-12-16T17:27:23.909Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906044063,
+    "createdAt": "2025-12-16T17:27:24.063Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906044248,
+    "createdAt": "2025-12-16T17:27:24.248Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dff",
+    "images": [],
+    "id": 1765906044462,
+    "createdAt": "2025-12-16T17:27:24.462Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906044642,
+    "createdAt": "2025-12-16T17:27:24.642Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906044805,
+    "createdAt": "2025-12-16T17:27:24.805Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dff",
+    "images": [],
+    "id": 1765906045147,
+    "createdAt": "2025-12-16T17:27:25.147Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906045188,
+    "createdAt": "2025-12-16T17:27:25.188Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dffg",
+    "images": [],
+    "id": 1765906045398,
+    "createdAt": "2025-12-16T17:27:25.398Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906045583,
+    "createdAt": "2025-12-16T17:27:25.583Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906045773,
+    "createdAt": "2025-12-16T17:27:25.773Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906045990,
+    "createdAt": "2025-12-16T17:27:25.990Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906046198,
+    "createdAt": "2025-12-16T17:27:26.198Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906046372,
+    "createdAt": "2025-12-16T17:27:26.372Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906046564,
+    "createdAt": "2025-12-16T17:27:26.564Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906046756,
+    "createdAt": "2025-12-16T17:27:26.756Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906046956,
+    "createdAt": "2025-12-16T17:27:26.956Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906047316,
+    "createdAt": "2025-12-16T17:27:27.316Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906047371,
+    "createdAt": "2025-12-16T17:27:27.371Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906047543,
+    "createdAt": "2025-12-16T17:27:27.543Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906047733,
+    "createdAt": "2025-12-16T17:27:27.733Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dffg",
+    "images": [],
+    "id": 1765906047935,
+    "createdAt": "2025-12-16T17:27:27.935Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906048130,
+    "createdAt": "2025-12-16T17:27:28.130Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906048320,
+    "createdAt": "2025-12-16T17:27:28.320Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906048500,
+    "createdAt": "2025-12-16T17:27:28.500Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906048700,
+    "createdAt": "2025-12-16T17:27:28.700Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906048897,
+    "createdAt": "2025-12-16T17:27:28.897Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906049090,
+    "createdAt": "2025-12-16T17:27:29.090Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906049338,
+    "createdAt": "2025-12-16T17:27:29.338Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906049488,
+    "createdAt": "2025-12-16T17:27:29.488Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906049668,
+    "createdAt": "2025-12-16T17:27:29.668Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906049854,
+    "createdAt": "2025-12-16T17:27:29.854Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906050067,
+    "createdAt": "2025-12-16T17:27:30.067Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906050300,
+    "createdAt": "2025-12-16T17:27:30.300Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906050466,
+    "createdAt": "2025-12-16T17:27:30.466Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906050689,
+    "createdAt": "2025-12-16T17:27:30.689Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906050908,
+    "createdAt": "2025-12-16T17:27:30.908Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dg",
+    "images": [],
+    "id": 1765906051129,
+    "createdAt": "2025-12-16T17:27:31.129Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906051321,
+    "createdAt": "2025-12-16T17:27:31.321Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906051732,
+    "createdAt": "2025-12-16T17:27:31.732Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906051918,
+    "createdAt": "2025-12-16T17:27:31.918Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906052148,
+    "createdAt": "2025-12-16T17:27:32.148Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906052349,
+    "createdAt": "2025-12-16T17:27:32.349Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906052556,
+    "createdAt": "2025-12-16T17:27:32.556Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906052766,
+    "createdAt": "2025-12-16T17:27:32.766Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906052962,
+    "createdAt": "2025-12-16T17:27:32.962Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906053202,
+    "createdAt": "2025-12-16T17:27:33.202Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906053375,
+    "createdAt": "2025-12-16T17:27:33.375Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906053556,
+    "createdAt": "2025-12-16T17:27:33.556Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906053768,
+    "createdAt": "2025-12-16T17:27:33.768Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906054053,
+    "createdAt": "2025-12-16T17:27:34.053Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906054307,
+    "createdAt": "2025-12-16T17:27:34.307Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dffg",
+    "images": [],
+    "id": 1765906054511,
+    "createdAt": "2025-12-16T17:27:34.511Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906054638,
+    "createdAt": "2025-12-16T17:27:34.638Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906054847,
+    "createdAt": "2025-12-16T17:27:34.847Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906055036,
+    "createdAt": "2025-12-16T17:27:35.036Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906055298,
+    "createdAt": "2025-12-16T17:27:35.298Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906055444,
+    "createdAt": "2025-12-16T17:27:35.444Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906055659,
+    "createdAt": "2025-12-16T17:27:35.659Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906055887,
+    "createdAt": "2025-12-16T17:27:35.887Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df/",
+    "images": [],
+    "id": 1765906056115,
+    "createdAt": "2025-12-16T17:27:36.115Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906056355,
+    "createdAt": "2025-12-16T17:27:36.355Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906056508,
+    "createdAt": "2025-12-16T17:27:36.508Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906056827,
+    "createdAt": "2025-12-16T17:27:36.827Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906057016,
+    "createdAt": "2025-12-16T17:27:37.016Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906057147,
+    "createdAt": "2025-12-16T17:27:37.147Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906057411,
+    "createdAt": "2025-12-16T17:27:37.411Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906057554,
+    "createdAt": "2025-12-16T17:27:37.554Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dg",
+    "images": [],
+    "id": 1765906057761,
+    "createdAt": "2025-12-16T17:27:37.761Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906057996,
+    "createdAt": "2025-12-16T17:27:37.996Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfggdf",
+    "images": [],
+    "id": 1765906058595,
+    "createdAt": "2025-12-16T17:27:38.595Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906058809,
+    "createdAt": "2025-12-16T17:27:38.809Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906059075,
+    "createdAt": "2025-12-16T17:27:39.075Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fd",
+    "images": [],
+    "id": 1765906059403,
+    "createdAt": "2025-12-16T17:27:39.403Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fdg",
+    "images": [],
+    "id": 1765906059615,
+    "createdAt": "2025-12-16T17:27:39.615Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd*f",
+    "images": [],
+    "id": 1765906060072,
+    "createdAt": "2025-12-16T17:27:40.072Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906060393,
+    "createdAt": "2025-12-16T17:27:40.393Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g/",
+    "images": [],
+    "id": 1765906060615,
+    "createdAt": "2025-12-16T17:27:40.615Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906060805,
+    "createdAt": "2025-12-16T17:27:40.805Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906061029,
+    "createdAt": "2025-12-16T17:27:41.029Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906061243,
+    "createdAt": "2025-12-16T17:27:41.243Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906061464,
+    "createdAt": "2025-12-16T17:27:41.464Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906061676,
+    "createdAt": "2025-12-16T17:27:41.676Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906061874,
+    "createdAt": "2025-12-16T17:27:41.874Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906062062,
+    "createdAt": "2025-12-16T17:27:42.062Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906062284,
+    "createdAt": "2025-12-16T17:27:42.284Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906062561,
+    "createdAt": "2025-12-16T17:27:42.561Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdd",
+    "images": [],
+    "id": 1765906062905,
+    "createdAt": "2025-12-16T17:27:42.905Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906063032,
+    "createdAt": "2025-12-16T17:27:43.032Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dff",
+    "images": [],
+    "id": 1765906063248,
+    "createdAt": "2025-12-16T17:27:43.248Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906063416,
+    "createdAt": "2025-12-16T17:27:43.416Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906063652,
+    "createdAt": "2025-12-16T17:27:43.652Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906063806,
+    "createdAt": "2025-12-16T17:27:43.806Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906064205,
+    "createdAt": "2025-12-16T17:27:44.205Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "f",
+    "images": [],
+    "id": 1765906064405,
+    "createdAt": "2025-12-16T17:27:44.405Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906064642,
+    "createdAt": "2025-12-16T17:27:44.642Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906064777,
+    "createdAt": "2025-12-16T17:27:44.777Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fd",
+    "images": [],
+    "id": 1765906064998,
+    "createdAt": "2025-12-16T17:27:44.998Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906065126,
+    "createdAt": "2025-12-16T17:27:45.126Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906065304,
+    "createdAt": "2025-12-16T17:27:45.304Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906065557,
+    "createdAt": "2025-12-16T17:27:45.557Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906065746,
+    "createdAt": "2025-12-16T17:27:45.746Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906065888,
+    "createdAt": "2025-12-16T17:27:45.888Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906066095,
+    "createdAt": "2025-12-16T17:27:46.095Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906066291,
+    "createdAt": "2025-12-16T17:27:46.291Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906066482,
+    "createdAt": "2025-12-16T17:27:46.482Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906066733,
+    "createdAt": "2025-12-16T17:27:46.733Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906066899,
+    "createdAt": "2025-12-16T17:27:46.899Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906067120,
+    "createdAt": "2025-12-16T17:27:47.120Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906067328,
+    "createdAt": "2025-12-16T17:27:47.328Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906067674,
+    "createdAt": "2025-12-16T17:27:47.674Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906067766,
+    "createdAt": "2025-12-16T17:27:47.766Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906067944,
+    "createdAt": "2025-12-16T17:27:47.944Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906068192,
+    "createdAt": "2025-12-16T17:27:48.192Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906068354,
+    "createdAt": "2025-12-16T17:27:48.354Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906068557,
+    "createdAt": "2025-12-16T17:27:48.557Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906068742,
+    "createdAt": "2025-12-16T17:27:48.742Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906068974,
+    "createdAt": "2025-12-16T17:27:48.974Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906069245,
+    "createdAt": "2025-12-16T17:27:49.245Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gdf",
+    "images": [],
+    "id": 1765906069486,
+    "createdAt": "2025-12-16T17:27:49.486Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906069592,
+    "createdAt": "2025-12-16T17:27:49.592Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "d",
+    "images": [],
+    "id": 1765906069791,
+    "createdAt": "2025-12-16T17:27:49.791Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906069969,
+    "createdAt": "2025-12-16T17:27:49.969Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906070175,
+    "createdAt": "2025-12-16T17:27:50.175Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fgdg",
+    "images": [],
+    "id": 1765906073611,
+    "createdAt": "2025-12-16T17:27:53.611Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gf",
+    "images": [],
+    "id": 1765906074402,
+    "createdAt": "2025-12-16T17:27:54.402Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906074962,
+    "createdAt": "2025-12-16T17:27:54.962Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906075404,
+    "createdAt": "2025-12-16T17:27:55.404Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906075935,
+    "createdAt": "2025-12-16T17:27:55.935Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906076457,
+    "createdAt": "2025-12-16T17:27:56.457Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fgd",
+    "images": [],
+    "id": 1765906077014,
+    "createdAt": "2025-12-16T17:27:57.014Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906077494,
+    "createdAt": "2025-12-16T17:27:57.494Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906078022,
+    "createdAt": "2025-12-16T17:27:58.022Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dfg",
+    "images": [],
+    "id": 1765906078495,
+    "createdAt": "2025-12-16T17:27:58.495Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fd",
+    "images": [],
+    "id": 1765906079047,
+    "createdAt": "2025-12-16T17:27:59.047Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fg",
+    "images": [],
+    "id": 1765906079478,
+    "createdAt": "2025-12-16T17:27:59.478Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906079967,
+    "createdAt": "2025-12-16T17:27:59.967Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dg",
+    "images": [],
+    "id": 1765906080391,
+    "createdAt": "2025-12-16T17:28:00.391Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "dg",
+    "images": [],
+    "id": 1765906080814,
+    "createdAt": "2025-12-16T17:28:00.815Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906081254,
+    "createdAt": "2025-12-16T17:28:01.254Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "fd",
+    "images": [],
+    "id": 1765906081662,
+    "createdAt": "2025-12-16T17:28:01.662Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "df",
+    "images": [],
+    "id": 1765906082118,
+    "createdAt": "2025-12-16T17:28:02.118Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gd",
+    "images": [],
+    "id": 1765906082582,
+    "createdAt": "2025-12-16T17:28:02.582Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ],
+    "reactions": [
+      {
+        "userId": "0000001",
+        "reaction": "🤖"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "uuhyy",
+    "images": [],
+    "id": 1765906646941,
+    "createdAt": "2025-12-16T17:37:26.941Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "yy",
+    "images": [],
+    "id": 1765906647672,
+    "createdAt": "2025-12-16T17:37:27.672Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906647845,
+    "createdAt": "2025-12-16T17:37:27.845Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906648102,
+    "createdAt": "2025-12-16T17:37:28.102Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906648628,
+    "createdAt": "2025-12-16T17:37:28.628Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906648695,
+    "createdAt": "2025-12-16T17:37:28.695Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906648797,
+    "createdAt": "2025-12-16T17:37:28.797Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906648905,
+    "createdAt": "2025-12-16T17:37:28.905Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906649058,
+    "createdAt": "2025-12-16T17:37:29.058Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906649645,
+    "createdAt": "2025-12-16T17:37:29.645Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "yy",
+    "images": [],
+    "id": 1765906649747,
+    "createdAt": "2025-12-16T17:37:29.747Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906649858,
+    "createdAt": "2025-12-16T17:37:29.858Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906650037,
+    "createdAt": "2025-12-16T17:37:30.037Z",
+    "seenBy": [
+      "3333333",
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906650736,
+    "createdAt": "2025-12-16T17:37:30.736Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906650841,
+    "createdAt": "2025-12-16T17:37:30.841Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906650902,
+    "createdAt": "2025-12-16T17:37:30.902Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906650984,
+    "createdAt": "2025-12-16T17:37:30.984Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "y",
+    "images": [],
+    "id": 1765906651114,
+    "createdAt": "2025-12-16T17:37:31.114Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906659866,
+    "createdAt": "2025-12-16T17:37:39.866Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906659953,
+    "createdAt": "2025-12-16T17:37:39.953Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906660137,
+    "createdAt": "2025-12-16T17:37:40.137Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906660343,
+    "createdAt": "2025-12-16T17:37:40.343Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906660556,
+    "createdAt": "2025-12-16T17:37:40.556Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906660857,
+    "createdAt": "2025-12-16T17:37:40.857Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906660970,
+    "createdAt": "2025-12-16T17:37:40.970Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906661179,
+    "createdAt": "2025-12-16T17:37:41.179Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906661607,
+    "createdAt": "2025-12-16T17:37:41.607Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906661941,
+    "createdAt": "2025-12-16T17:37:41.941Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906662234,
+    "createdAt": "2025-12-16T17:37:42.234Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906662432,
+    "createdAt": "2025-12-16T17:37:42.432Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906662646,
+    "createdAt": "2025-12-16T17:37:42.646Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906663002,
+    "createdAt": "2025-12-16T17:37:43.002Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906663092,
+    "createdAt": "2025-12-16T17:37:43.092Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906663289,
+    "createdAt": "2025-12-16T17:37:43.289Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906663490,
+    "createdAt": "2025-12-16T17:37:43.490Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906672848,
+    "createdAt": "2025-12-16T17:37:52.848Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gg",
+    "images": [],
+    "id": 1765906673122,
+    "createdAt": "2025-12-16T17:37:53.122Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "g",
+    "images": [],
+    "id": 1765906673326,
+    "createdAt": "2025-12-16T17:37:53.326Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906673957,
+    "createdAt": "2025-12-16T17:37:53.957Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906674153,
+    "createdAt": "2025-12-16T17:37:54.153Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906674313,
+    "createdAt": "2025-12-16T17:37:54.313Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hh",
+    "images": [],
+    "id": 1765906674745,
+    "createdAt": "2025-12-16T17:37:54.745Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906675094,
+    "createdAt": "2025-12-16T17:37:55.094Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906675318,
+    "createdAt": "2025-12-16T17:37:55.318Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "gh",
+    "images": [],
+    "id": 1765906675755,
+    "createdAt": "2025-12-16T17:37:55.755Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "ghh",
+    "images": [],
+    "id": 1765906676100,
+    "createdAt": "2025-12-16T17:37:56.100Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906676349,
+    "createdAt": "2025-12-16T17:37:56.349Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906676557,
+    "createdAt": "2025-12-16T17:37:56.557Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906676757,
+    "createdAt": "2025-12-16T17:37:56.757Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hh",
+    "images": [],
+    "id": 1765906677217,
+    "createdAt": "2025-12-16T17:37:57.217Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906677565,
+    "createdAt": "2025-12-16T17:37:57.565Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906677773,
+    "createdAt": "2025-12-16T17:37:57.773Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906677973,
+    "createdAt": "2025-12-16T17:37:57.973Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906678958,
+    "createdAt": "2025-12-16T17:37:58.958Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906679181,
+    "createdAt": "2025-12-16T17:37:59.181Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jj",
+    "images": [],
+    "id": 1765906679413,
+    "createdAt": "2025-12-16T17:37:59.413Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jjj",
+    "images": [],
+    "id": 1765906680093,
+    "createdAt": "2025-12-16T17:38:00.093Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jj",
+    "images": [],
+    "id": 1765906680581,
+    "createdAt": "2025-12-16T17:38:00.581Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906680957,
+    "createdAt": "2025-12-16T17:38:00.957Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906681153,
+    "createdAt": "2025-12-16T17:38:01.153Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jjjkjk",
+    "images": [],
+    "id": 1765906686318,
+    "createdAt": "2025-12-16T17:38:06.318Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906686737,
+    "createdAt": "2025-12-16T17:38:06.737Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906686965,
+    "createdAt": "2025-12-16T17:38:06.965Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906687173,
+    "createdAt": "2025-12-16T17:38:07.173Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906687523,
+    "createdAt": "2025-12-16T17:38:07.523Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906687597,
+    "createdAt": "2025-12-16T17:38:07.597Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jhj",
+    "images": [],
+    "id": 1765906695861,
+    "createdAt": "2025-12-16T17:38:15.861Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906696763,
+    "createdAt": "2025-12-16T17:38:16.763Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906697259,
+    "createdAt": "2025-12-16T17:38:17.259Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906697835,
+    "createdAt": "2025-12-16T17:38:17.835Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906698330,
+    "createdAt": "2025-12-16T17:38:18.330Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "j",
+    "images": [],
+    "id": 1765906698845,
+    "createdAt": "2025-12-16T17:38:18.845Z",
+    "seenBy": [
+      "0000001"
+    ],
+    "reactions": [
+      {
+        "userId": "0000001",
+        "reaction": "🤖"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jjhhj",
+    "images": [],
+    "id": 1765906716708,
+    "createdAt": "2025-12-16T17:38:36.708Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hjh",
+    "images": [],
+    "id": 1765906719048,
+    "createdAt": "2025-12-16T17:38:39.048Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906719671,
+    "createdAt": "2025-12-16T17:38:39.671Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906720157,
+    "createdAt": "2025-12-16T17:38:40.157Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906720755,
+    "createdAt": "2025-12-16T17:38:40.755Z",
+    "seenBy": [
+      "0000001"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906721375,
+    "createdAt": "2025-12-16T17:38:41.375Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906721900,
+    "createdAt": "2025-12-16T17:38:41.900Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906722515,
+    "createdAt": "2025-12-16T17:38:42.515Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906723083,
+    "createdAt": "2025-12-16T17:38:43.083Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906723669,
+    "createdAt": "2025-12-16T17:38:43.669Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hjhj",
+    "images": [],
+    "id": 1765906724404,
+    "createdAt": "2025-12-16T17:38:44.404Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906724876,
+    "createdAt": "2025-12-16T17:38:44.876Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jhjhv",
+    "images": [],
+    "id": 1765906725506,
+    "createdAt": "2025-12-16T17:38:45.506Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jhjh",
+    "images": [],
+    "id": 1765906726534,
+    "createdAt": "2025-12-16T17:38:46.534Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906727413,
+    "createdAt": "2025-12-16T17:38:47.413Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906728005,
+    "createdAt": "2025-12-16T17:38:48.005Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906728620,
+    "createdAt": "2025-12-16T17:38:48.620Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906729261,
+    "createdAt": "2025-12-16T17:38:49.261Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906729883,
+    "createdAt": "2025-12-16T17:38:49.883Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906730622,
+    "createdAt": "2025-12-16T17:38:50.622Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906731196,
+    "createdAt": "2025-12-16T17:38:51.196Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906731853,
+    "createdAt": "2025-12-16T17:38:51.853Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906732531,
+    "createdAt": "2025-12-16T17:38:52.531Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906733198,
+    "createdAt": "2025-12-16T17:38:53.198Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "",
+    "images": [
+      "1765906738727-821538776.png"
+    ],
+    "id": 1765906738743,
+    "createdAt": "2025-12-16T17:38:58.743Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hjjh",
+    "images": [],
+    "id": 1765906744473,
+    "createdAt": "2025-12-16T17:39:04.473Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906745777,
+    "createdAt": "2025-12-16T17:39:05.777Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906746701,
+    "createdAt": "2025-12-16T17:39:06.701Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "h",
+    "images": [],
+    "id": 1765906747457,
+    "createdAt": "2025-12-16T17:39:07.457Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906748393,
+    "createdAt": "2025-12-16T17:39:08.393Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906749265,
+    "createdAt": "2025-12-16T17:39:09.265Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906750033,
+    "createdAt": "2025-12-16T17:39:10.033Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906750703,
+    "createdAt": "2025-12-16T17:39:10.703Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "jh",
+    "images": [],
+    "id": 1765906751458,
+    "createdAt": "2025-12-16T17:39:11.458Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906752182,
+    "createdAt": "2025-12-16T17:39:12.182Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906752893,
+    "createdAt": "2025-12-16T17:39:12.893Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906753733,
+    "createdAt": "2025-12-16T17:39:13.733Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "0000001",
+    "text": "hj",
+    "images": [],
+    "id": 1765906754493,
+    "createdAt": "2025-12-16T17:39:14.493Z",
+    "seenBy": [
+      "0000001",
+      "3333333"
+    ],
+    "reactions": [
+      {
+        "userId": "3333333",
+        "reaction": "😂"
+      }
+    ]
+  },
+  {
+    "type": "department",
+    "department": "CST",
+    "semester": "1st",
+    "shift": "Day",
+    "senderId": "3333333",
+    "text": "566yrdfcfcgfgffffff",
+    "images": [],
+    "id": 1765947707966,
+    "createdAt": "2025-12-17T05:01:47.966Z",
+    "seenBy": [
+      "3333333"
+    ]
+  }
+]

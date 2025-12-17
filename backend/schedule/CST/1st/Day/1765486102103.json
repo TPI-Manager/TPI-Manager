@@ -1,0 +1,18 @@
+{
+  "id": "1765486102103",
+  "title": "546",
+  "startTime": "02:50",
+  "endTime": "02:53",
+  "days": [
+    "Saturday",
+    "Friday",
+    "Monday"
+  ],
+  "type": "schedule",
+  "department": "CST",
+  "semester": "1st",
+  "shift": "Day",
+  "createdBy": "1231234",
+  "body": "",
+  "createdAt": "2025-12-11T20:48:22.104Z"
+}

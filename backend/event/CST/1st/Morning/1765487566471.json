@@ -1,0 +1,26 @@
+{
+  "id": "1765487566471",
+  "title": "dg",
+  "type": "notice",
+  "body": "ee",
+  "startTime": "2025-12-27T03:14",
+  "endTime": "2026-03-20T03:23",
+  "options": [],
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
+  "department": "CST",
+  "semester": "1st",
+  "shift": "Morning",
+  "createdBy": "1235655",
+  "createdAt": "2025-12-11T21:12:46.472Z",
+  "votes": {},
+  "votedStudents": [],
+  "updatedAt": "2025-12-12T14:25:46.341Z"
+}

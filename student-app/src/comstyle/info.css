@@ -1,0 +1,210 @@
+.info-container {
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-bar button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.search-bar button:hover {
+  background: #45a049;
+}
+
+.student-card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f7f7f7;
+}
+
+.student-card h1 {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 5px;
+}
+
+.student-card input {
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.student-info .info-row {
+  margin: 5px 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.save-btn {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  background: #4caf50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #45a049;
+}
+/* info.css */
+
+/* ---------- VARIABLES ---------- */
+:root {
+  --light-bg: #f8f9fa;
+  --light-card: #fff;
+  --light-text: #333;
+  --light-border: #ddd;
+  --dark-bg: #1e1e2f;
+  --dark-card: #2c2c3a;
+  --dark-text: #f0f0f0;
+  --dark-border: #444;
+  --primary-color: #4f46e5;
+  --accent-color: #6366f1;
+  --transition: all 0.3s ease-in-out;
+}
+
+/* ---------- GLOBAL ---------- */
+.info-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 100vh;
+  transition: var(--transition);
+}
+
+.student-info {
+  background-color: var(--light-card);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-border);
+  transition: var(--transition);
+}
+
+.dark .student-info {
+  background-color: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text);
+}
+
+.student-info h1 {
+  margin-bottom: 0.5rem;
+}
+
+.student-info p {
+  margin: 0.2rem 0;
+}
+
+/* ---------- EDIT SECTION ---------- */
+.check-edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.check-edit-section input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--light-border);
+  transition: var(--transition);
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.dark .check-edit-section input {
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-card);
+  color: var(--dark-text);
+}
+
+.check-edit-section input.visible {
+  opacity: 1;
+  max-height: 50px;
+  transform: translateY(0);
+  transition: all 0.4s ease-in-out;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.edit-form input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--light-border);
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease-in-out;
+}
+
+.dark .edit-form input {
+  border: 1px solid var(--dark-border);
+  background-color: var(--dark-card);
+  color: var(--dark-text);
+}
+
+.edit-form input.visible {
+  opacity: 1;
+  max-height: 50px;
+  transform: translateY(0);
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .info-container {
+    padding: 0.5rem;
+  }
+}
+.rr12{
+  border-radius: 12px;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px 0;
+  border: 1px solid var(--border-color-light);
+  border-radius: 5px;
+  font-size: 1em;
+}

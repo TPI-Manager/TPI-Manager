@@ -1,0 +1,20 @@
+{
+  "studentId": "1235656",
+  "firstName": "ffd",
+  "lastName": "dddd",
+  "fullName": "ffd dddd",
+  "password": "93114",
+  "email": "maruf60463000@gmail.com",
+  "phone": "604630000",
+  "department": "Civil Technology",
+  "roll": "3",
+  "address": "3we",
+  "semester": "2nd",
+  "shift": "Morning",
+  "guardianName": "dhakat",
+  "guardianPhone": "01722999389",
+  "admin": "no",
+  "teacher": "no",
+  "createdAt": "2025-12-14T19:37:03.879Z",
+  "updatedAt": "2025-12-14T19:37:03.879Z"
+}

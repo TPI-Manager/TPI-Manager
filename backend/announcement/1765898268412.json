@@ -1,0 +1,19 @@
+{
+  "id": "1765898268412",
+  "title": "Official Holiday Notice",
+  "message": "This is to inform all students that the college will remain closed due to an upcoming government holiday. All classes and academic activities will be suspended on the mentioned date. Regular classes will resume from the next working day. Students are requested to stay updated through official notices.",
+  "createdBy": "3333333",
+  "body": "",
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
+  "startTime": "",
+  "endTime": "",
+  "createdAt": "2025-12-16T15:17:48.412Z"
+}

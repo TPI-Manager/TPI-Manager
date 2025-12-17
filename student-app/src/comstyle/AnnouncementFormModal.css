@@ -1,0 +1,156 @@
+/* AnnouncementFormModal.css */
+
+/* Root variables for light and dark mode */
+:root {
+  --bg-light: #ffffff;
+  --bg-dark: #1e1e1e;
+  --text-light: #000000;
+  --text-dark: #f1f1f1;
+  --overlay-light: rgba(0, 0, 0, 0.5);
+  --overlay-dark: rgba(255, 255, 255, 0.2);
+  --input-bg-light: #f5f5f5;
+  --input-bg-dark: #2a2a2a;
+  --input-text-light: #000000;
+  --input-text-dark: #ffffff;
+  --button-bg-light: #007bff;
+  --button-bg-dark: #3399ff;
+  --button-text-light: #ffffff;
+  --button-text-dark: #ffffff;
+  --button-hover-light: #0056b3;
+  --button-hover-dark: #0066cc;
+}
+
+/* Overlay */
+.announcement-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--overlay-light);
+  z-index: 1000;
+}
+
+body.dark-mode .announcement-modal-overlay {
+  background: var(--overlay-dark);
+}
+
+/* Modal form */
+.announcement-modal-form {
+  background: var(--bg-light);
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .announcement-modal-form {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Input and textarea */
+.announcement-modal-form input,
+.announcement-modal-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 14px;
+  background: var(--input-bg-light);
+  color: var(--input-text-light);
+  resize: vertical;
+  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+body.dark-mode .announcement-modal-form input,
+body.dark-mode .announcement-modal-form textarea {
+  background: var(--input-bg-dark);
+  color: var(--input-text-dark);
+  border: 1px solid #555;
+}
+
+/* Buttons */
+.announcement-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.announcement-modal-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+  transition: background 0.3s ease;
+}
+
+.announcement-modal-buttons button:hover {
+  background: var(--button-hover-light);
+}
+
+body.dark-mode .announcement-modal-buttons button {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+body.dark-mode .announcement-modal-buttons button:hover {
+  background: var(--button-hover-dark);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .announcement-modal-form {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .announcement-modal-form h3 {
+    font-size: 18px;
+  }
+
+  .announcement-modal-buttons button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+.ggu7 {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+
+  /* 🔥 FIX LINE BREAK */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  overflow-x: hidden;
+
+  padding: 10px;
+  border-radius: 6px;
+}
+.po2 {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  overflow-x: hidden;
+}
+.overlay form {
+  max-width: 95%;
+  box-sizing: border-box;
+}
+.ggu7 {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-x: hidden;
+}

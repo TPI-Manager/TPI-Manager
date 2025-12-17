@@ -1,0 +1,236 @@
+/* ===== Root Layout ===== */
+.home-layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== Sidebar (RIGHT SIDE) ===== */
+.sidebar-container {
+  width: 260px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar Open */
+.sidebar-container.open {
+  transform: translateX(0);
+}
+
+/* ===== Overlay ===== */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
+}
+
+/* ===== Toggle Button (Beautiful) ===== */
+.sidebar-toggle-btn {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1100;
+
+  color: white;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  box-shadow: 0 10px 28px rgba(139, 92, 246, 0.7);
+  transition: 0.3s ease;
+}
+
+/* Hover */
+.sidebar-toggle-btn:hover {
+  transform: rotate(8deg) scale(1.12);
+  box-shadow: 0 14px 32px rgba(6, 182, 212, 0.9);
+}
+
+/* Active */
+.sidebar-toggle-btn:active {
+  transform: scale(0.9);
+}
+
+/* When Sidebar is Open – Button Color Change */
+.sidebar-container.open + .sidebar-toggle-btn {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  box-shadow: 0 10px 28px rgba(239, 68, 68, 0.7);
+}
+
+/* ===== Page Container ===== */
+.page-container {
+  flex: 1;
+  height: 100vh;
+  width: 100%;
+  padding: 16px;
+  overflow-y: auto;
+  transition: margin-right 0.3s ease;
+  margin-right: 0;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  margin: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== ✅ DESKTOP MODE (NO OVERLAY) ✅ ===== */
+@media (min-width: 769px) {
+  .sidebar-container {
+    transform: translateX(0);
+    position: relative;
+  }
+
+  .sidebar-toggle-btn {
+    display: none;
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+
+  .page-container {
+    margin-right: 0;
+    flex: 1;
+  }
+}
+
+/* ===== Sidebar Buttons ===== */
+.sidebar-container nav button {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.35);
+  transition: all 0.3s ease;
+}
+
+.sidebar-container nav button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.sidebar-container nav button.active {
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+}
+
+.sidebar-container nav button:active {
+  transform: scale(0.95);
+}
+
+/* ===== Dark Mode ===== */
+body.dark .sidebar-container {
+  background: linear-gradient(180deg, #0f172a, #020617);
+}
+
+body.dark .sidebar-container nav button {
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+}
+
+body.dark .sidebar-container nav button.active {
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: black;
+}
+/* Root Layout */
+.home-layout {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sidebar */
+.sidebar-container {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+  transition: transform 0.25s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.sidebar-container.open {
+  transform: translateX(0);
+}
+
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-container.open ~ .sidebar-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Page Container */
+.page-container {
+  flex-grow: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  margin-right: 0; /* margin অটো adjust না করব */
+  transition: none; /* slide animation page effect remove */
+}
+
+/* Toggle Button */
+.sidebar-toggle-btn {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1100;
+  color: white;
+  background: linear-gradient(135deg,#8b5cf6,#06b6d4);
+  box-shadow:0 10px 28px rgba(139,92,246,0.7);
+  transition:0.3s ease;
+}
+
+.sidebar-toggle-btn:hover { transform: scale(1.1); }
+
+/* Desktop */
+@media(min-width:769px){
+  .sidebar-container { transform: translateX(0); position: relative; }
+  .sidebar-toggle-btn { display:none; }
+  .sidebar-overlay { display:none; }
+}
