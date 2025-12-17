@@ -1,0 +1,8 @@
+/* Similar to Schedule but distinct color */
+.card {
+    border-left-color: #9b59b6;
+}
+
+.header h2 {
+    color: var(--sea-green);
+}

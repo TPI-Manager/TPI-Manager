@@ -1,0 +1,116 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--frosted-mint) 0%, var(--celadon) 100%);
+  padding: 20px;
+}
+
+[data-theme="dark"] .login-wrapper {
+  background: linear-gradient(135deg, var(--evergreen) 0%, var(--pine-teal) 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-secondary);
+  padding: 48px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.brand-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand-header h1 {
+  color: var(--accent-color);
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.brand-header p {
+  color: var(--text-secondary);
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.error-msg {
+  color: #e74c3c;
+  background: #fdedec;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 1px solid #fadbd8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  border-radius: 10px;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+}
+
+.auth-footer p {
+  margin-bottom: 8px;
+}
+
+.link-btn {
+  background: none;
+  color: var(--accent-color);
+  padding: 0;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline;
+  box-shadow: none;
+}
+
+.link-btn:hover {
+  background: none;
+  color: var(--accent-hover);
+  transform: none;
+  text-decoration: underline;
+}
+
+/* Add Icons to inputs in Login (Optional UX improvement) */
+.input-group input {
+  padding-left: 16px;
+}

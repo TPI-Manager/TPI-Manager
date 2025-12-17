@@ -1,0 +1,135 @@
+/* Public Signup Wrapper */
+.signup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--frosted-mint) 0%, var(--celadon) 100%);
+}
+
+[data-theme="dark"] .signup-wrapper {
+    background: linear-gradient(135deg, var(--evergreen) 0%, var(--pine-teal) 100%);
+}
+
+/* Internal vs Public Card */
+.form-card,
+.internal-form-card {
+    background: var(--bg-secondary);
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    width: 100%;
+}
+
+.form-card {
+    max-width: 500px;
+}
+
+.internal-form-card {
+    max-width: 100%;
+}
+
+.form-card h2,
+.internal-form-card h2 {
+    color: var(--accent-color);
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 480px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+}
+
+.role-group {
+    display: flex;
+    gap: 24px;
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.role-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.role-group select {
+    width: auto;
+}
+
+.save-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    font-size: 1.1rem;
+}
+
+.status-msg {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.status-msg.ok {
+    background-color: var(--celadon);
+    color: var(--pine-teal);
+}
+
+.status-msg.err {
+    background-color: #fadbd8;
+    color: #c0392b;
+}
+
+/* Footer reuse from login */
+.auth-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.auth-footer p {
+    margin-bottom: 5px;
+}
+
+.link-btn {
+    background: none;
+    color: var(--accent-color);
+    padding: 0;
+    font-weight: 700;
+    text-decoration: underline;
+    font-size: 0.95rem;
+}
+
+.link-btn:hover {
+    background: none;
+    color: var(--accent-hover);
+    transform: none;
+}

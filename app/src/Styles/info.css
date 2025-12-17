@@ -1,0 +1,19 @@
+.info-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: var(--sea-green);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.info-card p {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.info-card p:last-child {
+    border-bottom: none;
+}

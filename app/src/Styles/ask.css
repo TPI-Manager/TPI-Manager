@@ -1,0 +1,59 @@
+.ask-page {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ask-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.ask-input input {
+    flex: 1;
+    margin: 10px 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.ask-input button {
+    padding: 12px 25px;
+    background: var(--mint-leaf-2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.question-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.question-card h4 small {
+    color: #7f8c8d;
+    font-weight: normal;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+
+.answers {
+    margin-top: 15px;
+    padding-left: 15px;
+    border-left: 3px solid #eee;
+}
+
+.answer {
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.reply-box {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
