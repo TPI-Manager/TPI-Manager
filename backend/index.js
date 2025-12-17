@@ -9,45 +9,30 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-/* -------------------------
-   FOLDERS
---------------------------*/
 const DATA_DIR = path.join(__dirname, "data");
 const EVENT_BASE = path.join(__dirname, "event");
 const SCHEDULE_BASE = path.join(__dirname, "schedule");
+const ANNOUNCE_BASE = path.join(__dirname, "announcement");
 
 const departments = ["CST", "Electrical", "Civil Technology"];
-const semesters = ["1st","2nd","3rd","4th","5th","6th","7th","8th"];
-const shifts = ["Morning","Day"];
+const semesters = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+const shifts = ["Morning", "Day"];
 
-// Create main folders
-[DATA_DIR, EVENT_BASE, SCHEDULE_BASE].forEach(f => {
+[DATA_DIR, EVENT_BASE, SCHEDULE_BASE, ANNOUNCE_BASE].forEach(f => {
   if (!fs.existsSync(f)) fs.mkdirSync(f, { recursive: true });
 });
 
-// Create event folders
 departments.forEach(d =>
   semesters.forEach(s =>
     shifts.forEach(sh => {
-      const dir = path.join(EVENT_BASE, d, s, sh);
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      const eventDir = path.join(EVENT_BASE, d, s, sh);
+      if (!fs.existsSync(eventDir)) fs.mkdirSync(eventDir, { recursive: true });
+      const schedDir = path.join(SCHEDULE_BASE, d, s, sh);
+      if (!fs.existsSync(schedDir)) fs.mkdirSync(schedDir, { recursive: true });
     })
   )
 );
 
-// Create schedule folders
-departments.forEach(d =>
-  semesters.forEach(s =>
-    shifts.forEach(sh => {
-      const dir = path.join(SCHEDULE_BASE, d, s, sh);
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    })
-  )
-);
-
-/* -------------------------
-    HELPERS
---------------------------*/
 function readJSON(file) {
   try {
     return JSON.parse(fs.readFileSync(file));
@@ -60,7 +45,6 @@ function writeJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-// HH:MM কে today date এর Date object এ convert করে
 function parseHHMMToDate(hhmm) {
   if (!hhmm) return null;
   const [hh, mm] = hhmm.split(":").map(Number);
@@ -112,9 +96,6 @@ function computeStatus(item) {
   return final;
 }
 
-/* -------------------------
-   STUDENT AUTH
---------------------------*/
 const getStudentFile = id => path.join(DATA_DIR, `${id}.json`);
 
 app.post("/api/student", (req, res) => {
@@ -127,15 +108,25 @@ app.post("/api/student", (req, res) => {
 
   if (fs.existsSync(file)) return res.json({ message: "duplicate" });
 
-
- const saveData = {
-  studentId: data.studentId,
-  firstName: data.firstName,
-  lastName: data.lastName,
-  fullName: `${data.firstName} ${data.lastName}`, // <-- এখানে fullname
-  password: data.password,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+  const saveData = {
+    studentId: data.studentId,
+    firstName: data.firstName || "",
+    lastName: data.lastName || "",
+    fullName: `${data.firstName || ""} ${data.lastName || ""}`,
+    password: data.password,
+    email: data.email || "",
+    phone: data.phone || "",
+    department: data.department || "",
+    roll: data.roll || "",
+    address: data.address || "",
+    semester: data.semester || "",
+    shift: data.shift || "",
+    guardianName: data.guardianName || "",
+    guardianPhone: data.guardianPhone || "",
+    admin: data.admin || "no",
+    teacher: data.teacher || "no",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
 
   writeJSON(file, saveData);
@@ -166,9 +157,38 @@ app.post("/api/login", (req, res) => {
   res.json(found);
 });
 
-/* -------------------------
-   EVENT SYSTEM
---------------------------*/
+app.get("/api/student/:id", (req, res) => {
+  const { id } = req.params;
+  const file = getStudentFile(id);
+
+  if (!fs.existsSync(file)) {
+    return res.status(404).json({ error: "Student not found" });
+  }
+
+  const student = readJSON(file);
+  res.json(student);
+});
+
+app.put("/api/student/:id", (req, res) => {
+  const { id } = req.params;
+  const file = getStudentFile(id);
+
+  if (!fs.existsSync(file)) {
+    return res.status(404).json({ error: "Student not found" });
+  }
+
+  const oldData = readJSON(file);
+  const newData = {
+    ...oldData,
+    ...req.body,
+    fullName: `${req.body.firstName || oldData.firstName} ${req.body.lastName || oldData.lastName}`,
+    updatedAt: new Date().toISOString()
+  };
+
+  writeJSON(file, newData);
+  res.json(newData);
+});
+
 const getEventFile = (d, s, sh, id) =>
   path.join(EVENT_BASE, d, s, sh, `${id}.json`);
 
@@ -187,7 +207,6 @@ app.get("/api/events/:department/:semester/:shift", (req, res) => {
   res.json(events);
 });
 
-// Add / Edit Event
 app.post("/api/events", (req, res) => {
   const data = req.body;
 
@@ -195,13 +214,12 @@ app.post("/api/events", (req, res) => {
     return res.status(400).json({ error: "Required fields missing" });
   }
 
-const eventId = data.id || Date.now().toString();
-const file = getEventFile(data.department, data.semester, data.shift, eventId);
+  const eventId = data.id || Date.now().toString();
+  const file = getEventFile(data.department, data.semester, data.shift, eventId);
 
-// Existing code
-let event = fs.existsSync(file)
-  ? { ...readJSON(file), ...data, updatedAt: new Date().toISOString() }
-  : {
+  let event = fs.existsSync(file)
+    ? { ...readJSON(file), ...data, updatedAt: new Date().toISOString() }
+    : {
       id: eventId,
       ...data,
       body: data.body || "",
@@ -210,9 +228,8 @@ let event = fs.existsSync(file)
       options: Array.isArray(data.options) ? data.options.slice(0, 10) : [],
       votes: {},
       votedStudents: [],
-      createdByName: data.createdByName || "Unknown",  // <-- add this
+      createdByName: data.createdByName || "Unknown",
     };
-
 
   if (Array.isArray(event.options)) {
     event.options.forEach(o => {
@@ -225,10 +242,8 @@ let event = fs.existsSync(file)
   res.status(201).json(computeStatus(event));
 });
 
-// Delete Event
 app.delete("/api/events/:department/:semester/:shift/:id", (req, res) => {
   const { department, semester, shift, id } = req.params;
-
   const file = getEventFile(department, semester, shift, id);
 
   if (!fs.existsSync(file))
@@ -238,7 +253,6 @@ app.delete("/api/events/:department/:semester/:shift/:id", (req, res) => {
   res.json({ message: "Deleted" });
 });
 
-// Vote System
 app.post("/api/events/:department/:semester/:shift/:id/vote", (req, res) => {
   const { department, semester, shift, id } = req.params;
   const { option, studentId } = req.body;
@@ -270,67 +284,60 @@ app.post("/api/events/:department/:semester/:shift/:id/vote", (req, res) => {
   res.json(computeStatus(event));
 });
 
-/* -------------------------
-   SCHEDULE SYSTEM
---------------------------*/
-const getScheduleFile = (d, s, sh, id) =>
-  path.join(SCHEDULE_BASE, d, s, sh, `${id}.json`);
+const ANNOUNCE_BASE_DIR = path.join(__dirname, "announcement");
+if (!fs.existsSync(ANNOUNCE_BASE_DIR)) fs.mkdirSync(ANNOUNCE_BASE_DIR, { recursive: true });
 
-app.get("/api/schedules/:department/:semester/:shift", (req, res) => {
-  const { department, semester, shift } = req.params;
+const getAnnounceFile = (id) => path.join(ANNOUNCE_BASE_DIR, `${id}.json`);
 
-  const folder = path.join(SCHEDULE_BASE, department, semester, shift);
-  if (!fs.existsSync(folder)) return res.json([]);
+app.get("/api/global-announcements", (req, res) => {
+  if (!fs.existsSync(ANNOUNCE_BASE_DIR)) return res.json([]);
 
-  const files = fs.readdirSync(folder).filter(f => f.endsWith(".json"));
-
-  const list = files
-    .map(f => computeStatus(readJSON(path.join(folder, f))))
+  const files = fs.readdirSync(ANNOUNCE_BASE_DIR).filter(f => f.endsWith(".json"));
+  const announcements = files
+    .map(f => computeStatus(readJSON(path.join(ANNOUNCE_BASE_DIR, f))))
     .filter(Boolean);
 
-  res.json(list);
+  res.json(announcements);
 });
 
-app.post("/api/schedules", (req, res) => {
+app.post("/api/global-announcements", (req, res) => {
   const data = req.body;
 
-  if (!data.title || !data.createdBy || !data.department || !data.semester || !data.shift)
+  if (!data.title || !data.createdBy) {
     return res.status(400).json({ error: "Required fields missing" });
+  }
 
-  const scheduleId = data.id || Date.now().toString();
-  const file = getScheduleFile(data.department, data.semester, data.shift, scheduleId);
+  const id = data.id || Date.now().toString();
+  const file = getAnnounceFile(id);
 
-  const schedule = fs.existsSync(file)
+  const announce = fs.existsSync(file)
     ? { ...readJSON(file), ...data, updatedAt: new Date().toISOString() }
     : {
-        id: scheduleId,
-        ...data,
-        body: data.body || "",
-        days: Array.isArray(data.days) ? data.days : [],
-        createdAt: new Date().toISOString(),
-      };
+      id,
+      ...data,
+      body: data.body || "",
+      days: Array.isArray(data.days) ? data.days : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      startTime: data.startTime || "",
+      endTime: data.endTime || "",
+      createdAt: new Date().toISOString(),
+    };
 
-  writeJSON(file, schedule);
+  writeJSON(file, announce);
 
-  res.json(computeStatus(schedule));
+  res.status(201).json(computeStatus(announce));
 });
 
-app.delete("/api/schedules/:department/:semester/:shift/:id", (req, res) => {
-  const { department, semester, shift, id } = req.params;
-
-  const file = getScheduleFile(department, semester, shift, id);
+app.delete("/api/global-announcements/:id", (req, res) => {
+  const { id } = req.params;
+  const file = getAnnounceFile(id);
 
   if (!fs.existsSync(file))
-    return res.status(404).json({ error: "Schedule not found" });
+    return res.status(404).json({ error: "Announcement not found" });
 
   fs.unlinkSync(file);
-
   res.json({ message: "Deleted" });
 });
 
-/* -------------------------
-   AUTO DELETE EXPIRED
---------------------------*/
 function cleanupExpired() {
   departments.forEach(d =>
     semesters.forEach(s =>
@@ -346,117 +353,13 @@ function cleanupExpired() {
 
             if (data && computeStatus(data).status === "expired") {
               fs.unlinkSync(file);
-              console.log("Expired event deleted:", f);
             }
           });
       })
     )
   );
 }
-// -------------------------
-// Announcement System
-// -------------------------
-const ANNOUNCE_BASE = path.join(__dirname, "announcement");
 
-// Create folder if not exists
-if (!fs.existsSync(ANNOUNCE_BASE)) fs.mkdirSync(ANNOUNCE_BASE, { recursive: true });
+setInterval(cleanupExpired, 60000);
 
-const getAnnounceFile = (id) => path.join(ANNOUNCE_BASE, `${id}.json`);
-
-// List all announcements
-app.get("/api/global-announcements", (req, res) => {
-  if (!fs.existsSync(ANNOUNCE_BASE)) return res.json([]);
-
-  const files = fs.readdirSync(ANNOUNCE_BASE).filter(f => f.endsWith(".json"));
-  const announcements = files
-    .map(f => computeStatus(readJSON(path.join(ANNOUNCE_BASE, f))))
-    .filter(Boolean);
-
-  res.json(announcements);
-});
-
-// Add / Edit Announcement
-app.post("/api/global-announcements", (req, res) => {
-  const data = req.body;
-
-  if (!data.title || !data.createdBy) {
-    return res.status(400).json({ error: "Required fields missing" });
-  }
-
-  const id = data.id || Date.now().toString();
-  const file = getAnnounceFile(id);
-
-  const announce = fs.existsSync(file)
-    ? { ...readJSON(file), ...data, updatedAt: new Date().toISOString() }
-    : {
-        id,
-        ...data,
-        body: data.body || "",
-        days: Array.isArray(data.days) ? data.days : ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-        startTime: data.startTime || "",
-        endTime: data.endTime || "",
-        createdAt: new Date().toISOString(),
-      };
-
-  writeJSON(file, announce);
-
-  res.status(201).json(computeStatus(announce));
-});
-
-// Delete Announcement
-app.delete("/api/global-announcements/:id", (req, res) => {
-  const { id } = req.params;
-  const file = getAnnounceFile(id);
-
-  if (!fs.existsSync(file))
-    return res.status(404).json({ error: "Announcement not found" });
-
-  fs.unlinkSync(file);
-  res.json({ message: "Deleted" });
-});
-/* -------------------------
-   STUDENT SEARCH & UPDATE
---------------------------*/
-
-// GET student by ID
-app.get("/api/student/:id", (req, res) => {
-  const { id } = req.params;
-  const file = getStudentFile(id);
-
-  if (!fs.existsSync(file)) {
-    return res.status(404).json({ error: "Student not found" });
-  }
-
-  const student = readJSON(file);
-  res.json(student);
-});
-
-// UPDATE student by ID
-app.put("/api/student/:id", (req, res) => {
-  const { id } = req.params;
-  const file = getStudentFile(id);
-
-  if (!fs.existsSync(file)) {
-    return res.status(404).json({ error: "Student not found" });
-  }
-
-  const oldData = readJSON(file);
-  const newData = { 
-    ...oldData, 
-    ...req.body, 
-    fullName: `${req.body.firstName || oldData.firstName} ${req.body.lastName || oldData.lastName}`,
-    updatedAt: new Date().toISOString()
-  };
-
-  writeJSON(file, newData);
-  res.json(newData);
-});
-
-
-setInterval(cleanupExpired, 6000);
-
-/* -------------------------
-   START SERVER
---------------------------*/
-
-app.listen(PORT, () => console.log(`Backend OK on ${PORT}`));
+app.listen(PORT, () => console.log(`Main Server (Auth/Events/Announcements) running on ${PORT}`));
