@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useSSE } from "../hooks/useSSE";
+import { useRealtime } from "../hooks/useRealtime";
 import "../Styles/chat.css";
 
 export default function ChatPage({ student }) {
@@ -9,6 +9,7 @@ export default function ChatPage({ student }) {
     const semester = student.semester || "Staff";
     const shift = student.shift || "General";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
+    const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
 
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
@@ -16,30 +17,27 @@ export default function ChatPage({ student }) {
     const [viewerImage, setViewerImage] = useState(null);
     const bottomRef = useRef();
 
-    // Fetch Initial
-    const fetchMessages = useCallback(async () => {
-        const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
-        try {
-            const res = await axios.get(`${API_BASE}/api/chat?room=${room}`);
+    // 1. Initial Load
+    useEffect(() => {
+        axios.get(`${API_BASE}/api/chat?room=${room}`).then(res => {
             setMessages(res.data);
-        } catch (e) { console.error(e); }
-    }, [department, semester, shift]);
+            scrollToBottom();
+        });
+    }, [room]);
 
-    useEffect(() => { fetchMessages(); }, [fetchMessages]);
-
-    // Realtime via SSE
-    useSSE(useCallback((msg) => {
-        const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
-        if (msg.type === `chat-${room}`) {
-            if (msg.data.action === "create") {
-                setMessages(prev => [...prev, msg.data.data]);
-            } else if (msg.data.action === "delete") {
-                setMessages(prev => prev.filter(m => m.id !== msg.data.id));
-            }
+    // 2. Realtime Subscription (Standard Supabase)
+    useRealtime('chat', (payload) => {
+        if (payload.eventType === 'INSERT') {
+            setMessages(prev => [...prev, payload.new]);
+            scrollToBottom();
+        } else if (payload.eventType === 'DELETE') {
+            setMessages(prev => prev.filter(m => m.id !== payload.old.id));
         }
-    }, [department, semester, shift]));
+    }, 'room', room);
 
-    useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+    const scrollToBottom = () => {
+        setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+    };
 
     const uploadFiles = async () => {
         if (selectedImages.length === 0) return [];
@@ -53,7 +51,8 @@ export default function ChatPage({ student }) {
     const sendMessage = async () => {
         if (!text && selectedImages.length === 0) return;
         const imgs = await uploadFiles();
-        const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
+
+        // Optimistic UI update (optional, but Realtime is usually fast enough)
         await axios.post(`${API_BASE}/api/chat`, {
             text,
             senderId: userId,
@@ -76,32 +75,69 @@ export default function ChatPage({ student }) {
 
     return (
         <div className="chat-container">
-            <div className="chat-header-info">Room: {department} ({semester})</div>
+            <div className="chat-header-info">
+                <i className="bi bi-people-fill"></i> {department} • {semester}
+            </div>
+
             <div className="messages-area">
                 {messages.map((m, i) => {
                     const isMe = m.senderId === userId;
                     return (
                         <div key={i} className={`message-row ${isMe ? "mine" : "theirs"}`}>
+                            {!isMe && <div className="avatar-small">{m.senderName.charAt(0)}</div>}
                             <div className="bubble">
-                                <div className="msg-header"><span>{m.senderName}</span></div>
-                                {m.images && m.images.map((img, idx) => <img key={idx} src={img} onClick={() => setViewerImage(img)} className="chat-img" />)}
-                                {m.text && <div>{m.text}</div>}
-                                {isMe && <button onClick={() => deleteMessage(m.id)} className="delete-btn">🗑</button>}
+                                {!isMe && <div className="msg-sender">{m.senderName}</div>}
+
+                                {m.images && m.images.length > 0 && (
+                                    <div className="msg-gallery">
+                                        {m.images.map((img, idx) => (
+                                            <img key={idx} src={img} onClick={() => setViewerImage(img)} />
+                                        ))}
+                                    </div>
+                                )}
+
+                                {m.text && <div className="msg-text">{m.text}</div>}
+
+                                <div className="msg-meta">
+                                    {isMe && <span className="delete-icon" onClick={() => deleteMessage(m.id)}>🗑</span>}
+                                    <span className="time">{new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                </div>
                             </div>
                         </div>
                     );
                 })}
                 <div ref={bottomRef} />
             </div>
-            {/* Input Area (Same as before) */}
+
             <div className="input-area-wrapper">
+                {selectedImages.length > 0 && (
+                    <div className="upload-preview">
+                        <span>{selectedImages.length} images selected</span>
+                        <button onClick={() => setSelectedImages([])}>Clear</button>
+                    </div>
+                )}
                 <div className="input-area">
-                    <label>📷 <input type="file" multiple onChange={e => setSelectedImages(Array.from(e.target.files))} hidden /></label>
-                    <input value={text} onChange={e => setText(e.target.value)} placeholder="Type..." />
-                    <button onClick={sendMessage}>Send</button>
+                    <label className="attach-btn">
+                        <i className="bi bi-image"></i>
+                        <input type="file" multiple onChange={e => setSelectedImages(Array.from(e.target.files))} hidden />
+                    </label>
+                    <input
+                        value={text}
+                        onChange={e => setText(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                        placeholder="Type a message..."
+                    />
+                    <button className="send-btn" onClick={sendMessage}>
+                        <i className="bi bi-send-fill"></i>
+                    </button>
                 </div>
             </div>
-            {viewerImage && <div className="image-viewer-overlay" onClick={() => setViewerImage(null)}><img src={viewerImage} /></div>}
+
+            {viewerImage && (
+                <div className="image-viewer-overlay" onClick={() => setViewerImage(null)}>
+                    <img src={viewerImage} alt="Full view" />
+                </div>
+            )}
         </div>
     );
 }

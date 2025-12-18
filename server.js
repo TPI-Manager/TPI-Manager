@@ -7,15 +7,23 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcryptjs");
-// Import Supabase utils
 const { supabase, uploadToSupabase } = require("./utils/db");
 const apiRoutes = require("./routes");
-const { sseHandler } = require("./utils/sse");
 
 const app = express();
 const server = http.createServer(app);
 
-app.use(helmet());
+// FIX: Relax Security Policy to allow Supabase Images
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "blob:", "https://*.supabase.co"], // Allow Supabase Images
+      connectSrc: ["'self'", "https://*.supabase.co", "wss://*.supabase.co"], // Allow Realtime
+      scriptSrc: ["'self'", "'unsafe-inline'"], // Allow React scripts
+    }
+  }
+}));
 
 const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : ["http://localhost:5173", "http://localhost:3000"];
 app.use(cors({
@@ -30,7 +38,7 @@ const PORT = process.env.PORT || 5000;
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
 
-const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 }); // Increased for chat polling if needed
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 });
 app.use("/api", limiter);
 
 const upload = multer({
@@ -43,7 +51,6 @@ const seedAdmin = async () => {
   try {
     const { data } = await supabase.from("users").select("*").eq("role", "admin").limit(1);
     if (!data || data.length === 0) {
-      console.log("🌱 Seeding Admin...");
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(process.env.ADMIN_INIT_PASS || "admin123", salt);
       await supabase.from("users").insert({
@@ -58,7 +65,6 @@ const seedAdmin = async () => {
   } catch (error) { console.error("Admin seed error", error); }
 };
 
-app.get("/api/stream", sseHandler);
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 app.use("/api", apiRoutes);
 
@@ -67,11 +73,6 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
     const ownerId = req.body.ownerId;
     if (!ownerId) return res.status(400).json({ error: "Owner ID required" });
     if (!req.files || req.files.length === 0) return res.json({ files: [] });
-
-    const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    for (const file of req.files) {
-      if (!allowed.includes(file.mimetype)) return res.status(400).json({ error: "Invalid type" });
-    }
 
     const promises = req.files.map(file => uploadToSupabase(file, ownerId));
     const files = await Promise.all(promises);
@@ -83,6 +84,7 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
   }
 });
 
+// Serve Frontend
 if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
   const path = require("path");
   const fs = require("fs");
