@@ -3,13 +3,9 @@ service firebase.storage {
   match /b/{bucket}/o {
     match /uploads/{fileName} {
       allow read: if true;
-      
-      // Allow creation if authenticated
       allow create: if request.auth != null 
                    && request.resource.contentType.matches('image/.*')
                    && request.resource.size < 5 * 1024 * 1024;
-      
-      // Allow delete/update ONLY if the file metadata 'ownerId' matches the user's ID
       allow delete, update: if request.auth != null 
                             && resource.metadata.ownerId == request.auth.uid;
     }
