@@ -2,7 +2,7 @@ const express = require("express");
 const { body, header, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { supabase } = require("../utils/db");
-const { broadcast } = require("../utils/sse");
+const { broadcast, sseHandler } = require("../utils/sse");
 
 const router = express.Router();
 
@@ -21,6 +21,9 @@ const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
   if (data[idField] !== userId) return { error: "Unauthorized", code: 403 };
   return { success: true };
 };
+
+// --- SSE ---
+router.get("/stream", sseHandler);
 
 // --- AUTH ---
 
