@@ -3,6 +3,23 @@ const { body, header, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { supabase } = require("../utils/db");
 const { broadcast, sseHandler } = require("../utils/sse");
+const { db: firestore } = require("../utils/firebaseAdmin");
+
+const syncToFirestore = async (collection, action, data) => {
+  try {
+    if (!firestore) return;
+    const colRef = firestore.collection(collection);
+    if (action === 'create' || action === 'update') {
+      // Firestore set with merge: true ensures partial updates or creation
+      // Ensure ID is string
+      await colRef.doc(String(data.id)).set(data, { merge: true });
+    } else if (action === 'delete') {
+      await colRef.doc(String(data)).delete();
+    }
+  } catch (e) {
+    console.error(`Firestore Sync Error (${collection}):`, e.message);
+  }
+};
 
 const router = express.Router();
 
@@ -115,6 +132,7 @@ router.post("/announcements", async (req, res) => {
   const { data, error } = await supabase.from("announcements").insert(req.body).select().single();
   if (error) return res.status(500).send();
   broadcast("announcements", { action: "create", data });
+  syncToFirestore("announcements", "create", data);
   res.json(data);
 });
 router.delete("/announcements/:id", async (req, res) => {
@@ -123,6 +141,7 @@ router.delete("/announcements/:id", async (req, res) => {
 
   await supabase.from("announcements").delete().eq("id", req.params.id);
   broadcast("announcements", { action: "delete", id: req.params.id });
+  syncToFirestore("announcements", "delete", req.params.id);
   res.json({ message: "Deleted" });
 });
 
@@ -137,6 +156,7 @@ router.post("/chat", async (req, res) => {
   if (error) return res.status(500).send();
   // Broadcast specific type for this room
   broadcast(`chat-${req.body.room}`, { action: "create", data });
+  syncToFirestore("chat", "create", data);
   res.json(data);
 });
 router.delete("/chat/:id", async (req, res) => {
@@ -155,6 +175,7 @@ router.delete("/chat/:id", async (req, res) => {
 
   await supabase.from("chat").delete().eq("id", req.params.id);
   broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
+  syncToFirestore("chat", "delete", req.params.id);
   res.json({ message: "Deleted" });
 });
 
@@ -167,11 +188,12 @@ router.post("/ask", async (req, res) => {
   const { data, error } = await supabase.from("ask").insert(req.body).select().single();
   if (error) return res.status(500).send();
   broadcast(`ask-${req.body.department}`, { action: "create", data });
+  syncToFirestore("ask", "create", data);
   res.json(data);
 });
 router.delete("/ask/:id", async (req, res) => {
   const { data: q } = await supabase.from("ask").select("department, senderId").eq("id", req.params.id).single();
-  if (!q) return res.status(404).send();
+  if (!q) return res.json({ message: "Already deleted" });
   if (q.senderId !== req.headers["x-user-id"]) {
     // Check if user is admin
     const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
@@ -182,6 +204,7 @@ router.delete("/ask/:id", async (req, res) => {
 
   await supabase.from("ask").delete().eq("id", req.params.id);
   broadcast(`ask-${q.department}`, { action: "delete", id: req.params.id });
+  syncToFirestore("ask", "delete", req.params.id);
   res.json({ message: "Deleted" });
 });
 // Add Answer to Question
@@ -196,6 +219,7 @@ router.post("/ask/:id/answer", async (req, res) => {
 
   await supabase.from("ask").update({ answers: updatedAnswers }).eq("id", id);
   broadcast(`ask-${q.department}`, { action: "update", id, answers: updatedAnswers });
+  syncToFirestore("ask", "update", { id, answers: updatedAnswers });
   res.json({ success: true });
 });
 
@@ -206,6 +230,7 @@ const handleDeptDelete = async (table, req, res) => {
   if (c.error) return res.status(c.code).json(c);
   await supabase.from(table).delete().eq("id", req.params.id);
   broadcast(table, { action: "delete", id: req.params.id });
+  syncToFirestore(table, "delete", req.params.id);
   res.json({ message: "Deleted" });
 };
 
@@ -216,6 +241,7 @@ router.get("/events/:dept", async (req, res) => {
 router.post("/events", async (req, res) => {
   const { data } = await supabase.from("events").insert(req.body).select().single();
   broadcast("events", { action: "save", data });
+  syncToFirestore("events", "create", data);
   res.json(data);
 });
 router.delete("/events/:id", (req, res) => handleDeptDelete("events", req, res));
@@ -227,6 +253,7 @@ router.get("/schedules/:dept", async (req, res) => {
 router.post("/schedules", async (req, res) => {
   const { data } = await supabase.from("schedules").insert(req.body).select().single();
   broadcast("schedules", { action: "save", data });
+  syncToFirestore("schedules", "create", data);
   res.json(data);
 });
 router.delete("/schedules/:id", (req, res) => handleDeptDelete("schedules", req, res));

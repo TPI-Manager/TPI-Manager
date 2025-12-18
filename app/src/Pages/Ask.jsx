@@ -113,8 +113,12 @@ export default function AskPage({ student }) {
                     <div key={q.id} className="question-card card-base fade-in">
                         <div className="q-header">
                             <div className="q-meta">
-                                <span className="q-author"><i className="bi bi-person-circle"></i> {q.senderName}</span>
-                                <span className="q-time">{new Date(q.createdAt).toLocaleDateString()}</span>
+                                <div className="q-author-row">
+                                    <span className="q-author"><i className="bi bi-person-circle"></i> {q.senderName}</span>
+                                    {/* Role and ID if available */}
+                                    {q.senderId && <span className="q-id">ID: {q.senderId.substring(0, 6)}</span>}
+                                </div>
+                                <span className="q-time">{new Date(q.createdAt).toLocaleString()}</span>
                             </div>
                             {(isAdmin || q.senderId === userId) && (
                                 <button className="delete-icon-btn" onClick={() => setDeleteTarget(q.id)}>
@@ -124,9 +128,23 @@ export default function AskPage({ student }) {
                         </div>
                         <p className="q-text">{q.text}</p>
                         <div className="q-images">
-                            {q.images && q.images.map((img, i) => (
-                                <img key={i} src={img} alt="attachment" className="q-img-thumb" />
-                            ))}
+                            {q.images && q.images.map((url, i) => {
+                                const isVideo = url.match(/\.(mp4|webm|ogg)$/i);
+                                const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+
+                                if (isVideo) {
+                                    return <video key={i} src={url} controls className="q-media-thumb" />;
+                                } else if (isImage) {
+                                    return <img key={i} src={url} alt="attachment" className="q-img-thumb" />;
+                                } else {
+                                    const fileName = url.split('/').pop().split('?')[0];
+                                    return (
+                                        <a key={i} href={url} download={fileName} target="_blank" rel="noopener noreferrer" className="file-attachment">
+                                            <i className="bi bi-file-earmark-arrow-down-fill"></i> {fileName}
+                                        </a>
+                                    );
+                                }
+                            })}
                         </div>
 
                         <div className="answers-section">

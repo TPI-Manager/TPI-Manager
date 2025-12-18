@@ -1,47 +1,47 @@
 import { useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-// Uses VITE_ keys because this runs in the browser
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-let supabase;
-if (supabaseUrl && supabaseKey) {
-    supabase = createClient(supabaseUrl, supabaseKey);
-}
+import { db } from "../firebase";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 export function useRealtime(table, onUpdate, filterField = null, filterValue = null) {
     useEffect(() => {
-        if (!supabase) return;
+        let unsubscribe = () => { };
 
-        // Create channel
-        let channel = supabase.channel(`public:${table}:${filterValue || 'all'}`);
+        if (db) {
+            let q = collection(db, table);
 
-        const handleChange = (payload) => {
-            onUpdate(payload);
-        };
+            if (filterField && filterValue) {
+                q = query(q, where(filterField, "==", filterValue));
+            }
 
-        if (filterField && filterValue) {
-            // Filter by specific column (e.g., department or room)
-            channel = channel
-                .on(
-                    'postgres_changes',
-                    { event: '*', schema: 'public', table: table, filter: `${filterField}=eq.${filterValue}` },
-                    handleChange
-                );
-        } else {
-            // Listen to entire table
-            channel = channel
-                .on(
-                    'postgres_changes',
-                    { event: '*', schema: 'public', table: table },
-                    handleChange
-                );
+            console.log(`Subscribing to Firestore: ${table}`);
+
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    const docData = { id: change.doc.id, ...change.doc.data() };
+
+                    if (change.type === "added") {
+                        onUpdate({ eventType: 'INSERT', new: docData });
+                    }
+                    if (change.type === "modified") {
+                        onUpdate({ eventType: 'UPDATE', new: docData });
+                    }
+                    if (change.type === "removed") {
+                        onUpdate({ eventType: 'DELETE', old: { id: change.doc.id } });
+                    }
+                });
+            }, (error) => {
+                console.error("Firestore Error:", error);
+            });
         }
 
-        channel.subscribe();
+        // 🟢 Polling Fallback
+        const interval = setInterval(() => {
+            onUpdate({ eventType: 'POLL' });
+        }, 4000);
 
         return () => {
-            supabase.removeChannel(channel);
+            if (typeof unsubscribe === 'function') unsubscribe();
+            clearInterval(interval);
         };
     }, [table, filterField, filterValue, onUpdate]);
 }

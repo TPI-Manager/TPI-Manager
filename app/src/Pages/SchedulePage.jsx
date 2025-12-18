@@ -88,11 +88,17 @@ export default function SchedulePage({ student }) {
                         <h3>{s.title}</h3>
                         <p><i className="bi bi-clock"></i> {s.startTime} - {s.endTime}</p>
                         <p><i className="bi bi-calendar-week"></i> {Array.isArray(s.days) ? s.days.join(", ") : ""}</p>
-                        {isAdmin && (
-                            <button className="delete-action" onClick={() => setDeleteTarget(s.id)}>
-                                <i className="bi bi-trash"></i> Remove
-                            </button>
-                        )}
+                        <div className="card-footer">
+                            <div className="meta-info">
+                                <span className="meta-time">{new Date(s.createdAt).toLocaleString()}</span>
+                                <span className="meta-id">ID: {s.id.substring(0, 6)}</span>
+                            </div>
+                            {(isAdmin || s.creatorId === (student.id || student.studentId || student.employeeId || student.adminId)) && (
+                                <button className="delete-action" onClick={() => setDeleteTarget(s.id)}>
+                                    <i className="bi bi-trash"></i> Remove
+                                </button>
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>

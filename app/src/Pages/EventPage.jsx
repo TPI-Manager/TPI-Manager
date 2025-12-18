@@ -83,11 +83,17 @@ export default function EventPage({ student }) {
                     <div key={ev.id} className="card">
                         <h3>{ev.title}</h3>
                         <p>{ev.body}</p>
-                        {isAdmin && (
-                            <button className="delete-action" onClick={() => setDeleteTarget(ev.id)}>
-                                <i className="bi bi-trash"></i> Remove
-                            </button>
-                        )}
+                        <div className="card-footer">
+                            <div className="meta-info">
+                                <span className="meta-time">{new Date(ev.createdAt).toLocaleString()}</span>
+                                <span className="meta-id">ID: {ev.id.substring(0, 6)}</span>
+                            </div>
+                            {(isAdmin || ev.creatorId === (student.id || student.studentId || student.employeeId || student.adminId)) && (
+                                <button className="delete-action" onClick={() => setDeleteTarget(ev.id)}>
+                                    <i className="bi bi-trash"></i> Remove
+                                </button>
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>
