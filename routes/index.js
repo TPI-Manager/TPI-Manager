@@ -8,22 +8,21 @@ const { db: firestore } = require("../utils/firebaseAdmin");
 const syncToFirestore = async (collection, action, data) => {
   try {
     if (!firestore || typeof firestore.collection !== 'function') {
-      console.warn("Firestore not ready or disabled");
+      // console.warn("Firestore not ready or disabled");
       return;
     }
     const colRef = firestore.collection(collection);
-    // Explicitly convert IDs to strings to avoid "1024" vs 1024 mismatches
     const docId = String(data.id || data);
 
     if (action === 'create' || action === 'update') {
-      // Remove undefined fields, Firestore hates them
       const cleanData = JSON.parse(JSON.stringify(data));
       await colRef.doc(docId).set(cleanData, { merge: true });
     } else if (action === 'delete') {
       await colRef.doc(docId).delete();
     }
   } catch (e) {
-    console.error(`Firestore Sync Error (${collection}):`, e.message);
+    console.error(`Firestore Sync Error (${collection}):`, e);
+    // Do not throw, keep server alive
   }
 };
 
