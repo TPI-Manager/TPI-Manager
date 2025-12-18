@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { useSSE } from "../hooks/useSSE";
 import "../Styles/schedule.css";
 
 export default function SchedulePage({ student }) {
@@ -13,26 +14,26 @@ export default function SchedulePage({ student }) {
     const sem = student.semester || "1st";
     const shift = student.shift || "Morning";
 
-    useEffect(() => {
-        const fetchSchedule = async () => {
-            try {
-                const res = await axios.get(`${API_BASE}/api/schedules/${dept}/${sem}/${shift}`);
-                setSchedules(Array.isArray(res.data) ? res.data : []);
-            } catch {
-                setSchedules([]);
-            }
-        };
-        fetchSchedule();
-    }, [dept, sem, shift]);
-
-    const refresh = async () => {
+    const fetchSchedule = useCallback(async () => {
         try {
             const res = await axios.get(`${API_BASE}/api/schedules/${dept}/${sem}/${shift}`);
             setSchedules(Array.isArray(res.data) ? res.data : []);
         } catch {
             setSchedules([]);
         }
-    };
+    }, [dept, sem, shift]);
+
+    useEffect(() => {
+        fetchSchedule();
+    }, [fetchSchedule]);
+
+    useSSE(useCallback((msg) => {
+        if (msg.type === "schedules") {
+            fetchSchedule();
+        }
+    }, [fetchSchedule]));
+
+    const refresh = fetchSchedule;
 
     const save = async () => {
         try {

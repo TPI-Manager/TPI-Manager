@@ -13,10 +13,9 @@ export default defineConfig({
         target: 'http://localhost:5000',
         changeOrigin: true,
       },
-      '/socket.io': {
+      '/api/stream': {
         target: 'http://localhost:5000',
-        ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       }
     }
   }
