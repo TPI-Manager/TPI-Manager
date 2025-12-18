@@ -77,6 +77,7 @@ const seedAdmin = async () => {
 };
 
 app.get("/api/stream", sseHandler);
+app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 app.use("/api", apiRoutes);
 
 // Upload Endpoint
@@ -179,7 +180,7 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
 if (require.main === module) {
   server.listen(PORT, async () => {
     console.log(`\n🚀 Server running on port ${PORT}`);
-    // await seedAdmin(); // Commented out for testing Vercel deployment timeouts
+    await seedAdmin();
   });
 }
 

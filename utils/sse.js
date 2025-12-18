@@ -20,7 +20,9 @@ const sseHandler = (req, res) => {
   res.write(`data: ${JSON.stringify({ type: 'connected', id: clientId })}\n\n`);
 
   req.on('close', () => {
-    console.log(`${clientId} Connection closed`);
+    if (process.env.NODE_ENV !== 'test') {
+      console.log(`${clientId} Connection closed`);
+    }
     clients.delete(newClient);
   });
 };

@@ -1,0 +1,8 @@
+Found serviceAccountKey.json
+Private Key Type: string
+Private Key Length: 1708
+Starts with expected header? true
+Contains newline char? true
+Contains literal \n sequence? false
+Preview: -----BEGIN PRIVATE KEY-----
+MIIEvwIBADANBgkqhkiG9w

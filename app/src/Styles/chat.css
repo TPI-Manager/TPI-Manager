@@ -6,29 +6,27 @@
     box-shadow: var(--card-shadow);
     overflow: hidden;
     border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
 }
 
 .chat-header-info {
     padding: 16px;
-    background: var(--celadon);
-    color: var(--evergreen);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     font-weight: 600;
     text-align: center;
-    border-bottom: 1px solid var(--celadon-2);
-}
-
-[data-theme="dark"] .chat-header-info {
-    background: var(--dark-emerald);
-    color: var(--frosted-mint);
+    border-bottom: 1px solid var(--border-color);
+    font-family: var(--font-heading);
+    letter-spacing: 0.02em;
 }
 
 .messages-area {
     flex: 1;
-    padding: 20px;
+    padding: 24px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     background-color: var(--bg-primary);
 }
 
@@ -47,32 +45,34 @@
 
 .bubble {
     max-width: 70%;
-    padding: 12px 16px;
-    border-radius: 16px;
+    padding: 14px 18px;
+    border-radius: 18px;
     position: relative;
     font-size: 0.95rem;
-    line-height: 1.4;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .mine .bubble {
-    background-color: var(--sea-green);
-    color: white;
-    border-bottom-right-radius: 2px;
+    background-color: var(--accent-color);
+    color: var(--accent-text);
+    border-bottom-right-radius: 4px;
 }
 
 .theirs .bubble {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
-    border-bottom-left-radius: 2px;
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 4px;
 }
 
 .msg-header {
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     opacity: 0.8;
+    font-weight: 500;
 }
 
 .msg-text {
@@ -92,16 +92,17 @@
 .msg-images {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 5px;
+    gap: 6px;
+    margin-bottom: 6px;
 }
 
 .msg-images img {
     max-width: 150px;
     max-height: 150px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .delete-btn {
@@ -115,51 +116,65 @@
 }
 
 .input-area-wrapper {
-    background: var(--bg-secondary);
+    background: var(--bg-primary);
     border-top: 1px solid var(--border-color);
 }
 
 .image-preview {
     display: flex;
     gap: 10px;
-    padding: 10px;
+    padding: 12px;
     overflow-x: auto;
-    background: rgba(0,0,0,0.05);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .preview-thumb {
-    background: white;
-    padding: 5px;
-    border-radius: 5px;
+    background: var(--bg-primary);
+    padding: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.8rem;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    border: 1px solid var(--border-color);
 }
 
 .input-area {
-    padding: 16px;
+    padding: 20px;
     display: flex;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
 }
 
 .input-area input {
-    border-radius: 24px;
-    background-color: var(--bg-primary);
+    border-radius: 30px;
+    background-color: var(--bg-secondary);
     flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 14px 20px;
+}
+
+.input-area input:focus {
+    background-color: var(--bg-primary);
 }
 
 .input-area button {
-    border-radius: 24px;
-    padding: 0 24px;
+    border-radius: 30px;
+    padding: 0 28px;
 }
 
 .file-upload-btn {
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     display: flex;
     align-items: center;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.file-upload-btn:hover {
+    color: var(--accent-color);
 }
 
 .image-viewer-overlay {
@@ -173,6 +188,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(5px);
 }
 
 .image-viewer-content {
@@ -185,6 +201,7 @@
     max-width: 100%;
     max-height: 90vh;
     object-fit: contain;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .close-viewer {
@@ -195,8 +212,12 @@
     color: black;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
 }

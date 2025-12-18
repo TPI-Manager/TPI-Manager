@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-// import { socket } from "socket.io-client"; // Removed
+// Firestore imports replaced socket.io
 import { db } from "../firebase"; // Added
 import {
     collection, query, where, orderBy, limit, onSnapshot,

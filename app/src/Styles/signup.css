@@ -5,24 +5,22 @@
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    background: linear-gradient(135deg, var(--frosted-mint) 0%, var(--celadon) 100%);
+    background-color: var(--bg-secondary);
 }
 
-[data-theme="dark"] .signup-wrapper {
-    background: linear-gradient(135deg, var(--evergreen) 0%, var(--pine-teal) 100%);
-}
-
-/* Internal vs Public Card */
 .form-card,
 .internal-form-card {
-    background: var(--bg-secondary);
-    padding: 24px;
+    background: var(--bg-primary);
+    padding: 40px;
+    border-radius: var(--radius-lg);
     box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
     width: 100%;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .form-card {
-    max-width: 500px;
+    max-width: 520px;
 }
 
 .internal-form-card {
@@ -31,19 +29,22 @@
 
 .form-card h2,
 .internal-form-card h2 {
-    color: var(--accent-color);
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    font-family: var(--font-heading);
+    text-align: center;
+    font-size: 1.8rem;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 20px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 550px) {
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -53,20 +54,27 @@
     grid-column: 1 / -1;
 }
 
+.form-group {
+    margin-bottom: 4px;
+}
+
 .form-group label {
     display: block;
     font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-weight: 500;
+    margin-bottom: 8px;
     color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .role-group {
     display: flex;
     gap: 24px;
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
     padding: 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
 }
 
 .role-group label {
@@ -74,62 +82,55 @@
     align-items: center;
     gap: 10px;
     margin: 0;
+    cursor: pointer;
 }
 
-.role-group select {
+.role-group input[type="radio"] {
     width: auto;
+    accent-color: var(--accent-color);
 }
 
 .save-btn {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 32px;
     padding: 14px;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .status-msg {
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 8px;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
 .status-msg.ok {
-    background-color: var(--celadon);
-    color: var(--pine-teal);
+    background-color: rgba(58, 90, 64, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(58, 90, 64, 0.2);
 }
 
 .status-msg.err {
-    background-color: #fadbd8;
-    color: #c0392b;
+    background-color: rgba(185, 28, 28, 0.1);
+    color: var(--error);
+    border: 1px solid rgba(185, 28, 28, 0.2);
 }
 
-/* Footer reuse from login */
 .auth-footer {
-    margin-top: 24px;
+    margin-top: 32px;
     text-align: center;
     font-size: 0.9rem;
     color: var(--text-secondary);
     border-top: 1px solid var(--border-color);
-    padding-top: 20px;
-}
-
-.auth-footer p {
-    margin-bottom: 5px;
+    padding-top: 24px;
 }
 
 .link-btn {
     background: none;
-    color: var(--accent-color);
-    padding: 0;
-    font-weight: 700;
+    font-weight: 500;
     text-decoration: underline;
-    font-size: 0.95rem;
-}
-
-.link-btn:hover {
-    background: none;
-    color: var(--accent-hover);
-    transform: none;
+    padding: 0;
+    margin-left: 6px;
 }

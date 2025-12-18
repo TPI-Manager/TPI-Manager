@@ -20,6 +20,20 @@ try {
 }
 
 if (serviceAccount) {
+    // Fix common formatting issues in private key
+    if (serviceAccount.private_key) {
+        let pk = serviceAccount.private_key;
+
+        // Fix missing spaces in headers/footers (common env var issue)
+        pk = pk.replace(/-----BEGINPRIVATEKEY-----/g, '-----BEGIN PRIVATE KEY-----');
+        pk = pk.replace(/-----ENDPRIVATEKEY-----/g, '-----END PRIVATE KEY-----');
+
+        // Fix escaped newlines
+        pk = pk.replace(/\\n/g, '\n');
+
+        serviceAccount.private_key = pk;
+    }
+
     if (!admin.apps.length) {
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),

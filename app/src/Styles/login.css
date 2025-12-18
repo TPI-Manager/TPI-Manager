@@ -1,41 +1,40 @@
 .login-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--frosted-mint) 0%, var(--celadon) 100%);
   padding: 20px;
-}
-
-[data-theme="dark"] .login-wrapper {
-  background: linear-gradient(135deg, var(--evergreen) 0%, var(--pine-teal) 100%);
+  background-color: var(--bg-secondary);
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
-  background: var(--bg-secondary);
-  padding: 48px 40px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-out;
+  padding: 48px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .brand-header h1 {
-  color: var(--accent-color);
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 8px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  color: var(--text-primary);
 }
 
 .brand-header p {
   color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .input-group {
@@ -45,38 +44,16 @@
 .input-group label {
   display: block;
   margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.error-msg {
-  color: #e74c3c;
-  background: #fdedec;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-  font-size: 0.9rem;
-  border: 1px solid #fadbd8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
 .primary-btn {
   width: 100%;
+  margin-top: 12px;
+  font-size: 1rem;
   padding: 14px;
-  font-size: 1.1rem;
-  margin-top: 8px;
-  border-radius: 10px;
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none;
 }
 
 .auth-footer {
@@ -84,33 +61,35 @@ button:disabled {
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-secondary);
-  border-top: 1px solid var(--border-color);
-  padding-top: 24px;
-}
-
-.auth-footer p {
-  margin-bottom: 8px;
 }
 
 .link-btn {
   background: none;
-  color: var(--accent-color);
+  border: none;
+  color: var(--text-primary);
+  text-decoration: underline;
   padding: 0;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 0.95rem;
-  display: inline;
-  box-shadow: none;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .link-btn:hover {
   background: none;
-  color: var(--accent-hover);
+  color: var(--text-secondary);
+  box-shadow: none;
   transform: none;
-  text-decoration: underline;
 }
 
-/* Add Icons to inputs in Login (Optional UX improvement) */
-.input-group input {
-  padding-left: 16px;
+.error-msg {
+  background-color: rgba(185, 28, 28, 0.1);
+  /* Error color with opacity */
+  color: var(--error);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(185, 28, 28, 0.2);
+  text-align: center;
 }
