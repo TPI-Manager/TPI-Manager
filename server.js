@@ -114,16 +114,38 @@ socketManager(io);
 if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
   const path = require("path");
   const fs = require("fs");
-  const distPath = path.join(__dirname, "app", "dist");
+
+  const potentialPaths = [
+    path.join(__dirname, "app", "dist"),
+    path.join(process.cwd(), "app", "dist"),
+    path.join(__dirname, "dist"),
+    path.join(process.cwd(), "dist")
+  ];
+
+  const distPath = potentialPaths.find(p => fs.existsSync(p)) || potentialPaths[0];
 
   app.use(express.static(distPath));
 
   app.get("/api/health", (req, res) => {
+    const listDir = (dir, depth = 0) => {
+      if (depth > 2 || !fs.existsSync(dir)) return [];
+      try {
+        return fs.readdirSync(dir).map(f => {
+          const p = path.join(dir, f);
+          const isDir = fs.statSync(p).isDirectory();
+          return isDir ? { name: f, children: listDir(p, depth + 1) } : f;
+        });
+      } catch (e) { return [e.message]; }
+    };
+
     res.json({
       status: "ok",
-      env: process.env.NODE_ENV,
+      cwd: process.cwd(),
+      dirname: __dirname,
+      distPath,
       distExists: fs.existsSync(distPath),
-      files: fs.existsSync(distPath) ? fs.readdirSync(distPath).slice(0, 5) : []
+      structure: listDir(process.cwd()),
+      potentialPaths
     });
   });
 
