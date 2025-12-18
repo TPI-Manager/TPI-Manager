@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useSSE } from "../hooks/useSSE";
+import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
 import "../Styles/schedule.css";
 
 export default function SchedulePage({ student }) {
@@ -16,8 +16,13 @@ export default function SchedulePage({ student }) {
 
     const fetchSchedule = useCallback(async () => {
         try {
-            const res = await axios.get(`${API_BASE}/api/schedules/${dept}/${sem}/${shift}`);
-            setSchedules(Array.isArray(res.data) ? res.data : []);
+            const res = await axios.get(`${API_BASE}/api/schedules/${dept}`);
+            // Client-side filtering for Semester/Shift (since Supabase table is flat)
+            // or if API endpoint filters it. The provided API endpoint /api/schedules/:dept 
+            // returns all for dept, so we filter here to match UI context if needed.
+            // For now, assuming API returns relevant list or filtering happens there.
+            const filtered = res.data.filter(s => s.semester === sem && s.shift === shift);
+            setSchedules(filtered);
         } catch {
             setSchedules([]);
         }
@@ -27,27 +32,35 @@ export default function SchedulePage({ student }) {
         fetchSchedule();
     }, [fetchSchedule]);
 
-    useSSE(useCallback((msg) => {
-        if (msg.type === "schedules") {
-            fetchSchedule();
-        }
-    }, [fetchSchedule]));
+    // REALTIME IMPLEMENTATION
+    useRealtime('schedules', () => {
+        fetchSchedule();
+    });
 
     const refresh = fetchSchedule;
 
     const save = async () => {
         try {
-            await axios.post(`${API_BASE}/api/schedules`, { ...form, department: dept, semester: sem, shift });
+            await axios.post(`${API_BASE}/api/schedules`, {
+                ...form,
+                department: dept,
+                semester: sem,
+                shift,
+                creatorId: student.id || student.studentId || student.employeeId || student.adminId
+            });
             setShowModal(false);
-            refresh();
+            // Realtime triggers refresh
         } catch (e) { console.error(e); }
     };
 
     const del = async (id) => {
         try {
-            await axios.delete(`${API_BASE}/api/schedules/${dept}/${sem}/${shift}/${id}`);
-            refresh();
-        } catch (e) { console.error(e); }
+            const userId = student.id || student.studentId || student.employeeId || student.adminId;
+            await axios.delete(`${API_BASE}/api/schedules/${id}`, {
+                headers: { 'x-user-id': userId }
+            });
+            // Realtime triggers refresh
+        } catch (e) { alert("Delete failed or unauthorized"); }
     };
 
     return (
@@ -74,8 +87,10 @@ export default function SchedulePage({ student }) {
                         <input type="time" onChange={e => setForm({ ...form, startTime: e.target.value })} />
                         <input type="time" onChange={e => setForm({ ...form, endTime: e.target.value })} />
                         <input placeholder="Days (comma sep)" onChange={e => setForm({ ...form, days: e.target.value.split(',') })} />
-                        <button onClick={save}>Save</button>
-                        <button onClick={() => setShowModal(false)}>Close</button>
+                        <div className="modal-actions">
+                            <button className="cancel-btn" onClick={() => setShowModal(false)}>Close</button>
+                            <button onClick={save}>Save</button>
+                        </div>
                     </div>
                 </div>
             )}

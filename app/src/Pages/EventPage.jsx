@@ -1,56 +1,55 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useSSE } from "../hooks/useSSE";
+import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
 import "../Styles/event.css";
 
 export default function EventPage({ student }) {
     const [events, setEvents] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [form, setForm] = useState({ title: "", body: "", startTime: "", endTime: "" });
+    const [form, setForm] = useState({ title: "", body: "" });
 
     const isAdmin = student.role === "admin" || student.role === "teacher";
     const dept = student.department || "CST";
-    const sem = student.semester || "1st";
-    const shift = student.shift || "Morning";
 
+    // API fetches events by dept
     const fetchEvents = useCallback(async () => {
         try {
-            const res = await axios.get(`${API_BASE}/api/events/${dept}/${sem}/${shift}`);
+            const res = await axios.get(`${API_BASE}/api/events/${dept}`);
             setEvents(Array.isArray(res.data) ? res.data : []);
         } catch {
             setEvents([]);
         }
-    }, [dept, sem, shift]);
+    }, [dept]);
 
     useEffect(() => {
         fetchEvents();
     }, [fetchEvents]);
 
-    useSSE(useCallback((msg) => {
-        if (msg.type === "events") {
-            // Optimally we could check if the event belongs to this dept/sem/shift
-            // But since msg.data has the full object, we can filter or just refetch.
-            // Refetch is safer and simple.
-            fetchEvents();
-        }
-    }, [fetchEvents]));
-
-    const refresh = fetchEvents;
+    // REALTIME
+    useRealtime('events', () => {
+        fetchEvents();
+    });
 
     const save = async () => {
         try {
-            await axios.post(`${API_BASE}/api/events`, { ...form, department: dept, semester: sem, shift });
+            const userId = student.id || student.studentId || student.employeeId || student.adminId;
+            await axios.post(`${API_BASE}/api/events`, {
+                ...form,
+                department: dept,
+                creatorId: userId
+            });
             setShowModal(false);
-            refresh();
         } catch (e) { console.error(e); }
     };
 
     const del = async (id) => {
         try {
-            await axios.delete(`${API_BASE}/api/events/${dept}/${sem}/${shift}/${id}`);
-            refresh();
-        } catch (e) { console.error(e); }
+            const userId = student.id || student.studentId || student.employeeId || student.adminId;
+            await axios.delete(`${API_BASE}/api/events/${id}`, {
+                headers: { 'x-user-id': userId }
+            });
+        } catch (e) { alert("Delete failed"); }
     };
 
     return (
@@ -72,10 +71,13 @@ export default function EventPage({ student }) {
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal">
+                        <h3>New Event</h3>
                         <input placeholder="Title" onChange={e => setForm({ ...form, title: e.target.value })} />
                         <input placeholder="Details" onChange={e => setForm({ ...form, body: e.target.value })} />
-                        <button onClick={save}>Save</button>
-                        <button onClick={() => setShowModal(false)}>Close</button>
+                        <div className="modal-actions">
+                            <button className="cancel-btn" onClick={() => setShowModal(false)}>Close</button>
+                            <button onClick={save}>Save</button>
+                        </div>
                     </div>
                 </div>
             )}

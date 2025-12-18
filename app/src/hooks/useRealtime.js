@@ -1,29 +1,40 @@
 import { useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../config";
+// Uses VITE_ keys because this runs in the browser
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabase;
+if (supabaseUrl && supabaseKey) {
+    supabase = createClient(supabaseUrl, supabaseKey);
+}
 
 export function useRealtime(table, onUpdate, filterField = null, filterValue = null) {
     useEffect(() => {
-        // Basic channel setup
-        let channel = supabase.channel(`public:${table}`);
+        if (!supabase) return;
+
+        // Create channel
+        let channel = supabase.channel(`public:${table}:${filterValue || 'all'}`);
+
+        const handleChange = (payload) => {
+            onUpdate(payload);
+        };
 
         if (filterField && filterValue) {
-            // Filtered subscription (e.g., chat room)
+            // Filter by specific column (e.g., department or room)
             channel = channel
                 .on(
                     'postgres_changes',
                     { event: '*', schema: 'public', table: table, filter: `${filterField}=eq.${filterValue}` },
-                    (payload) => onUpdate(payload)
+                    handleChange
                 );
         } else {
-            // Global subscription (e.g., announcements)
+            // Listen to entire table
             channel = channel
                 .on(
                     'postgres_changes',
                     { event: '*', schema: 'public', table: table },
-                    (payload) => onUpdate(payload)
+                    handleChange
                 );
         }
 

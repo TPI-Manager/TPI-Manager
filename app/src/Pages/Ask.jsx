@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useSSE } from "../hooks/useSSE";
+import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
 import "../Styles/ask.css";
 
 export default function AskPage({ student }) {
@@ -21,15 +21,11 @@ export default function AskPage({ student }) {
 
     useEffect(() => { fetchQs(); }, [fetchQs]);
 
-    useSSE(useCallback((msg) => {
-        if (msg.type === `ask-${department}`) {
-            if (msg.data.action === "create") setQuestions(p => [msg.data.data, ...p]);
-            if (msg.data.action === "delete") setQuestions(p => p.filter(q => q.id !== msg.data.id));
-            if (msg.data.action === "update") {
-                setQuestions(p => p.map(q => q.id === msg.data.id ? { ...q, answers: msg.data.answers } : q));
-            }
-        }
-    }, [department]));
+    // REALTIME: Listen to changes in 'ask' table for this department
+    useRealtime('ask', (payload) => {
+        // Simple and robust: Refetch list on any change (Insert, Update Answer, Delete)
+        fetchQs();
+    }, 'department', department);
 
     const upload = async (files) => {
         const fd = new FormData();
@@ -64,30 +60,37 @@ export default function AskPage({ student }) {
     return (
         <div className="ask-page">
             <div className="ask-input-section">
-                <textarea value={text} onChange={e => setText(e.target.value)} className="ask-textarea" />
-                <input type="file" multiple onChange={e => setQImages(Array.from(e.target.files))} />
-                <button onClick={postQ} className="post-btn">Post</button>
+                <textarea value={text} onChange={e => setText(e.target.value)} className="ask-textarea" placeholder="Ask a question..." />
+                <div className="file-controls">
+                    <input type="file" multiple onChange={e => setQImages(Array.from(e.target.files))} />
+                    <button onClick={postQ} className="post-btn">Post</button>
+                </div>
             </div>
             <div className="questions-list">
                 {questions.map(q => (
                     <div key={q.id} className="question-card">
                         <div className="q-header">
-                            <span>{q.senderName}</span>
-                            {q.senderId === userId && <button onClick={() => deleteQ(q.id)} style={{ color: 'red' }}>Del</button>}
+                            <span className="q-author">{q.senderName}</span>
+                            {q.senderId === userId && <button onClick={() => deleteQ(q.id)} style={{ color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}>Delete</button>}
                         </div>
                         <p>{q.text}</p>
                         <div className="q-images">{q.images && q.images.map((img, i) => <img key={i} src={img} width="100" />)}</div>
-                        <div className="answers">
+
+                        <div className="answers-section">
                             {q.answers && q.answers.map((a, i) => (
                                 <div key={i} className="answer-item"><b>{a.senderName}:</b> {a.text}</div>
                             ))}
                         </div>
+
                         {activeQ === q.id ? (
                             <div className="reply-box">
-                                <input value={reply} onChange={e => setReply(e.target.value)} />
-                                <button onClick={() => postAns(q.id)}>Reply</button>
+                                <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Type a reply..." />
+                                <div className="reply-controls">
+                                    <button onClick={() => postAns(q.id)}>Reply</button>
+                                    <button onClick={() => setActiveQ(null)} className="cancel-btn">Cancel</button>
+                                </div>
                             </div>
-                        ) : <button onClick={() => setActiveQ(q.id)}>Answer</button>}
+                        ) : <button onClick={() => setActiveQ(q.id)} className="reply-btn">Reply</button>}
                     </div>
                 ))}
             </div>
