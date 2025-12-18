@@ -5,22 +5,30 @@ const fs = require("fs");
 let serviceAccount;
 
 try {
-    // Look for serviceAccountKey.json in root
-    const serviceAccountPath = path.join(__dirname, "../serviceAccountKey.json");
-    if (fs.existsSync(serviceAccountPath)) {
-        serviceAccount = require(serviceAccountPath);
+    // Method 1: Environment Variable (Recommended for production/Vercel)
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
     } else {
-        console.warn("⚠️  serviceAccountKey.json not found. Firebase will not work until configured.");
+        // Method 2: Local File (Development only)
+        const serviceAccountPath = path.join(__dirname, "../serviceAccountKey.json");
+        if (fs.existsSync(serviceAccountPath)) {
+            serviceAccount = require(serviceAccountPath);
+        }
     }
 } catch (error) {
-    console.error("Error loading service account:", error);
+    console.error("❌ Error loading service account:", error.message);
 }
 
 if (serviceAccount) {
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        storageBucket: `${serviceAccount.project_id}.appspot.com` // Default bucket inference
-    });
+    if (!admin.apps.length) {
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${serviceAccount.project_id}.appspot.com`
+        });
+        console.log("✅ Firebase Admin initialized.");
+    }
+} else {
+    console.error("🛑 CRITICAL: Firebase Service Account missing! Set FIREBASE_SERVICE_ACCOUNT env var or add serviceAccountKey.json");
 }
 
 const db = serviceAccount ? admin.firestore() : null;
