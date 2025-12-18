@@ -160,6 +160,19 @@
     padding: 8px;
     outline: none;
     box-shadow: none;
+    color: inherit;
+}
+
+.mine .bubble {
+    background: #000; /* Strict Black */
+    color: #fff;       /* Strict White */
+    border-bottom-right-radius: 4px;
+}
+
+.theirs .bubble {
+    background: #f0f0f0;
+    color: #111;
+    border-bottom-left-radius: 4px;
 }
 
 .attach-btn,

@@ -158,7 +158,10 @@ router.get("/chat", async (req, res) => {
 });
 router.post("/chat", async (req, res) => {
   const { data, error } = await supabase.from("chat").insert(req.body).select().single();
-  if (error) return res.status(500).send();
+  if (error) {
+    console.error("Supabase Insert Error (Chat):", error);
+    return res.status(500).json({ error: error.message });
+  }
   // Broadcast specific type for this room
   broadcast(`chat-${req.body.room}`, { action: "create", data });
   syncToFirestore("chat", "create", data);
