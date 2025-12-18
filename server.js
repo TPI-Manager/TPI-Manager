@@ -122,7 +122,27 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
     path.join(process.cwd(), "dist")
   ];
 
-  const distPath = potentialPaths.find(p => fs.existsSync(p)) || potentialPaths[0];
+  let distPath = potentialPaths.find(p => fs.existsSync(path.join(p, "index.html")));
+
+  // Search fallback
+  if (!distPath) {
+    const findIndex = (dir, depth = 0) => {
+      if (depth > 3 || !fs.existsSync(dir)) return null;
+      try {
+        const files = fs.readdirSync(dir);
+        if (files.includes("index.html") && dir.toLowerCase().includes("dist")) return dir;
+        for (const f of files) {
+          const p = path.join(dir, f);
+          if (fs.statSync(p).isDirectory() && !f.startsWith(".")) {
+            const found = findIndex(p, depth + 1);
+            if (found) return found;
+          }
+        }
+      } catch (e) { }
+      return null;
+    };
+    distPath = findIndex(process.cwd()) || findIndex(__dirname) || potentialPaths[0];
+  }
 
   app.use(express.static(distPath));
 
@@ -143,7 +163,7 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
       cwd: process.cwd(),
       dirname: __dirname,
       distPath,
-      distExists: fs.existsSync(distPath),
+      distExists: fs.existsSync(path.join(distPath, "index.html")),
       structure: listDir(process.cwd()),
       potentialPaths
     });
@@ -154,7 +174,12 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
     if (fs.existsSync(indexPath)) {
       res.sendFile(indexPath);
     } else {
-      res.status(404).send(`Frontend not found at ${indexPath}. Base dir: ${__dirname}`);
+      res.status(404).json({
+        error: "Frontend not found",
+        path: indexPath,
+        cwd: process.cwd(),
+        dirname: __dirname
+      });
     }
   });
 }

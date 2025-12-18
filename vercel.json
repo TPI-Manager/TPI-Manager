@@ -1,17 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "./app/dist/**",
-          "./app/dist/**/*"
-        ]
-      }
+  "functions": {
+    "server.js": {
+      "includeFiles": "app/dist/**"
     }
-  ],
+  },
   "rewrites": [
     {
       "source": "/(api|socket.io)(.*)",
