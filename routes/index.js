@@ -117,7 +117,7 @@ router.post("/chat", async (req, res) => {
       department: b.department || null,
       semester: b.semester || null,
       shift: b.shift || null,
-      images: Array.isArray(b.images) && b.images.length > 0 ? b.images : null
+      images: b.images || null
     };
     const { data, error } = await supabase.from("chat").insert([payload]).select().single();
     if (error) throw error;

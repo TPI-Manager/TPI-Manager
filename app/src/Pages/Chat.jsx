@@ -8,8 +8,8 @@ import "../Styles/chat.css";
 
 export default function ChatPage({ student }) {
     const department = student.department || "CST";
-    const semester = student.semester || "Staff";
-    const shift = student.shift || "General";
+    const semester = student.semester || "1st";
+    const shift = student.shift || "Morning";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
     const room = `department-${department}-${semester}-${shift}`;
     const isAdmin = student.role === "admin";
@@ -44,9 +44,9 @@ export default function ChatPage({ student }) {
 
     useRealtime('chat', (payload) => {
         if (payload.eventType === 'INSERT') {
+            const real = payload.new;
+            if (real.room !== room) return;
             setMessages(prev => {
-                const real = payload.new;
-                if (real.room !== room) return prev;
                 const filtered = prev.filter(m => !(m.isTemp && m.text === real.text && m.senderId === real.senderId));
                 if (filtered.some(m => m.id === real.id)) return filtered;
                 return [...filtered, real];
@@ -78,32 +78,36 @@ export default function ChatPage({ student }) {
     };
 
     const sendMessage = async () => {
-        if (!text.trim() && selectedFiles.length === 0) return;
+        const trimmed = text.trim();
+        if (!trimmed && selectedFiles.length === 0) return;
+
         const tempId = Date.now();
         const tempMsg = {
             id: tempId,
-            text,
+            text: trimmed,
             senderId: userId,
             senderName: student.fullName,
-            role: student.role,
             createdAt: new Date().toISOString(),
             images: selectedFiles.map(f => URL.createObjectURL(f)),
             isTemp: true
         };
+
         setMessages(prev => [...prev, tempMsg]);
         setText("");
         const filesToUpload = [...selectedFiles];
         setSelectedFiles([]);
+
         try {
             const media = await uploadFiles(filesToUpload);
             await axios.post(`${API_BASE}/api/chat`, {
-                text: tempMsg.text,
+                text: trimmed || null,
                 senderId: userId,
                 senderName: student.fullName,
                 room,
-                department, semester, shift,
-                images: media,
-                role: student.role
+                department,
+                semester,
+                shift,
+                images: media.length > 0 ? media : null
             });
         } catch (error) {
             setMessages(prev => prev.filter(m => m.id !== tempId));
@@ -113,21 +117,24 @@ export default function ChatPage({ student }) {
 
     const confirmDelete = async () => {
         if (!deleteTarget) return;
-        const targetMsg = messages.find(m => m.id === deleteTarget);
-        if (targetMsg?.isTemp) {
+        const isTemp = messages.find(m => m.id === deleteTarget)?.isTemp;
+        if (isTemp) {
             setMessages(prev => prev.filter(m => m.id !== deleteTarget));
             setDeleteTarget(null);
             return;
         }
-        const originalMessages = [...messages];
+
+        const original = [...messages];
         setMessages(prev => prev.filter(m => m.id !== deleteTarget));
+        const idToDelete = deleteTarget;
         setDeleteTarget(null);
+
         try {
-            await axios.delete(`${API_BASE}/api/chat/${deleteTarget}`, {
+            await axios.delete(`${API_BASE}/api/chat/${idToDelete}`, {
                 headers: { 'x-user-id': userId }
             });
         } catch (error) {
-            setMessages(originalMessages);
+            setMessages(original);
             toast.error("Delete failed");
         }
     };
@@ -144,7 +151,7 @@ export default function ChatPage({ student }) {
                         <div key={m.id} className={`message-row ${isMe ? "mine" : "theirs"}`}>
                             {!isMe && <div className="avatar-small">{m.senderName?.charAt(0)}</div>}
                             <div className="bubble">
-                                {!isMe && <div className="msg-sender">{m.senderName} <span className="msg-role">{m.role || ""}</span></div>}
+                                {!isMe && <div className="msg-sender">{m.senderName}</div>}
                                 {m.images?.length > 0 && (
                                     <div className="msg-gallery">
                                         {m.images.map((url, idx) => (
