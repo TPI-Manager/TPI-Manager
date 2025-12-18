@@ -1,5 +1,5 @@
 const express = require("express");
-const { body, header, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { supabase } = require("../utils/db");
 const { broadcast, sseHandler } = require("../utils/sse");
@@ -7,12 +7,9 @@ const { db: firestore } = require("../utils/firebaseAdmin");
 
 const syncToFirestore = async (collection, action, data) => {
   try {
-    if (!firestore || typeof firestore.collection !== 'function') {
-      // console.warn("Firestore not ready or disabled");
-      return;
-    }
+    if (!firestore || typeof firestore.collection !== 'function' || !data) return;
     const colRef = firestore.collection(collection);
-    const docId = String(data.id || data);
+    const docId = String(data.id || (typeof data === 'string' ? data : Date.now()));
 
     if (action === 'create' || action === 'update') {
       const cleanData = JSON.parse(JSON.stringify(data));
@@ -21,8 +18,7 @@ const syncToFirestore = async (collection, action, data) => {
       await colRef.doc(docId).delete();
     }
   } catch (e) {
-    console.error(`Firestore Sync Error (${collection}):`, e);
-    // Do not throw, keep server alive
+    console.error(`Sync Error:`, e.message);
   }
 };
 
@@ -38,20 +34,15 @@ const validate = (validations) => {
 };
 
 const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
-  // Check if user is admin
   const { data: user } = await supabase.from("users").select("role").eq("id", userId).single();
   if (user && user.role === 'admin') return { success: true };
-
   const { data, error } = await supabase.from(table).select(idField).eq('id', id).single();
   if (error || !data) return { error: "Not found", code: 404 };
   if (data[idField] !== userId) return { error: "Unauthorized", code: 403 };
   return { success: true };
 };
 
-// --- SSE ---
 router.get("/stream", sseHandler);
-
-// --- AUTH ---
 
 router.post("/auth/login", [
   body("userId").trim().notEmpty(),
@@ -60,12 +51,9 @@ router.post("/auth/login", [
   try {
     const { userId, password } = req.body;
     const { data: user, error } = await supabase.from("users").select("*").eq("id", userId).single();
-
     if (error || !user) return res.status(401).json({ error: "Invalid credentials" });
-
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ error: "Invalid credentials" });
-
     const { password: _, ...safeUser } = user;
     res.json(safeUser);
   } catch (error) { res.status(500).json({ error: "Server Error" }); }
@@ -77,193 +65,189 @@ router.post("/auth/create", [
 ], validate([]), async (req, res) => {
   try {
     const d = req.body;
-    // Check duplicate
     const { data: exists } = await supabase.from("users").select("id").eq("id", d.id).single();
     if (exists) return res.json({ message: "duplicate" });
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(d.password, salt);
-
     const newUser = {
       id: d.id,
       password: hashedPassword,
-      "fullName": `${d.firstName || ""} ${d.lastName || ""}`.trim(),
+      fullName: `${d.firstName || ""} ${d.lastName || ""}`.trim(),
       role: d.userType,
       department: d.department,
       semester: d.semester,
       shift: d.shift,
-      // Map roles
-      "studentId": (d.userType === 'student') ? d.id : null,
-      "employeeId": (d.userType === 'teacher') ? d.id : null,
-      "adminId": (d.userType === 'admin') ? d.id : null
+      studentId: (d.userType === 'student') ? d.id : null,
+      employeeId: (d.userType === 'teacher') ? d.id : null,
+      adminId: (d.userType === 'admin') ? d.id : null
     };
-
     const { error } = await supabase.from("users").insert(newUser);
     if (error) throw error;
-
     const { password: _, ...safeUser } = newUser;
     res.json({ message: "Saved", data: safeUser });
-  } catch (e) { console.error(e); res.status(500).json({ error: "Error" }); }
+  } catch (e) { res.status(500).json({ error: "Error" }); }
 });
 
 router.put("/auth/update", async (req, res) => {
   try {
     const { currentId, newPassword, newId } = req.body;
-
     const updates = {};
-    if (newPassword) {
-      updates.password = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
-    }
+    if (newPassword) updates.password = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
     if (newId && newId !== currentId) {
       updates.id = newId;
-      updates.adminId = newId; // assuming only admin uses this
+      updates.adminId = newId;
     }
-
     const { data, error } = await supabase.from("users").update(updates).eq("id", currentId).select().single();
-
-    if (error) return res.status(400).json({ error: "Update failed (ID might exist)" });
-
+    if (error) return res.status(400).json({ error: "Update failed" });
     const { password: _, ...safeUser } = data;
     res.json({ message: "Updated", user: safeUser });
   } catch (e) { res.status(500).json({ error: "Error" }); }
 });
 
-// --- ANNOUNCEMENTS ---
 router.get("/announcements", async (req, res) => {
   const { data } = await supabase.from("announcements").select("*").order("createdAt", { ascending: false });
   res.json(data || []);
 });
+
 router.post("/announcements", async (req, res) => {
-  const { data, error } = await supabase.from("announcements").insert(req.body).select().single();
-  if (error) return res.status(500).send();
-  broadcast("announcements", { action: "create", data });
-  syncToFirestore("announcements", "create", data);
-  res.json(data);
+  try {
+    const { data, error } = await supabase.from("announcements").insert(req.body).select().single();
+    if (error) throw error;
+    broadcast("announcements", { action: "create", data });
+    syncToFirestore("announcements", "create", data);
+    res.json(data);
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
 router.delete("/announcements/:id", async (req, res) => {
-  const c = await verifyOwnership("announcements", req.params.id, req.headers["x-user-id"], "creatorId");
-  if (c.error) return res.status(c.code).json(c);
-
-  await supabase.from("announcements").delete().eq("id", req.params.id);
-  broadcast("announcements", { action: "delete", id: req.params.id });
-  syncToFirestore("announcements", "delete", req.params.id);
-  res.json({ message: "Deleted" });
+  try {
+    const c = await verifyOwnership("announcements", req.params.id, req.headers["x-user-id"], "creatorId");
+    if (c.error) return res.status(c.code).json(c);
+    await supabase.from("announcements").delete().eq("id", req.params.id);
+    broadcast("announcements", { action: "delete", id: req.params.id });
+    syncToFirestore("announcements", "delete", req.params.id);
+    res.json({ message: "Deleted" });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// --- CHAT (Now via API + SSE) ---
 router.get("/chat", async (req, res) => {
   const { room } = req.query;
   const { data } = await supabase.from("chat").select("*").eq("room", room).order("createdAt", { ascending: true });
   res.json(data || []);
 });
+
 router.post("/chat", async (req, res) => {
-  const { data, error } = await supabase.from("chat").insert(req.body).select().single();
-  if (error) {
-    console.error("Supabase Insert Error (Chat):", error);
-    return res.status(500).json({ error: error.message });
+  try {
+    const { data, error } = await supabase.from("chat").insert([req.body]).select().single();
+    if (error) throw error;
+    broadcast(`chat-${req.body.room}`, { action: "create", data });
+    syncToFirestore("chat", "create", data);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  // Broadcast specific type for this room
-  broadcast(`chat-${req.body.room}`, { action: "create", data });
-  syncToFirestore("chat", "create", data);
-  res.json(data);
 });
+
 router.delete("/chat/:id", async (req, res) => {
-  // 1. Get room to broadcast deletion
-  const { data: msg } = await supabase.from("chat").select("room, senderId").eq("id", req.params.id).single();
-  if (!msg) return res.status(404).send();
-
-  // Ownership check
-  if (msg.senderId !== req.headers["x-user-id"]) {
-    // Check if user is admin
-    const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
-    if (!user || user.role !== 'admin') {
-      return res.status(403).json({ error: "Unauthorized" });
+  try {
+    const { data: msg } = await supabase.from("chat").select("room, senderId").eq("id", req.params.id).single();
+    if (!msg) return res.status(404).json({ error: "Not found" });
+    if (msg.senderId !== req.headers["x-user-id"]) {
+      const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
+      if (!user || user.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
-  }
-
-  await supabase.from("chat").delete().eq("id", req.params.id);
-  broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
-  syncToFirestore("chat", "delete", req.params.id);
-  res.json({ message: "Deleted" });
+    await supabase.from("chat").delete().eq("id", req.params.id);
+    broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
+    syncToFirestore("chat", "delete", req.params.id);
+    res.json({ message: "Deleted" });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// --- ASK (Q&A) ---
 router.get("/ask/:dept", async (req, res) => {
   const { data } = await supabase.from("ask").select("*").eq("department", req.params.dept).order("createdAt", { ascending: false });
   res.json(data || []);
 });
+
 router.post("/ask", async (req, res) => {
-  const { data, error } = await supabase.from("ask").insert(req.body).select().single();
-  if (error) return res.status(500).send();
-  broadcast(`ask-${req.body.department}`, { action: "create", data });
-  syncToFirestore("ask", "create", data);
-  res.json(data);
+  try {
+    const { data, error } = await supabase.from("ask").insert(req.body).select().single();
+    if (error) throw error;
+    broadcast(`ask-${req.body.department}`, { action: "create", data });
+    syncToFirestore("ask", "create", data);
+    res.json(data);
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
 router.delete("/ask/:id", async (req, res) => {
-  const { data: q } = await supabase.from("ask").select("department, senderId").eq("id", req.params.id).single();
-  if (!q) return res.json({ message: "Already deleted" });
-  if (q.senderId !== req.headers["x-user-id"]) {
-    // Check if user is admin
-    const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
-    if (!user || user.role !== 'admin') {
-      return res.status(403).json({ error: "Unauthorized" });
+  try {
+    const { data: q } = await supabase.from("ask").select("department, senderId").eq("id", req.params.id).single();
+    if (!q) return res.json({ message: "Deleted" });
+    if (q.senderId !== req.headers["x-user-id"]) {
+      const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
+      if (!user || user.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
-  }
-
-  await supabase.from("ask").delete().eq("id", req.params.id);
-  broadcast(`ask-${q.department}`, { action: "delete", id: req.params.id });
-  syncToFirestore("ask", "delete", req.params.id);
-  res.json({ message: "Deleted" });
+    await supabase.from("ask").delete().eq("id", req.params.id);
+    broadcast(`ask-${q.department}`, { action: "delete", id: req.params.id });
+    syncToFirestore("ask", "delete", req.params.id);
+    res.json({ message: "Deleted" });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
-// Add Answer to Question
+
 router.post("/ask/:id/answer", async (req, res) => {
-  const { id } = req.params;
-  const newAnswer = req.body; // { text, senderId... }
-
-  // Postgres array append for JSONB or just fetch-modify-save
-  // Fetch current
-  const { data: q } = await supabase.from("ask").select("answers, department").eq("id", id).single();
-  const updatedAnswers = [...(q.answers || []), newAnswer];
-
-  await supabase.from("ask").update({ answers: updatedAnswers }).eq("id", id);
-  broadcast(`ask-${q.department}`, { action: "update", id, answers: updatedAnswers });
-  syncToFirestore("ask", "update", { id, answers: updatedAnswers });
-  res.json({ success: true });
+  try {
+    const { id } = req.params;
+    const { data: q } = await supabase.from("ask").select("answers, department").eq("id", id).single();
+    const updatedAnswers = [...(q.answers || []), req.body];
+    await supabase.from("ask").update({ answers: updatedAnswers }).eq("id", id);
+    broadcast(`ask-${q.department}`, { action: "update", id, answers: updatedAnswers });
+    syncToFirestore("ask", "update", { id, answers: updatedAnswers });
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-
-// --- GENERIC ---
 const handleDeptDelete = async (table, req, res) => {
-  const c = await verifyOwnership(table, req.params.id, req.headers["x-user-id"], "creatorId");
-  if (c.error) return res.status(c.code).json(c);
-  await supabase.from(table).delete().eq("id", req.params.id);
-  broadcast(table, { action: "delete", id: req.params.id });
-  syncToFirestore(table, "delete", req.params.id);
-  res.json({ message: "Deleted" });
+  try {
+    const c = await verifyOwnership(table, req.params.id, req.headers["x-user-id"], "creatorId");
+    if (c.error) return res.status(c.code).json(c);
+    await supabase.from(table).delete().eq("id", req.params.id);
+    broadcast(table, { action: "delete", id: req.params.id });
+    syncToFirestore(table, "delete", req.params.id);
+    res.json({ message: "Deleted" });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 };
 
 router.get("/events/:dept", async (req, res) => {
   const { data } = await supabase.from("events").select("*").eq("department", req.params.dept);
   res.json(data || []);
 });
+
 router.post("/events", async (req, res) => {
-  const { data } = await supabase.from("events").insert(req.body).select().single();
-  broadcast("events", { action: "save", data });
-  syncToFirestore("events", "create", data);
-  res.json(data);
+  try {
+    const { data, error } = await supabase.from("events").insert(req.body).select().single();
+    if (error) throw error;
+    broadcast("events", { action: "save", data });
+    syncToFirestore("events", "create", data);
+    res.json(data);
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
 router.delete("/events/:id", (req, res) => handleDeptDelete("events", req, res));
 
 router.get("/schedules/:dept", async (req, res) => {
   const { data } = await supabase.from("schedules").select("*").eq("department", req.params.dept);
   res.json(data || []);
 });
+
 router.post("/schedules", async (req, res) => {
-  const { data } = await supabase.from("schedules").insert(req.body).select().single();
-  broadcast("schedules", { action: "save", data });
-  syncToFirestore("schedules", "create", data);
-  res.json(data);
+  try {
+    const { data, error } = await supabase.from("schedules").insert(req.body).select().single();
+    if (error) throw error;
+    broadcast("schedules", { action: "save", data });
+    syncToFirestore("schedules", "create", data);
+    res.json(data);
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
 router.delete("/schedules/:id", (req, res) => handleDeptDelete("schedules", req, res));
 
 module.exports = router;

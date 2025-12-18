@@ -5,20 +5,25 @@ let db;
 try {
     let serviceAccount;
     if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+        const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
+        serviceAccount = JSON.parse(raw);
+
+        if (serviceAccount.private_key) {
+            serviceAccount.private_key = serviceAccount.private_key
+                .replace(/\\n/g, '\n')
+                .replace("-----BEGINPRIVATEKEY-----", "-----BEGIN PRIVATE KEY-----")
+                .replace("-----ENDPRIVATEKEY-----", "-----END PRIVATE KEY-----");
+        }
     }
 
-    if (serviceAccount) {
+    if (serviceAccount && serviceAccount.private_key) {
         if (admin.apps.length === 0) {
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
             });
         }
         db = admin.firestore();
-        console.log("Firebase Admin Initialized");
     } else {
-        console.warn("FIREBASE_SERVICE_ACCOUNT missing. Double-write disabled.");
-        // Mock to prevent crash
         db = {
             collection: () => ({
                 doc: () => ({ set: async () => { }, delete: async () => { }, update: async () => { } }),
@@ -27,7 +32,6 @@ try {
         };
     }
 } catch (error) {
-    console.error("Firebase Init Error:", error);
     db = {
         collection: () => ({
             doc: () => ({ set: async () => { }, delete: async () => { }, update: async () => { } }),
