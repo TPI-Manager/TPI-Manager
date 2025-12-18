@@ -4,43 +4,43 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 export function useRealtime(table, onUpdate, filterField = null, filterValue = null) {
     useEffect(() => {
-        let unsubscribe = null;
-        let isMounted = true;
+        let unsubscribe = () => { };
 
         if (db) {
-            try {
-                let q = collection(db, table);
-                if (filterField && filterValue) {
-                    q = query(q, where(filterField, "==", filterValue));
-                }
+            let q = collection(db, table);
 
-                unsubscribe = onSnapshot(q, (snapshot) => {
-                    if (!isMounted) return;
-                    snapshot.docChanges().forEach((change) => {
-                        const docData = { id: change.doc.id, ...change.doc.data() };
-                        if (change.type === "added") onUpdate({ eventType: 'INSERT', new: docData });
-                        if (change.type === "modified") onUpdate({ eventType: 'UPDATE', new: docData });
-                        if (change.type === "removed") onUpdate({ eventType: 'DELETE', old: { id: change.doc.id } });
-                    });
-                }, (error) => {
-                    if (error.code === 'failed-precondition') {
-                        console.warn("Firestore: Index required or listener limit reached.");
-                    } else {
-                        console.error("Firestore Error:", error.message);
+            if (filterField && filterValue) {
+                q = query(q, where(filterField, "==", filterValue));
+            }
+
+            // console.log(`Subscribing to Firestore: ${table}`);
+
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    const docData = { id: change.doc.id, ...change.doc.data() };
+
+                    if (change.type === "added") {
+                        onUpdate({ eventType: 'INSERT', new: docData });
+                    }
+                    if (change.type === "modified") {
+                        onUpdate({ eventType: 'UPDATE', new: docData });
+                    }
+                    if (change.type === "removed") {
+                        onUpdate({ eventType: 'DELETE', old: { id: change.doc.id } });
                     }
                 });
-            } catch (err) {
-                console.error("Setup Error:", err.message);
-            }
+            }, (error) => {
+                console.error("Firestore Error:", error);
+            });
         }
 
+        // 🟢 Polling Fallback
         const interval = setInterval(() => {
-            if (isMounted) onUpdate({ eventType: 'POLL' });
-        }, 5000);
+            onUpdate({ eventType: 'POLL' });
+        }, 4000);
 
         return () => {
-            isMounted = false;
-            if (unsubscribe) unsubscribe();
+            if (typeof unsubscribe === 'function') unsubscribe();
             clearInterval(interval);
         };
     }, [table, filterField, filterValue, onUpdate]);
