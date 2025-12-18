@@ -1,0 +1,26 @@
+[
+  {
+    "type": "department",
+    "department": "TEST_DEPT",
+    "semester": "1st",
+    "shift": "Day",
+    "text": "Socket Test Msg",
+    "senderId": "test_st_01",
+    "senderName": "Tester",
+    "id": 1766023271361,
+    "createdAt": "2025-12-18T02:01:11.361Z",
+    "seenBy": []
+  },
+  {
+    "type": "department",
+    "department": "TEST_DEPT",
+    "semester": "1st",
+    "shift": "Day",
+    "text": "Socket Test Msg",
+    "senderId": "test_st_01",
+    "senderName": "Tester",
+    "id": 1766025941281,
+    "createdAt": "2025-12-18T02:45:41.281Z",
+    "seenBy": []
+  }
+]
