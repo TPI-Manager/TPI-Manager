@@ -16,6 +16,10 @@ const validate = (validations) => {
 };
 
 const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
+  // Check if user is admin
+  const { data: user } = await supabase.from("users").select("role").eq("id", userId).single();
+  if (user && user.role === 'admin') return { success: true };
+
   const { data, error } = await supabase.from(table).select(idField).eq('id', id).single();
   if (error || !data) return { error: "Not found", code: 404 };
   if (data[idField] !== userId) return { error: "Unauthorized", code: 403 };
