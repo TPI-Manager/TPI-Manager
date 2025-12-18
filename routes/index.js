@@ -46,6 +46,12 @@ router.post("/auth/login", [
 
     const userData = userDoc.data();
 
+    // Safety check: ensure password hash exists
+    if (!userData.password) {
+      console.error(`Login failed: User ${userId} has no password hash.`);
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
     // Compare hashed password
     const isMatch = await bcrypt.compare(password, userData.password);
     if (!isMatch) {
@@ -59,12 +65,14 @@ router.post("/auth/login", [
     try {
       firebaseToken = await admin.auth().createCustomToken(userId);
     } catch (e) {
-      console.error("Error creating custom token:", e);
+      console.error("Error creating custom token:", e.message);
+      // Proceed without token if it fails (user can still use app, just not firebase features)
     }
 
     res.json({ ...safeUser, firebaseToken });
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("Login Route Error:", error);
+    // Ensure we send a string error, not an object
     res.status(500).json({ error: "Server Error" });
   }
 });

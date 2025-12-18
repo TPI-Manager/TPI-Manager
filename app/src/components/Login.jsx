@@ -29,8 +29,24 @@ export default function Login({ setLoggedStudent, onSwitchToSignup }) {
 
             setLoggedStudent(userData);
         } catch (err) {
-            console.error(err);
-            setError(err.response?.data?.error || "Invalid ID or Password");
+            console.error("Login Error:", err);
+
+            let errorMsg = "Invalid ID or Password";
+
+            // Safe error extraction to prevent React objects-as-children crash
+            if (err.response && err.response.data && err.response.data.error) {
+                const apiError = err.response.data.error;
+                if (typeof apiError === "string") {
+                    errorMsg = apiError;
+                } else if (typeof apiError === "object") {
+                    // If backend sends an object (e.g. {code, message}), extract message
+                    errorMsg = apiError.message || apiError.code || "An unknown error occurred";
+                }
+            } else if (err.message) {
+                errorMsg = err.message;
+            }
+
+            setError(errorMsg);
         } finally {
             setLoading(false);
         }
