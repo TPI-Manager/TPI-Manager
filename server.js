@@ -18,8 +18,16 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "blob:", "https://*.supabase.co"], // Allow images from Supabase
-      connectSrc: ["'self'", "https://*.supabase.co", "wss://*.supabase.co"], // Allow Realtime websockets
+      imgSrc: ["'self'", "data:", "blob:", "https://*.supabase.co", "https://*.googleapis.com"],
+      connectSrc: [
+        "'self'",
+        "https://*.supabase.co",
+        "wss://*.supabase.co",
+        "https://firestore.googleapis.com",
+        "https://*.googleapis.com",
+        "https://*.firebaseio.com",
+        "wss://*.firebaseio.com"
+      ],
       scriptSrc: ["'self'", "'unsafe-inline'"],
     }
   }
