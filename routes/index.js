@@ -2,6 +2,7 @@ const express = require("express");
 const { body, param, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const { db, admin } = require("../utils/firebase");
+const { broadcast } = require("../utils/sse");
 
 const router = express.Router();
 
@@ -219,6 +220,7 @@ router.post("/announcements", [
     const ref = db.collection("announcements").doc();
     const data = { id: ref.id, ...req.body, createdAt: new Date().toISOString() };
     await ref.set(data);
+    broadcast("announcements", { action: "create", data });
     res.json(data);
   } catch (error) {
     console.error("Announcements Post Error:", error);
@@ -229,6 +231,7 @@ router.post("/announcements", [
 router.delete("/announcements/:id", checkDB, async (req, res) => {
   try {
     await db.collection("announcements").doc(req.params.id).delete();
+    broadcast("announcements", { action: "delete", id: req.params.id });
     res.json({ message: "Deleted" });
   } catch (error) {
     console.error("Announcements Delete Error:", error);
@@ -269,6 +272,7 @@ const handleDeptSave = async (collection, req, res) => {
     };
 
     await ref.set(data, { merge: true });
+    broadcast(collection, { action: "save", data });
     res.json(computeStatus(data));
   } catch (error) {
     console.error(`Save ${collection} Error:`, error);
@@ -279,6 +283,7 @@ const handleDeptSave = async (collection, req, res) => {
 const handleDeptDelete = async (collection, req, res) => {
   try {
     await db.collection(collection).doc(req.params.id).delete();
+    broadcast(collection, { action: "delete", id: req.params.id });
     res.json({ message: "Deleted" });
   } catch (error) {
     console.error(`Delete ${collection} Error:`, error);

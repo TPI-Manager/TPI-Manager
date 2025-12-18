@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { useSSE } from "../hooks/useSSE";
 import AnnouncementCard from "../components/AnnouncementCard";
 import AnnouncementFormModal from "../components/AnnouncementFormModal";
 import "../Styles/announcement.css";
@@ -11,26 +12,24 @@ export default function AnnouncementPage({ student }) {
 
     const isAdmin = student.role === "admin" || student.role === "teacher";
 
-    useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                const res = await axios.get(`${API_BASE}/api/announcements`);
-                setList(Array.isArray(res.data) ? res.data.reverse() : []);
-            } catch {
-                setList([]);
-            }
-        };
-        fetchAnnouncements();
-    }, []);
-
-    const fetchAnnouncements = async () => {
+    const fetchAnnouncements = useCallback(async () => {
         try {
             const res = await axios.get(`${API_BASE}/api/announcements`);
             setList(Array.isArray(res.data) ? res.data.reverse() : []);
         } catch {
             setList([]);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchAnnouncements();
+    }, [fetchAnnouncements]);
+
+    useSSE(useCallback((msg) => {
+        if (msg.type === "announcements") {
+            fetchAnnouncements();
+        }
+    }, [fetchAnnouncements]));
 
     const handleSave = async (data) => {
         if (!data.title || !data.body) return;
