@@ -11,30 +11,25 @@ const syncToFirestore = async (collection, action, data) => {
     const colRef = firestore.collection(collection);
     const docId = String(data.id || (typeof data === 'string' ? data : Date.now()));
     if (action === 'create' || action === 'update') {
-      const cleanData = JSON.parse(JSON.stringify(data));
-      await colRef.doc(docId).set(cleanData, { merge: true });
+      await colRef.doc(docId).set(JSON.parse(JSON.stringify(data)), { merge: true });
     } else if (action === 'delete') {
       await colRef.doc(docId).delete();
     }
-  } catch (e) {
-    console.error(`Sync Error:`, e.message);
-  }
+  } catch (e) { console.error(`Sync Error:`, e.message); }
 };
 
 const router = express.Router();
 
-const validate = (validations) => {
-  return async (req, res, next) => {
-    await Promise.all(validations.map(validation => validation.run(req)));
-    const errors = validationResult(req);
-    if (errors.isEmpty()) return next();
-    return res.status(400).json({ error: errors.array()[0].msg });
-  };
+const validate = (validations) => async (req, res, next) => {
+  await Promise.all(validations.map(v => v.run(req)));
+  const errors = validationResult(req);
+  if (errors.isEmpty()) return next();
+  return res.status(400).json({ error: errors.array()[0].msg });
 };
 
 const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
   const { data: user } = await supabase.from("users").select("role").eq("id", userId).single();
-  if (user && user.role === 'admin') return { success: true };
+  if (user?.role === 'admin') return { success: true };
   const { data, error } = await supabase.from(table).select(idField).eq('id', id).single();
   if (error || !data) return { error: "Not found", code: 404 };
   if (data[idField] !== userId) return { error: "Unauthorized", code: 403 };
@@ -43,45 +38,31 @@ const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
 
 router.get("/stream", sseHandler);
 
-router.post("/auth/login", [
-  body("userId").trim().notEmpty(),
-  body("password").notEmpty()
-], validate([]), async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   try {
     const { userId, password } = req.body;
     const { data: user, error } = await supabase.from("users").select("*").eq("id", userId).single();
     if (error || !user) return res.status(401).json({ error: "Invalid credentials" });
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ error: "Invalid credentials" });
+    if (!await bcrypt.compare(password, user.password)) return res.status(401).json({ error: "Invalid credentials" });
     const { password: _, ...safeUser } = user;
     res.json(safeUser);
   } catch (error) { res.status(500).json({ error: "Server Error" }); }
 });
 
-router.post("/auth/create", [
-  body("id").trim().notEmpty(),
-  body("password").isLength({ min: 6 })
-], validate([]), async (req, res) => {
+router.post("/auth/create", async (req, res) => {
   try {
     const d = req.body;
     const { data: exists } = await supabase.from("users").select("id").eq("id", d.id).single();
     if (exists) return res.json({ message: "duplicate" });
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(d.password, salt);
+    const hashedPassword = await bcrypt.hash(d.password, 10);
     const newUser = {
-      id: d.id,
-      password: hashedPassword,
-      fullName: `${d.firstName || ""} ${d.lastName || ""}`.trim(),
-      role: d.userType,
-      department: d.department,
-      semester: d.semester,
-      shift: d.shift,
-      studentId: (d.userType === 'student') ? d.id : null,
-      employeeId: (d.userType === 'teacher') ? d.id : null,
-      adminId: (d.userType === 'admin') ? d.id : null
+      id: d.id, password: hashedPassword, fullName: `${d.firstName || ""} ${d.lastName || ""}`.trim(),
+      role: d.userType, department: d.department, semester: d.semester, shift: d.shift,
+      studentId: d.userType === 'student' ? d.id : null,
+      employeeId: d.userType === 'teacher' ? d.id : null,
+      adminId: d.userType === 'admin' ? d.id : null
     };
-    const { error } = await supabase.from("users").insert(newUser);
-    if (error) throw error;
+    await supabase.from("users").insert(newUser);
     const { password: _, ...safeUser } = newUser;
     res.json({ message: "Saved", data: safeUser });
   } catch (e) { res.status(500).json({ error: "Error" }); }
@@ -91,11 +72,8 @@ router.put("/auth/update", async (req, res) => {
   try {
     const { currentId, newPassword, newId } = req.body;
     const updates = {};
-    if (newPassword) updates.password = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
-    if (newId && newId !== currentId) {
-      updates.id = newId;
-      updates.adminId = newId;
-    }
+    if (newPassword) updates.password = await bcrypt.hash(newPassword, 10);
+    if (newId && newId !== currentId) { updates.id = newId; updates.adminId = newId; }
     const { data, error } = await supabase.from("users").update(updates).eq("id", currentId).select().single();
     if (error) return res.status(400).json({ error: "Update failed" });
     const { password: _, ...safeUser } = data;
@@ -139,33 +117,25 @@ router.post("/chat", async (req, res) => {
   try {
     const b = req.body;
     const payload = {
-      text: b.text || null,
-      senderId: b.senderId,
-      senderName: b.senderName,
-      room: b.room,
-      department: b.department,
-      semester: b.semester,
-      shift: b.shift,
-      images: Array.isArray(b.images) ? b.images : null
+      text: b.text || null, senderId: b.senderId, senderName: b.senderName,
+      room: b.room, department: b.department, semester: b.semester, shift: b.shift,
+      images: Array.isArray(b.images) ? b.images : null, role: b.role || "student"
     };
     const { data, error } = await supabase.from("chat").insert([payload]).select().single();
     if (error) throw error;
     broadcast(`chat-${payload.room}`, { action: "create", data });
     syncToFirestore("chat", "create", data);
     res.json(data);
-  } catch (error) {
-    console.error("DB Error:", error);
-    res.status(500).json({ error: error.message });
-  }
+  } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
 router.delete("/chat/:id", async (req, res) => {
   try {
     const { data: msg } = await supabase.from("chat").select("room, senderId").eq("id", req.params.id).single();
-    if (!msg) return res.status(404).json({ error: "Not found" });
+    if (!msg) return res.status(200).json({ message: "Already deleted" });
     if (msg.senderId !== req.headers["x-user-id"]) {
       const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
-      if (!user || user.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
+      if (user?.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
     await supabase.from("chat").delete().eq("id", req.params.id);
     broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
@@ -195,7 +165,7 @@ router.delete("/ask/:id", async (req, res) => {
     if (!q) return res.json({ message: "Deleted" });
     if (q.senderId !== req.headers["x-user-id"]) {
       const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
-      if (!user || user.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
+      if (user?.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
     await supabase.from("ask").delete().eq("id", req.params.id);
     broadcast(`ask-${q.department}`, { action: "delete", id: req.params.id });
