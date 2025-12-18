@@ -7,7 +7,10 @@ const router = express.Router();
 
 // Middleware to ensure DB is ready
 const checkDB = (req, res, next) => {
-  if (!db) return res.status(503).json({ error: "Database not connected" });
+  if (!db) {
+    console.error("Database connection missing in checkDB middleware");
+    return res.status(503).json({ error: "Database not connected" });
+  }
   next();
 };
 
@@ -38,7 +41,14 @@ router.post("/auth/login", [
   try {
     const { userId, password } = req.body;
 
-    const userDoc = await db.collection("users").doc(userId).get();
+    // 1. Fetch User
+    let userDoc;
+    try {
+      userDoc = await db.collection("users").doc(userId).get();
+    } catch (dbError) {
+      console.error("Firestore Get Error:", dbError);
+      return res.status(500).json({ error: "Database read failed" });
+    }
 
     if (!userDoc.exists) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -46,34 +56,47 @@ router.post("/auth/login", [
 
     const userData = userDoc.data();
 
-    // Safety check: ensure password hash exists
-    if (!userData.password) {
-      console.error(`Login failed: User ${userId} has no password hash.`);
-      return res.status(401).json({ error: "Invalid credentials" });
+    // 2. Validate Password Hash Existence
+    if (!userData || typeof userData.password !== 'string') {
+      console.error(`Login failed: User ${userId} has missing or invalid password hash structure.`);
+      // Return 401 to user, but log specific error for admin
+      return res.status(401).json({ error: "Account invalid. Please contact admin." });
     }
 
-    // Compare hashed password
-    const isMatch = await bcrypt.compare(password, userData.password);
+    // 3. Compare Password
+    let isMatch = false;
+    try {
+      isMatch = await bcrypt.compare(password, userData.password);
+    } catch (bcryptError) {
+      console.error("Bcrypt Compare Error:", bcryptError);
+      return res.status(500).json({ error: "Authentication processing failed" });
+    }
+
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
+    // 4. Safe User Object
     const { password: _, ...safeUser } = userData;
 
-    // Generate Firebase Custom Token for Client SDK
+    // 5. Generate Firebase Token (Non-blocking failure)
     let firebaseToken = "";
-    try {
-      firebaseToken = await admin.auth().createCustomToken(userId);
-    } catch (e) {
-      console.error("Error creating custom token:", e.message);
-      // Proceed without token if it fails (user can still use app, just not firebase features)
+    if (admin) {
+      try {
+        firebaseToken = await admin.auth().createCustomToken(userId);
+      } catch (tokenError) {
+        console.error("Firebase Auth Token Error:", tokenError.message);
+        // We continue even if token fails, frontend handles null token
+      }
+    } else {
+      console.warn("Firebase Admin not initialized, skipping custom token generation.");
     }
 
     res.json({ ...safeUser, firebaseToken });
+
   } catch (error) {
-    console.error("Login Route Error:", error);
-    // Ensure we send a string error, not an object
-    res.status(500).json({ error: "Server Error" });
+    console.error("Login Critical Route Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -149,8 +172,6 @@ router.put("/auth/update", [
 
       const oldData = doc.data();
       const newData = { ...oldData, ...updates, id: newId, adminId: newId };
-      // Ensure we don't carry over the old password if we didn't update it (it's already hashed in oldData)
-      // If we updated it, 'updates.password' has the new hash.
 
       const batch = db.batch();
       batch.set(newRef, newData);
