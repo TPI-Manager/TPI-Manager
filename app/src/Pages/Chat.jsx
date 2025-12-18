@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import io from "socket.io-client";
-import { SOCKET_URL, API_BASE, UPLOAD_URL } from "../config";
+// import { socket } from "socket.io-client"; // Removed
+import { db } from "../firebase"; // Added
+import {
+    collection, query, where, orderBy, limit, onSnapshot,
+    addDoc, deleteDoc, updateDoc, doc, setDoc, serverTimestamp
+} from "firebase/firestore";
+import { API_BASE, UPLOAD_URL } from "../config";
 import "../Styles/chat.css";
 
 export default function ChatPage({ student }) {
@@ -10,7 +15,6 @@ export default function ChatPage({ student }) {
 
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
 
-    const socketRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [selectedImages, setSelectedImages] = useState([]);
@@ -18,70 +22,41 @@ export default function ChatPage({ student }) {
     const bottomRef = useRef();
 
     useEffect(() => {
-        // Setup Socket
-        const s = io(SOCKET_URL, {
-            path: "/socket.io",
-            transports: ['websocket', 'polling'], // Force websocket stability
-            reconnection: true
+        const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
+
+        const q = query(
+            collection(db, "chat"),
+            where("room", "==", room),
+            orderBy("createdAt", "asc"), // Firestore requires index for complex queries, but simple should work or might need desc + reverse. 
+            // Note: If using 'desc', we need to reverse array for display. User's original code sorted by date.
+            // Let's use 'asc' effectively or sort client side.
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const msgs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            // Client-side sort to be safe if index issues arise
+            msgs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            setMessages(msgs);
         });
-        socketRef.current = s;
 
-        const roomConfig = { type: "department", department, semester, shift };
-
-        s.on("connect", () => {
-            s.emit("joinChatRoom", roomConfig);
-        });
-
-        const onExisting = (msgs) => {
-            const sorted = (Array.isArray(msgs) ? msgs : []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-            setMessages(sorted);
-        };
-        const onNew = (msg) => {
-            setMessages(prev => [...prev, msg]);
-            // Emit markSeen for the new message if it's not mine
-            if (msg.senderId !== userId) {
-                s.emit("markSeen", {
-                     messageId: msg.id, userId,
-                     type: "department", department, semester, shift
-                });
-            }
-        };
-
-        const onDeleted = (msgId) => setMessages(prev => prev.filter(m => m.id !== msgId));
-        const onSeen = ({ messageId, seenBy }) => {
-            setMessages(prev => prev.map(m => m.id === messageId ? { ...m, seenBy } : m));
-        };
-
-        s.on("existingMessages", onExisting);
-        s.on("newMessage", onNew);
-        s.on("messageDeleted", onDeleted);
-        s.on("messageSeen", onSeen);
-
-        // Cleanup
-        return () => {
-            s.off("existingMessages", onExisting);
-            s.off("newMessage", onNew);
-            s.off("messageDeleted", onDeleted);
-            s.off("messageSeen", onSeen);
-            s.disconnect();
-            socketRef.current = null;
-        };
-    }, [department, semester, shift, userId]);
+        return () => unsubscribe();
+    }, [department, semester, shift]);
 
     useEffect(() => {
-        // Mark existing unread messages as seen
-        if (messages.length > 0 && socketRef.current) {
-             messages.forEach(m => {
-                 if (m.senderId !== userId && (!m.seenBy || !m.seenBy.includes(userId))) {
-                     socketRef.current.emit("markSeen", {
-                         messageId: m.id, userId,
-                         type: "department", department, semester, shift
-                     });
-                 }
-             });
-        }
+        // Mark seen logic
+        messages.forEach(async (m) => {
+            if (m.senderId !== userId && (!m.seenBy || !m.seenBy.includes(userId))) {
+                try {
+                    const mRef = doc(db, "chat", m.id);
+                    const seenBy = m.seenBy ? [...m.seenBy, userId] : [userId];
+                    await updateDoc(mRef, { seenBy });
+                } catch (e) {
+                    // console.log("Error marking seen", e);
+                }
+            }
+        });
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages, userId, department, semester, shift]);
+    }, [messages, userId]);
 
     const handleFileChange = (e) => {
         if (e.target.files) {
@@ -108,29 +83,38 @@ export default function ChatPage({ student }) {
     };
 
     const sendMessage = async () => {
-        if ((!text.trim() && selectedImages.length === 0) || !socketRef.current) return;
+        if ((!text.trim() && selectedImages.length === 0)) return;
 
         const uploadedImages = await uploadFiles();
 
-        socketRef.current.emit("sendMessage", {
+        const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
+        const newMsgRef = doc(collection(db, "chat"));
+
+        const newMessage = {
             type: "department", department, semester, shift,
             senderId: userId,
             senderName: student.fullName,
             text,
-            images: uploadedImages
-        });
+            images: uploadedImages,
+            room,
+            id: newMsgRef.id,
+            createdAt: new Date().toISOString(),
+            seenBy: []
+        };
+
+        await setDoc(newMsgRef, newMessage);
+
         setText("");
         setSelectedImages([]);
     };
 
-    const deleteMessage = (msgId) => {
-        if(!socketRef.current) return;
-        if(window.confirm("Delete this message?")) {
-            socketRef.current.emit("deleteMessage", {
-                messageId: msgId,
-                senderId: userId,
-                type: "department", department, semester, shift
-            });
+    const deleteMessage = async (msgId) => {
+        if (window.confirm("Delete this message?")) {
+            try {
+                await deleteDoc(doc(db, "chat", msgId));
+            } catch (e) {
+                console.error("Delete failed", e);
+            }
         }
     };
 
@@ -182,20 +166,20 @@ export default function ChatPage({ student }) {
             </div>
 
             <div className="input-area-wrapper">
-                 {selectedImages.length > 0 && (
-                     <div className="image-preview">
-                         {selectedImages.map((f, i) => (
-                             <div key={i} className="preview-thumb">
-                                 <span>{f.name}</span>
-                                 <button onClick={() => setSelectedImages(prev => prev.filter((_, idx) => idx !== i))}>x</button>
-                             </div>
-                         ))}
-                     </div>
-                 )}
-                 <div className="input-area">
+                {selectedImages.length > 0 && (
+                    <div className="image-preview">
+                        {selectedImages.map((f, i) => (
+                            <div key={i} className="preview-thumb">
+                                <span>{f.name}</span>
+                                <button onClick={() => setSelectedImages(prev => prev.filter((_, idx) => idx !== i))}>x</button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <div className="input-area">
                     <label className="file-upload-btn">
                         📷
-                        <input type="file" multiple accept="image/*" onChange={handleFileChange} style={{display: 'none'}} />
+                        <input type="file" multiple accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
                     </label>
                     <input
                         value={text}

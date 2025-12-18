@@ -3,6 +3,9 @@ import axios from "axios";
 import { API_BASE } from "../config";
 import "../Styles/login.css";
 
+import { auth } from "../firebase";
+import { signInWithCustomToken } from "firebase/auth";
+
 export default function Login({ setLoggedStudent, onSwitchToSignup }) {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
@@ -18,8 +21,15 @@ export default function Login({ setLoggedStudent, onSwitchToSignup }) {
                 userId: loginId,
                 password: password
             });
-            setLoggedStudent(res.data);
+
+            const { firebaseToken, ...userData } = res.data;
+            if (firebaseToken) {
+                await signInWithCustomToken(auth, firebaseToken);
+            }
+
+            setLoggedStudent(userData);
         } catch (err) {
+            console.error(err);
             setError(err.response?.data?.error || "Invalid ID or Password");
         } finally {
             setLoading(false);

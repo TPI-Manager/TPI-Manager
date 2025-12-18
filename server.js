@@ -2,15 +2,16 @@
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
-const { Server } = require("socket.io");
+// const { Server } = require("socket.io");
 const cors = require("cors");
 const multer = require("multer");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const bcrypt = require("bcryptjs");
 const { db, uploadToFirebase } = require("./utils/firebase");
 const apiRoutes = require("./routes");
-const socketManager = require("./sockets");
+// const socketManager = require("./sockets");
 
 const app = express();
 const server = http.createServer(app);
@@ -26,14 +27,8 @@ app.use(cors({
   credentials: true
 }));
 
-const io = new Server(server, {
-  cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
-    credentials: true
-  },
-  path: "/socket.io"
-});
+// Socket.IO configuration removed for serverless deployment
+// const io = new Server(server, { ... });
 
 const PORT = process.env.PORT || 5000;
 
@@ -67,9 +62,11 @@ const seedAdmin = async () => {
       console.log("🌱 Seeding default Admin account...");
       // In production, you might want to force a random password logged to console instead
       const initialPassword = process.env.ADMIN_INIT_PASS || "admin123";
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(initialPassword, salt);
       await adminRef.set({
         id: "admin",
-        password: initialPassword,
+        password: hashedPassword,
         firstName: "System",
         lastName: "Administrator",
         fullName: "System Administrator",
@@ -108,7 +105,7 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
   }
 });
 
-socketManager(io);
+// socketManager(io);
 
 // Handle React Routing in Production
 if (process.env.NODE_ENV === "production" || process.env.VERCEL) {

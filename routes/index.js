@@ -1,6 +1,7 @@
 const express = require("express");
 const { body, param, validationResult } = require("express-validator");
-const { db } = require("../utils/firebase");
+const bcrypt = require("bcryptjs");
+const { db, admin } = require("../utils/firebase");
 
 const router = express.Router();
 
@@ -44,13 +45,24 @@ router.post("/auth/login", [
     }
 
     const userData = userDoc.data();
-    // Note: In a real high-security app, use bcrypt to compare hashes, not plain text
-    if (userData.password !== password) {
+
+    // Compare hashed password
+    const isMatch = await bcrypt.compare(password, userData.password);
+    if (!isMatch) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     const { password: _, ...safeUser } = userData;
-    res.json(safeUser);
+
+    // Generate Firebase Custom Token for Client SDK
+    let firebaseToken = "";
+    try {
+      firebaseToken = await admin.auth().createCustomToken(userId);
+    } catch (e) {
+      console.error("Error creating custom token:", e);
+    }
+
+    res.json({ ...safeUser, firebaseToken });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ error: "Server Error" });
@@ -67,15 +79,20 @@ router.post("/auth/create", [
 ], validate([]), async (req, res) => {
   try {
     const data = req.body;
-    const { userType, id } = data;
+    const { userType, id, password } = data;
 
     const docRef = db.collection("users").doc(id);
     const doc = await docRef.get();
 
     if (doc.exists) return res.json({ message: "duplicate" });
 
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = {
       ...data,
+      password: hashedPassword,
       fullName: `${data.firstName || ""} ${data.lastName || ""}`.trim(),
       createdAt: new Date().toISOString(),
       role: userType,
@@ -87,7 +104,9 @@ router.post("/auth/create", [
     Object.keys(newUser).forEach(key => newUser[key] === undefined && delete newUser[key]);
 
     await docRef.set(newUser);
-    res.json({ message: "Saved", data: newUser });
+
+    const { password: _, ...safeUser } = newUser;
+    res.json({ message: "Saved", data: safeUser });
   } catch (error) {
     console.error("Create User Error:", error);
     res.status(500).json({ error: "Server Error" });
@@ -110,7 +129,10 @@ router.put("/auth/update", [
     if (!doc.exists) return res.status(404).json({ error: "User not found" });
 
     const updates = {};
-    if (newPassword) updates.password = newPassword;
+    if (newPassword) {
+      const salt = await bcrypt.genSalt(10);
+      updates.password = await bcrypt.hash(newPassword, salt);
+    }
 
     if (newId && newId !== currentId) {
       const newRef = db.collection("users").doc(newId);
@@ -119,13 +141,16 @@ router.put("/auth/update", [
 
       const oldData = doc.data();
       const newData = { ...oldData, ...updates, id: newId, adminId: newId };
+      // Ensure we don't carry over the old password if we didn't update it (it's already hashed in oldData)
+      // If we updated it, 'updates.password' has the new hash.
 
       const batch = db.batch();
       batch.set(newRef, newData);
       batch.delete(userRef);
       await batch.commit();
 
-      return res.json({ message: "Updated", user: newData });
+      const { password: _, ...safeUser } = newData;
+      return res.json({ message: "Updated", user: safeUser });
     }
 
     if (Object.keys(updates).length > 0) {

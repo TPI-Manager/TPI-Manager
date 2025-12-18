@@ -10,7 +10,7 @@ service cloud.firestore {
     // Lock everything by default.
     // The Server (Node.js Admin SDK) bypasses these rules automatically.
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if request.auth != null;
     }
   }
 }

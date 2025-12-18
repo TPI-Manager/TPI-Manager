@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import io from "socket.io-client";
-import { SOCKET_URL, API_BASE, UPLOAD_URL } from "../config";
+import { db } from "../firebase";
+import {
+    collection, query, where, orderBy, onSnapshot,
+    setDoc, doc, updateDoc, arrayUnion
+} from "firebase/firestore";
+import { API_BASE, UPLOAD_URL } from "../config";
 import "../Styles/ask.css";
 
 export default function AskPage({ student }) {
-    const socketRef = useRef(null);
     const [questions, setQuestions] = useState([]);
     const [text, setText] = useState("");
     const [qImages, setQImages] = useState([]);
@@ -16,30 +19,18 @@ export default function AskPage({ student }) {
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
 
     useEffect(() => {
-        const s = io(SOCKET_URL, {
-            path: "/socket.io",
-            transports: ['websocket', 'polling']
+        const q = query(
+            collection(db, "ask"),
+            where("department", "==", department),
+            orderBy("createdAt", "desc")
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const data = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            setQuestions(data);
         });
-        socketRef.current = s;
 
-        s.on("connect", () => {
-            s.emit("joinAskRoom", { department });
-        });
-
-        const onExisting = (data) => setQuestions(Array.isArray(data) ? data : []);
-        const onNew = (q) => setQuestions(prev => [q, ...prev]);
-        const onAnswered = ({ questionId, answer }) => {
-            setQuestions(prev => prev.map(q => q.id === questionId ? { ...q, answers: [...q.answers, answer] } : q));
-        };
-
-        s.on("existingQuestions", onExisting);
-        s.on("newQuestion", onNew);
-        s.on("questionAnswered", onAnswered);
-
-        return () => {
-            s.disconnect();
-            socketRef.current = null;
-        };
+        return () => unsubscribe();
     }, [department]);
 
     const uploadFiles = async (files) => {
@@ -61,36 +52,46 @@ export default function AskPage({ student }) {
     };
 
     const ask = async () => {
-        if ((!text && qImages.length === 0) || !socketRef.current) return;
+        if ((!text && qImages.length === 0)) return;
 
         const uploadedImages = await uploadFiles(qImages);
+        const ref = doc(collection(db, "ask"));
 
-        socketRef.current.emit("askQuestion", {
+        const newQ = {
+            id: ref.id,
             department,
             text,
             senderId: userId,
             senderName: student.fullName,
-            images: uploadedImages
-        });
+            images: uploadedImages,
+            answers: [],
+            createdAt: new Date().toISOString()
+        };
+
+        await setDoc(ref, newQ);
+
         setText("");
         setQImages([]);
     };
 
     const answer = async (qid) => {
-        if ((!reply && rImages.length === 0) || !socketRef.current) return;
+        if ((!reply && rImages.length === 0)) return;
 
         const uploadedImages = await uploadFiles(rImages);
 
-        socketRef.current.emit("answerQuestion", {
-            questionId: qid,
-            department,
-            answer: {
-                text: reply,
-                senderName: student.fullName,
-                senderId: userId,
-                images: uploadedImages
-            }
+        const newAnswer = {
+            text: reply,
+            senderName: student.fullName,
+            senderId: userId,
+            images: uploadedImages,
+            createdAt: new Date().toISOString()
+        };
+
+        const qRef = doc(db, "ask", qid);
+        await updateDoc(qRef, {
+            answers: arrayUnion(newAnswer)
         });
+
         setReply("");
         setRImages([]);
         setActiveQ(null);
@@ -113,10 +114,10 @@ export default function AskPage({ student }) {
                     placeholder="Ask a question..."
                     className="ask-textarea"
                 />
-                 <div className="file-controls">
+                <div className="file-controls">
                     <label className="file-btn">
                         Add Images
-                        <input type="file" multiple accept="image/*" onChange={handleQFileChange} style={{display:'none'}} />
+                        <input type="file" multiple accept="image/*" onChange={handleQFileChange} style={{ display: 'none' }} />
                     </label>
                     <span className="file-count">{qImages.length} files selected</span>
                     <button onClick={ask} className="post-btn">Post Question</button>
@@ -163,8 +164,8 @@ export default function AskPage({ student }) {
                             <div className="reply-box">
                                 <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Write a reply..." />
                                 <div className="reply-controls">
-                                     <label>
-                                        📷 <input type="file" multiple accept="image/*" onChange={handleRFileChange} style={{display:'none'}} />
+                                    <label>
+                                        📷 <input type="file" multiple accept="image/*" onChange={handleRFileChange} style={{ display: 'none' }} />
                                     </label>
                                     <span>{rImages.length}</span>
                                     <button onClick={() => answer(q.id)}>Send</button>

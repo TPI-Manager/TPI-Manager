@@ -6,12 +6,12 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/socket.io/(.*)",
-      "destination": "/api/index.js"
+      "source": "/assets/(.*)",
+      "destination": "/dist/assets/$1"
     },
     {
-      "source": "/((?!api/|socket.io/|.*\\..*).*)",
-      "destination": "/index.html"
+      "source": "/((?!api/|assets/|.*\\..*).*)",
+      "destination": "/dist/index.html"
     }
   ]
 }
