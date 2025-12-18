@@ -110,16 +110,24 @@ router.post("/chat", async (req, res) => {
   try {
     const b = req.body;
     const payload = {
-      text: b.text || null, senderId: b.senderId, senderName: b.senderName,
-      room: b.room, department: b.department, semester: b.semester, shift: b.shift,
-      images: Array.isArray(b.images) ? b.images : null, role: b.role || "student"
+      text: b.text || null,
+      senderId: b.senderId,
+      senderName: b.senderName,
+      room: b.room,
+      department: b.department || null,
+      semester: b.semester || null,
+      shift: b.shift || null,
+      images: Array.isArray(b.images) && b.images.length > 0 ? b.images : null
     };
     const { data, error } = await supabase.from("chat").insert([payload]).select().single();
     if (error) throw error;
     broadcast(`chat-${payload.room}`, { action: "create", data });
     syncToFirestore("chat", "create", data);
     res.json(data);
-  } catch (error) { res.status(500).json({ error: error.message }); }
+  } catch (error) {
+    console.error("Chat Error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 router.delete("/chat/:id", async (req, res) => {
@@ -130,8 +138,7 @@ router.delete("/chat/:id", async (req, res) => {
       const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
       if (user?.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
-    const { error } = await supabase.from("chat").delete().eq("id", req.params.id);
-    if (error) throw error;
+    await supabase.from("chat").delete().eq("id", req.params.id);
     broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
     syncToFirestore("chat", "delete", req.params.id);
     res.json({ message: "Deleted" });
