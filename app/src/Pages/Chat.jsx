@@ -37,10 +37,8 @@ export default function ChatPage({ student }) {
     }, [fetchMessages]);
 
     useEffect(() => {
-        if (messages.length > 0) {
-            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [messages.length]);
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     useRealtime('chat', (payload) => {
         if (payload.eventType === 'INSERT') {
@@ -80,8 +78,7 @@ export default function ChatPage({ student }) {
     const sendMessage = async () => {
         const trimmed = text.trim();
         if (!trimmed && selectedFiles.length === 0) return;
-
-        const tempId = Date.now();
+        const tempId = `temp-${Date.now()}`;
         const tempMsg = {
             id: tempId,
             text: trimmed,
@@ -91,12 +88,10 @@ export default function ChatPage({ student }) {
             images: selectedFiles.map(f => URL.createObjectURL(f)),
             isTemp: true
         };
-
         setMessages(prev => [...prev, tempMsg]);
         setText("");
         const filesToUpload = [...selectedFiles];
         setSelectedFiles([]);
-
         try {
             const media = await uploadFiles(filesToUpload);
             await axios.post(`${API_BASE}/api/chat`, {
@@ -117,24 +112,15 @@ export default function ChatPage({ student }) {
 
     const confirmDelete = async () => {
         if (!deleteTarget) return;
-        const isTemp = messages.find(m => m.id === deleteTarget)?.isTemp;
-        if (isTemp) {
-            setMessages(prev => prev.filter(m => m.id !== deleteTarget));
-            setDeleteTarget(null);
-            return;
-        }
-
-        const original = [...messages];
-        setMessages(prev => prev.filter(m => m.id !== deleteTarget));
         const idToDelete = deleteTarget;
         setDeleteTarget(null);
-
+        setMessages(prev => prev.filter(m => m.id !== idToDelete));
         try {
             await axios.delete(`${API_BASE}/api/chat/${idToDelete}`, {
                 headers: { 'x-user-id': userId }
             });
         } catch (error) {
-            setMessages(original);
+            fetchMessages();
             toast.error("Delete failed");
         }
     };
