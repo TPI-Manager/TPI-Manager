@@ -10,7 +10,6 @@ const syncToFirestore = async (collection, action, data) => {
     if (!firestore || typeof firestore.collection !== 'function' || !data) return;
     const colRef = firestore.collection(collection);
     const docId = String(data.id || (typeof data === 'string' ? data : Date.now()));
-
     if (action === 'create' || action === 'update') {
       const cleanData = JSON.parse(JSON.stringify(data));
       await colRef.doc(docId).set(cleanData, { merge: true });
@@ -138,12 +137,24 @@ router.get("/chat", async (req, res) => {
 
 router.post("/chat", async (req, res) => {
   try {
-    const { data, error } = await supabase.from("chat").insert([req.body]).select().single();
+    const b = req.body;
+    const payload = {
+      text: b.text || null,
+      senderId: b.senderId,
+      senderName: b.senderName,
+      room: b.room,
+      department: b.department,
+      semester: b.semester,
+      shift: b.shift,
+      images: Array.isArray(b.images) ? b.images : null
+    };
+    const { data, error } = await supabase.from("chat").insert([payload]).select().single();
     if (error) throw error;
-    broadcast(`chat-${req.body.room}`, { action: "create", data });
+    broadcast(`chat-${payload.room}`, { action: "create", data });
     syncToFirestore("chat", "create", data);
     res.json(data);
   } catch (error) {
+    console.error("DB Error:", error);
     res.status(500).json({ error: error.message });
   }
 });
