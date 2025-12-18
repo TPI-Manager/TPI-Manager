@@ -122,8 +122,8 @@ if (process.env.NODE_ENV === "production") {
 if (require.main === module) {
   server.listen(PORT, async () => {
     console.log(`\n🚀 Server running on port ${PORT}`);
-    await seedAdmin();
+    // await seedAdmin(); // Commented out for testing Vercel deployment timeouts
   });
 }
 
-module.exports = { app, server };
+module.exports = app;

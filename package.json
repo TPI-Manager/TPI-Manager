@@ -1,6 +1,9 @@
 {
   "name": "tpi-manager",
   "version": "2.1.0",
+  "engines": {
+    "node": "24.x"
+  },
   "main": "server.js",
   "scripts": {
     "dev": "concurrently \"nodemon server.js\" \"cd app && npm run dev\"",
