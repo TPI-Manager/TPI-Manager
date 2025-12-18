@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { useSSE } from "../hooks/useSSE";
 import "../Styles/event.css";
 
 export default function EventPage({ student }) {
@@ -13,26 +14,29 @@ export default function EventPage({ student }) {
     const sem = student.semester || "1st";
     const shift = student.shift || "Morning";
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const res = await axios.get(`${API_BASE}/api/events/${dept}/${sem}/${shift}`);
-                setEvents(Array.isArray(res.data) ? res.data : []);
-            } catch {
-                setEvents([]);
-            }
-        };
-        fetchEvents();
-    }, [dept, sem, shift]);
-
-    const refresh = async () => {
+    const fetchEvents = useCallback(async () => {
         try {
             const res = await axios.get(`${API_BASE}/api/events/${dept}/${sem}/${shift}`);
             setEvents(Array.isArray(res.data) ? res.data : []);
         } catch {
             setEvents([]);
         }
-    };
+    }, [dept, sem, shift]);
+
+    useEffect(() => {
+        fetchEvents();
+    }, [fetchEvents]);
+
+    useSSE(useCallback((msg) => {
+        if (msg.type === "events") {
+            // Optimally we could check if the event belongs to this dept/sem/shift
+            // But since msg.data has the full object, we can filter or just refetch.
+            // Refetch is safer and simple.
+            fetchEvents();
+        }
+    }, [fetchEvents]));
+
+    const refresh = fetchEvents;
 
     const save = async () => {
         try {

@@ -2,7 +2,6 @@
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
-// const { Server } = require("socket.io");
 const cors = require("cors");
 const multer = require("multer");
 const morgan = require("morgan");
@@ -11,7 +10,7 @@ const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcryptjs");
 const { db, uploadToFirebase } = require("./utils/firebase");
 const apiRoutes = require("./routes");
-// const socketManager = require("./sockets");
+const { sseHandler } = require("./utils/sse");
 
 const app = express();
 const server = http.createServer(app);
@@ -26,9 +25,6 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-
-// Socket.IO configuration removed for serverless deployment
-// const io = new Server(server, { ... });
 
 const PORT = process.env.PORT || 5000;
 
@@ -80,6 +76,7 @@ const seedAdmin = async () => {
   }
 };
 
+app.get("/api/stream", sseHandler);
 app.use("/api", apiRoutes);
 
 // Upload Endpoint
@@ -104,8 +101,6 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
     res.status(500).json({ error: "Upload failed" });
   }
 });
-
-// socketManager(io);
 
 // Handle React Routing in Production
 if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
