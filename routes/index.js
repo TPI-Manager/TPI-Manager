@@ -20,13 +20,6 @@ const syncToFirestore = async (collection, action, data) => {
 
 const router = express.Router();
 
-const validate = (validations) => async (req, res, next) => {
-  await Promise.all(validations.map(v => v.run(req)));
-  const errors = validationResult(req);
-  if (errors.isEmpty()) return next();
-  return res.status(400).json({ error: errors.array()[0].msg });
-};
-
 const verifyOwnership = async (table, id, userId, idField = 'creatorId') => {
   const { data: user } = await supabase.from("users").select("role").eq("id", userId).single();
   if (user?.role === 'admin') return { success: true };
@@ -132,12 +125,13 @@ router.post("/chat", async (req, res) => {
 router.delete("/chat/:id", async (req, res) => {
   try {
     const { data: msg } = await supabase.from("chat").select("room, senderId").eq("id", req.params.id).single();
-    if (!msg) return res.status(200).json({ message: "Already deleted" });
+    if (!msg) return res.json({ message: "Deleted" });
     if (msg.senderId !== req.headers["x-user-id"]) {
       const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
       if (user?.role !== 'admin') return res.status(403).json({ error: "Unauthorized" });
     }
-    await supabase.from("chat").delete().eq("id", req.params.id);
+    const { error } = await supabase.from("chat").delete().eq("id", req.params.id);
+    if (error) throw error;
     broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
     syncToFirestore("chat", "delete", req.params.id);
     res.json({ message: "Deleted" });
