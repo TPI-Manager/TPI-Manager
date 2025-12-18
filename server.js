@@ -111,11 +111,29 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
 socketManager(io);
 
 // Handle React Routing in Production
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
   const path = require("path");
-  app.use(express.static(path.join(__dirname, "app/dist")));
+  const fs = require("fs");
+  const distPath = path.join(__dirname, "app", "dist");
+
+  app.use(express.static(distPath));
+
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: "ok",
+      env: process.env.NODE_ENV,
+      distExists: fs.existsSync(distPath),
+      files: fs.existsSync(distPath) ? fs.readdirSync(distPath).slice(0, 5) : []
+    });
+  });
+
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "app", "dist", "index.html"));
+    const indexPath = path.join(distPath, "index.html");
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).send(`Frontend not found at ${indexPath}. Base dir: ${__dirname}`);
+    }
   });
 }
 
