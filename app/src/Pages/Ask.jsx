@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
+import { useRealtime } from "../hooks/useRealtime";
 import "../Styles/ask.css";
 
 export default function AskPage({ student }) {
@@ -14,17 +14,25 @@ export default function AskPage({ student }) {
     const department = student.department || "CST";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
 
-    const fetchQs = useCallback(async () => {
-        const res = await axios.get(`${API_BASE}/api/ask/${department}`);
-        setQuestions(res.data);
+    const loadQuestions = useCallback(async () => {
+        try {
+            const res = await axios.get(`${API_BASE}/api/ask/${department}`);
+            setQuestions(res.data);
+        } catch (error) {
+            console.error(error);
+        }
     }, [department]);
 
-    useEffect(() => { fetchQs(); }, [fetchQs]);
+    useEffect(() => {
+        // Calling the async function inside the effect
+        const load = async () => {
+            await loadQuestions();
+        };
+        load();
+    }, [loadQuestions]);
 
-    // REALTIME: Listen to changes in 'ask' table for this department
-    useRealtime('ask', (payload) => {
-        // Simple and robust: Refetch list on any change (Insert, Update Answer, Delete)
-        fetchQs();
+    useRealtime('ask', () => {
+        loadQuestions();
     }, 'department', department);
 
     const upload = async (files) => {

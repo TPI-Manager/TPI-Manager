@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
+import { useRealtime } from "../hooks/useRealtime";
 import "../Styles/event.css";
 
 export default function EventPage({ student }) {
@@ -12,7 +12,6 @@ export default function EventPage({ student }) {
     const isAdmin = student.role === "admin" || student.role === "teacher";
     const dept = student.department || "CST";
 
-    // API fetches events by dept
     const fetchEvents = useCallback(async () => {
         try {
             const res = await axios.get(`${API_BASE}/api/events/${dept}`);
@@ -23,10 +22,12 @@ export default function EventPage({ student }) {
     }, [dept]);
 
     useEffect(() => {
-        fetchEvents();
+        const load = async () => {
+            await fetchEvents();
+        };
+        load();
     }, [fetchEvents]);
 
-    // REALTIME
     useRealtime('events', () => {
         fetchEvents();
     });
@@ -40,7 +41,7 @@ export default function EventPage({ student }) {
                 creatorId: userId
             });
             setShowModal(false);
-        } catch (e) { console.error(e); }
+        } catch (error) { console.error(error); }
     };
 
     const del = async (id) => {
@@ -49,7 +50,7 @@ export default function EventPage({ student }) {
             await axios.delete(`${API_BASE}/api/events/${id}`, {
                 headers: { 'x-user-id': userId }
             });
-        } catch (e) { alert("Delete failed"); }
+        } catch { alert("Delete failed"); }
     };
 
     return (

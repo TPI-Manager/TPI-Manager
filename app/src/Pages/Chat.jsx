@@ -17,27 +17,35 @@ export default function ChatPage({ student }) {
     const [viewerImage, setViewerImage] = useState(null);
     const bottomRef = useRef();
 
-    // 1. Initial Load
-    useEffect(() => {
-        axios.get(`${API_BASE}/api/chat?room=${room}`).then(res => {
+    const fetchMessages = useCallback(async () => {
+        try {
+            const res = await axios.get(`${API_BASE}/api/chat?room=${room}`);
             setMessages(res.data);
-            scrollToBottom();
-        });
+        } catch (error) {
+            console.error(error);
+        }
     }, [room]);
 
-    // 2. Realtime Subscription (Standard Supabase)
+    useEffect(() => {
+        const load = async () => {
+            await fetchMessages();
+        };
+        load();
+    }, [fetchMessages]);
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+        }
+    }, [messages]);
+
     useRealtime('chat', (payload) => {
         if (payload.eventType === 'INSERT') {
             setMessages(prev => [...prev, payload.new]);
-            scrollToBottom();
         } else if (payload.eventType === 'DELETE') {
             setMessages(prev => prev.filter(m => m.id !== payload.old.id));
         }
     }, 'room', room);
-
-    const scrollToBottom = () => {
-        setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
-    };
 
     const uploadFiles = async () => {
         if (selectedImages.length === 0) return [];
@@ -52,7 +60,6 @@ export default function ChatPage({ student }) {
         if (!text && selectedImages.length === 0) return;
         const imgs = await uploadFiles();
 
-        // Optimistic UI update (optional, but Realtime is usually fast enough)
         await axios.post(`${API_BASE}/api/chat`, {
             text,
             senderId: userId,

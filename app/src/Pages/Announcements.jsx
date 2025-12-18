@@ -28,12 +28,15 @@ export default function AnnouncementPage({ student }) {
 
     // Initial Load
     useEffect(() => {
-        fetchAnnouncements();
+        const load = async () => {
+            await fetchAnnouncements();
+        };
+        load();
     }, [fetchAnnouncements]);
 
     // 2. Realtime Subscription
     // Listens for ANY change to the 'announcements' table in Supabase
-    useRealtime('announcements', (payload) => {
+    useRealtime('announcements', () => {
         // Simple strategy: If anything changes (Insert/Delete), just refetch the list
         // This ensures the order and data is always 100% synced with DB
         fetchAnnouncements();

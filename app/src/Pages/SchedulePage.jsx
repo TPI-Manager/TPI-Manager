@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import { useRealtime } from "../hooks/useRealtime"; // FIXED IMPORT
+import { useRealtime } from "../hooks/useRealtime";
 import "../Styles/schedule.css";
 
 export default function SchedulePage({ student }) {
@@ -14,13 +14,9 @@ export default function SchedulePage({ student }) {
     const sem = student.semester || "1st";
     const shift = student.shift || "Morning";
 
-    const fetchSchedule = useCallback(async () => {
+    const loadSchedule = useCallback(async () => {
         try {
             const res = await axios.get(`${API_BASE}/api/schedules/${dept}`);
-            // Client-side filtering for Semester/Shift (since Supabase table is flat)
-            // or if API endpoint filters it. The provided API endpoint /api/schedules/:dept 
-            // returns all for dept, so we filter here to match UI context if needed.
-            // For now, assuming API returns relevant list or filtering happens there.
             const filtered = res.data.filter(s => s.semester === sem && s.shift === shift);
             setSchedules(filtered);
         } catch {
@@ -29,15 +25,15 @@ export default function SchedulePage({ student }) {
     }, [dept, sem, shift]);
 
     useEffect(() => {
-        fetchSchedule();
-    }, [fetchSchedule]);
+        const load = async () => {
+            await loadSchedule();
+        };
+        load();
+    }, [loadSchedule]);
 
-    // REALTIME IMPLEMENTATION
     useRealtime('schedules', () => {
-        fetchSchedule();
+        loadSchedule();
     });
-
-    const refresh = fetchSchedule;
 
     const save = async () => {
         try {
@@ -49,8 +45,7 @@ export default function SchedulePage({ student }) {
                 creatorId: student.id || student.studentId || student.employeeId || student.adminId
             });
             setShowModal(false);
-            // Realtime triggers refresh
-        } catch (e) { console.error(e); }
+        } catch (error) { console.error(error); }
     };
 
     const del = async (id) => {
@@ -59,8 +54,7 @@ export default function SchedulePage({ student }) {
             await axios.delete(`${API_BASE}/api/schedules/${id}`, {
                 headers: { 'x-user-id': userId }
             });
-            // Realtime triggers refresh
-        } catch (e) { alert("Delete failed or unauthorized"); }
+        } catch { alert("Delete failed or unauthorized"); }
     };
 
     return (
