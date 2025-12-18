@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "concurrently \"nodemon server.js\" \"cd app && npm run dev\"",
     "start": "node server.js",
-    "build": "npm install && cd app && npm install && npm run build",
+    "build": "npm install && cd app && npm install && npm run build && cd .. && rm -rf dist && cp -r app/dist ./dist",
     "test": "jest --detectOpenHandles --forceExit"
   },
   "dependencies": {

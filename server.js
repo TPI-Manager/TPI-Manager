@@ -116,10 +116,10 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
   const fs = require("fs");
 
   const potentialPaths = [
-    path.join(__dirname, "app", "dist"),
-    path.join(process.cwd(), "app", "dist"),
     path.join(__dirname, "dist"),
-    path.join(process.cwd(), "dist")
+    path.join(process.cwd(), "dist"),
+    path.join(__dirname, "app", "dist"),
+    path.join(process.cwd(), "app", "dist")
   ];
 
   let distPath = potentialPaths.find(p => fs.existsSync(path.join(p, "index.html")));
