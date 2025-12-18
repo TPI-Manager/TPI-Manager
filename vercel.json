@@ -10,8 +10,8 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "source": "/((?!api/|socket.io/|.*\\..*).*)",
+      "destination": "/index.html"
     }
   ]
 }
