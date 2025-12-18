@@ -5,12 +5,12 @@ import "../Styles/info.css";
 export default function Info({ student, setLoggedStudent }) {
     const [showEdit, setShowEdit] = useState(false);
 
+    // Only Admin can edit their credentials via this specific modal logic
     const isAdmin = student.role === "admin";
 
     const handleUpdateSuccess = (updatedUser) => {
-        // Update local storage and app state
-        // Note: setLoggedStudent needs to be passed down from Home -> Info
-        if (setLoggedStudent) setLoggedStudent(updatedUser);
+        setLoggedStudent(updatedUser);
+        // LocalStorage update handled by App.jsx effect
     };
 
     return (
@@ -18,15 +18,19 @@ export default function Info({ student, setLoggedStudent }) {
             <h2>Profile Information</h2>
             <div className="info-card">
                 <p><strong>Name:</strong> {student.fullName}</p>
-                <p><strong>ID:</strong> {student.id}</p>
-                {student.department && <p><strong>Dept:</strong> {student.department}</p>}
-                {student.semester && <p><strong>Semester:</strong> {student.semester}</p>}
+                <p><strong>ID / Username:</strong> {student.id}</p>
                 <p><strong>Role:</strong> {student.role ? student.role.toUpperCase() : "STUDENT"}</p>
+                {student.department && <p><strong>Dept:</strong> {student.department}</p>}
             </div>
 
             {isAdmin && (
-                <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <button onClick={() => setShowEdit(true)}>Edit Credentials</button>
+                <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                    <button onClick={() => setShowEdit(true)}>
+                        <i className="bi bi-shield-lock"></i> Update Admin Credentials
+                    </button>
+                    <p style={{ fontSize: '0.8rem', color: '#888', marginTop: '10px' }}>
+                        Click here to change your username or password.
+                    </p>
                 </div>
             )}
 

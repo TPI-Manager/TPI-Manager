@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
-import "../Styles/signup.css"; // Reuse existing styles
+import { auth } from "../firebase";
+import { signInWithCustomToken, signOut } from "firebase/auth";
+import "../Styles/signup.css";
 
 export default function EditProfileModal({ student, onClose, onUpdateSuccess }) {
     const [newId, setNewId] = useState(student.id);
@@ -13,6 +15,10 @@ export default function EditProfileModal({ student, onClose, onUpdateSuccess }) 
     const handleUpdate = async () => {
         if (newPassword && newPassword !== confirmPassword) {
             setMsg("Passwords do not match");
+            return;
+        }
+        if (!newId || newId.length < 3) {
+            setMsg("Username too short");
             return;
         }
 
@@ -28,13 +34,22 @@ export default function EditProfileModal({ student, onClose, onUpdateSuccess }) 
             });
 
             if (res.data.user) {
-                setMsg("Success!");
+                setMsg("Credentials Updated!");
+
+                // If the ID changed, the backend sends a NEW firebase token
+                // We must re-auth with Firebase immediately so rules verify against the new ID
+                if (res.data.firebaseToken) {
+                    await signOut(auth);
+                    await signInWithCustomToken(auth, res.data.firebaseToken);
+                }
+
                 setTimeout(() => {
                     onUpdateSuccess(res.data.user);
                     onClose();
                 }, 1000);
             }
         } catch (error) {
+            console.error(error);
             setMsg(error.response?.data?.error || "Update failed");
         } finally {
             setLoading(false);
@@ -44,24 +59,41 @@ export default function EditProfileModal({ student, onClose, onUpdateSuccess }) 
     return (
         <div className="modal-overlay">
             <div className="modal">
-                <h2>Edit Admin Credentials</h2>
+                <div className="brand-header" style={{ marginBottom: '20px' }}>
+                    <h2>Update Admin Credentials</h2>
+                    <p>Modify your login details</p>
+                </div>
+
                 <div className="form-group">
-                    <label>Username / ID</label>
-                    <input value={newId} onChange={e => setNewId(e.target.value)} />
+                    <label>Username (Login ID)</label>
+                    <input
+                        value={newId}
+                        onChange={e => setNewId(e.target.value)}
+                        placeholder="Current: admin"
+                    />
                 </div>
                 <div className="form-group">
-                    <label>New Password (leave blank to keep)</label>
-                    <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
+                    <label>New Password (Optional)</label>
+                    <input
+                        type="password"
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
+                        placeholder="Leave blank to keep current"
+                    />
                 </div>
                 <div className="form-group">
                     <label>Confirm New Password</label>
-                    <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
+                    />
                 </div>
 
-                {msg && <div className={`status-msg ${msg === "Success!" ? "ok" : "err"}`}>{msg}</div>}
+                {msg && <div className={`status-msg ${msg.includes("Updated") ? "ok" : "err"}`}>{msg}</div>}
 
                 <div className="modal-actions">
-                    <button onClick={onClose}>Cancel</button>
+                    <button className="secondary-btn" onClick={onClose}>Cancel</button>
                     <button onClick={handleUpdate} disabled={loading}>
                         {loading ? "Saving..." : "Save Changes"}
                     </button>

@@ -20,7 +20,7 @@ const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : ["htt
 app.use(cors({
   origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "x-user-id"], // Allow custom header for delete
+  allowedHeaders: ["Content-Type", "x-user-id"],
   credentials: true
 }));
 
@@ -42,50 +42,57 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-// Seed Admin
+// --- SMART ADMIN SEEDING ---
 const seedAdmin = async () => {
   if (!db) return;
   try {
-    const adminRef = db.collection("users").doc("admin");
-    const doc = await adminRef.get();
-    if (!doc.exists) {
-      console.log("🌱 Seeding Admin...");
+    // Check if ANY admin exists to avoid re-seeding if ID was changed
+    const snapshot = await db.collection("users").where("role", "==", "admin").limit(1).get();
+
+    if (snapshot.empty) {
+      console.log("🌱 No admin found. Seeding default 'admin' account...");
+      const adminRef = db.collection("users").doc("admin");
+
       const salt = await bcrypt.genSalt(10);
+      // Default password: "admin123" (Change this immediately in UI)
       const hashedPassword = await bcrypt.hash(process.env.ADMIN_INIT_PASS || "admin123", salt);
+
       await adminRef.set({
         id: "admin",
         password: hashedPassword,
+        firstName: "System",
+        lastName: "Administrator",
         fullName: "System Administrator",
         role: "admin",
+        adminId: "admin",
         createdAt: new Date().toISOString()
       });
+      console.log("✅ Default Admin created. ID: 'admin', Pass: 'admin123'");
+    } else {
+      // Admin already exists (could be custom ID)
     }
-  } catch (error) { console.error("Admin seed error", error); }
+  } catch (error) {
+    console.error("Error seeding admin:", error);
+  }
 };
 
 app.get("/api/stream", sseHandler);
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 app.use("/api", apiRoutes);
 
-// Updated Upload Endpoint to require ownerId
 app.post("/api/upload", upload.array("images", 3), async (req, res) => {
   try {
     const ownerId = req.body.ownerId;
-    if (!ownerId) {
-      return res.status(400).json({ error: "Owner ID required for uploads" });
-    }
-
+    if (!ownerId) return res.status(400).json({ error: "Owner ID required" });
     if (!req.files || req.files.length === 0) return res.json({ files: [] });
 
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     for (const file of req.files) {
-      if (!allowedMimeTypes.includes(file.mimetype)) {
-        return res.status(400).json({ error: "Invalid file type. Only images allowed." });
-      }
+      if (!allowed.includes(file.mimetype)) return res.status(400).json({ error: "Invalid file type" });
     }
 
-    const uploadPromises = req.files.map(file => uploadToFirebase(file, ownerId));
-    const files = await Promise.all(uploadPromises);
+    const promises = req.files.map(file => uploadToFirebase(file, ownerId));
+    const files = await Promise.all(promises);
 
     res.json({ files });
   } catch (error) {
@@ -98,12 +105,9 @@ if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
   const path = require("path");
   const fs = require("fs");
   const distPath = path.join(process.cwd(), "dist");
-
   if (fs.existsSync(distPath)) {
     app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
+    app.get("*", (req, res) => res.sendFile(path.join(distPath, "index.html")));
   }
 }
 
