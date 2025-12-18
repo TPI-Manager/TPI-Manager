@@ -1,0 +1,50 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // --- AUTHENTICATION REQUIRED FOR READS ---
+    // Instead of public read, we can require the user to be logged in 
+    // to see content. This is slightly better than full public read.
+    // (Assuming you use Firebase Auth on client, otherwise stick to 'if true')
+
+    // Since you are using Custom Auth / No Firebase Auth on Client currently,
+    // we must keep 'allow read: if true' to basic collections so users can see updates.
+    
+    // --- WRITE SECURITY STRATEGY ---
+    // 1. Data Integrity: We must keep Supabase and Firestore in Sync.
+    // 2. Logic: The Backend API (Node.js) handles all business logic (who can edit what).
+    // 3. Enforcement: We BLOCK all client-side writes here.
+    // Result: A user MUST call your API to change data. They cannot hack around it.
+
+    match /announcements/{docId} {
+      allow read: if true;
+      allow write: if false; // Only Backend Admin SDK can write
+    }
+
+    match /chat/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /ask/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /events/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /schedules/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Default: Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
