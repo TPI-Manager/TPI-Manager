@@ -51,7 +51,7 @@ export default function Home({ loggedStudent, setLoggedStudent, theme, toggleThe
                     {page === "Schedule" && <SchedulePage student={loggedStudent} />}
                     {page === "Chat" && <Chat student={loggedStudent} />}
                     {page === "Ask" && <Ask student={loggedStudent} />}
-                    {page === "Info" && <Info student={loggedStudent} />}
+                    {page === "Info" && <Info student={loggedStudent} setLoggedStudent={setLoggedStudent} />}
                     {page === "Add User" && <Signup isPublic={false} />}
                 </div>
             </main>

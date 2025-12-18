@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check auth
+    // Since we are using Custom Auth logic in Node.js (Admin SDK), 
+    // the client reads data via Socket/API. 
+    // However, if we ever allow client SDK direct access:
+    
+    // Lock everything by default.
+    // The Server (Node.js Admin SDK) bypasses these rules automatically.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

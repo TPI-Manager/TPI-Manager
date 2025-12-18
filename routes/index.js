@@ -1,10 +1,23 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
-const { FOLDERS, readJSON, writeJSON, deleteFile, getFilePath } = require("../utils/storage");
+const { body, param, validationResult } = require("express-validator");
+const { db } = require("../utils/firebase");
 
 const router = express.Router();
+
+// Middleware to ensure DB is ready
+const checkDB = (req, res, next) => {
+  if (!db) return res.status(503).json({ error: "Database not connected" });
+  next();
+};
+
+const validate = (validations) => {
+  return async (req, res, next) => {
+    await Promise.all(validations.map(validation => validation.run(req)));
+    const errors = validationResult(req);
+    if (errors.isEmpty()) return next();
+    return res.status(400).json({ error: errors.array()[0].msg });
+  };
+};
 
 const computeStatus = (item) => {
   if (!item) return null;
@@ -14,60 +27,66 @@ const computeStatus = (item) => {
   return { ...item, status: "active" };
 };
 
-router.post("/auth/login", (req, res) => {
+// --- AUTH ---
+
+router.post("/auth/login", [
+  checkDB,
+  body("userId").trim().escape().notEmpty().withMessage("User ID required"),
+  body("password").notEmpty().withMessage("Password required")
+], validate([]), async (req, res) => {
   try {
     const { userId, password } = req.body;
 
-    const searchFolders = [
-      { dir: FOLDERS.ADMINS, role: "admin" },
-      { dir: FOLDERS.TEACHERS, role: "teacher" },
-      { dir: FOLDERS.STUDENTS, role: "student" }
-    ];
+    const userDoc = await db.collection("users").doc(userId).get();
 
-    for (const { dir, role } of searchFolders) {
-      if (!fs.existsSync(dir)) continue;
-      const files = fs.readdirSync(dir);
-      for (const file of files) {
-        if (!file.endsWith(".json")) continue;
-        const user = readJSON(path.join(dir, file));
-        if (user && user.password === password) {
-          if (user.id === userId || user.studentId === userId || user.employeeId === userId || user.adminId === userId) {
-            return res.json({ ...user, role });
-          }
-        }
-      }
+    if (!userDoc.exists) {
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    res.status(401).json({ error: "Invalid credentials" });
+    const userData = userDoc.data();
+    // Note: In a real high-security app, use bcrypt to compare hashes, not plain text
+    if (userData.password !== password) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const { password: _, ...safeUser } = userData;
+    res.json(safeUser);
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ error: "Server Error" });
   }
 });
 
-router.post("/auth/create", (req, res) => {
+router.post("/auth/create", [
+  checkDB,
+  body("userType").isIn(['student', 'teacher', 'admin']).withMessage("Invalid Role"),
+  body("id").trim().escape().notEmpty().isLength({ min: 3 }).withMessage("ID invalid"),
+  body("password").isLength({ min: 6 }).withMessage("Password must be 6+ chars"),
+  body("firstName").trim().escape(),
+  body("lastName").trim().escape()
+], validate([]), async (req, res) => {
   try {
     const data = req.body;
-    const { userType, id, password } = data;
+    const { userType, id } = data;
 
-    if (!id || !password || !userType) return res.status(400).json({ error: "Missing required fields" });
+    const docRef = db.collection("users").doc(id);
+    const doc = await docRef.get();
 
-    let targetFolder;
-    if (userType === "admin") targetFolder = FOLDERS.ADMINS;
-    else if (userType === "teacher") targetFolder = FOLDERS.TEACHERS;
-    else targetFolder = FOLDERS.STUDENTS;
-
-    const filePath = getFilePath(targetFolder, id);
-    if (fs.existsSync(filePath)) return res.json({ message: "duplicate" });
+    if (doc.exists) return res.json({ message: "duplicate" });
 
     const newUser = {
       ...data,
       fullName: `${data.firstName || ""} ${data.lastName || ""}`.trim(),
       createdAt: new Date().toISOString(),
-      role: userType
+      role: userType,
+      studentId: (userType === 'student') ? id : undefined,
+      employeeId: (userType === 'teacher') ? id : undefined,
+      adminId: (userType === 'admin') ? id : undefined
     };
 
-    writeJSON(filePath, newUser);
+    Object.keys(newUser).forEach(key => newUser[key] === undefined && delete newUser[key]);
+
+    await docRef.set(newUser);
     res.json({ message: "Saved", data: newUser });
   } catch (error) {
     console.error("Create User Error:", error);
@@ -75,27 +94,77 @@ router.post("/auth/create", (req, res) => {
   }
 });
 
-router.get("/announcements", (req, res) => {
+router.put("/auth/update", [
+  checkDB,
+  body("currentId").notEmpty(),
+  body("role").equals("admin").withMessage("Unauthorized action"),
+  body("newId").optional().trim().escape().isLength({ min: 3 }),
+  body("newPassword").optional().isLength({ min: 6 })
+], validate([]), async (req, res) => {
   try {
-    if (!fs.existsSync(FOLDERS.ANNOUNCEMENTS)) return res.json([]);
-    const files = fs.readdirSync(FOLDERS.ANNOUNCEMENTS);
-    const data = files
-      .filter(f => f.endsWith(".json"))
-      .map(f => readJSON(path.join(FOLDERS.ANNOUNCEMENTS, f)))
-      .filter(Boolean);
-    res.json(data);
+    const { currentId, newPassword, newId } = req.body;
+
+    const userRef = db.collection("users").doc(currentId);
+    const doc = await userRef.get();
+
+    if (!doc.exists) return res.status(404).json({ error: "User not found" });
+
+    const updates = {};
+    if (newPassword) updates.password = newPassword;
+
+    if (newId && newId !== currentId) {
+      const newRef = db.collection("users").doc(newId);
+      const newDoc = await newRef.get();
+      if (newDoc.exists) return res.status(400).json({ error: "New ID already taken" });
+
+      const oldData = doc.data();
+      const newData = { ...oldData, ...updates, id: newId, adminId: newId };
+
+      const batch = db.batch();
+      batch.set(newRef, newData);
+      batch.delete(userRef);
+      await batch.commit();
+
+      return res.json({ message: "Updated", user: newData });
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await userRef.update(updates);
+    }
+
+    const updatedDoc = await db.collection("users").doc(newId || currentId).get();
+    const { password: _, ...safeUser } = updatedDoc.data();
+    res.json({ message: "Updated", user: safeUser });
+
+  } catch (error) {
+    console.error("Update User Error:", error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+// --- ANNOUNCEMENTS ---
+
+router.get("/announcements", checkDB, async (req, res) => {
+  try {
+    const snapshot = await db.collection("announcements").orderBy("createdAt", "desc").get();
+    const list = snapshot.docs.map(doc => doc.data());
+    res.json(list);
   } catch (error) {
     console.error("Announcements Get Error:", error);
     res.status(500).json({ error: "Failed to fetch announcements" });
   }
 });
 
-router.post("/announcements", (req, res) => {
+router.post("/announcements", [
+  checkDB,
+  body("title").trim().escape().notEmpty(),
+  body("body").trim().escape().notEmpty(),
+  body("createdBy").trim().escape()
+], validate([]), async (req, res) => {
   try {
-    const id = req.body.id || uuidv4();
-    const filePath = getFilePath(FOLDERS.ANNOUNCEMENTS, id);
-    const data = { id, ...req.body, createdAt: new Date().toISOString() };
-    writeJSON(filePath, data);
+    const ref = db.collection("announcements").doc();
+    const data = { id: ref.id, ...req.body, createdAt: new Date().toISOString() };
+    await ref.set(data);
     res.json(data);
   } catch (error) {
     console.error("Announcements Post Error:", error);
@@ -103,9 +172,9 @@ router.post("/announcements", (req, res) => {
   }
 });
 
-router.delete("/announcements/:id", (req, res) => {
+router.delete("/announcements/:id", checkDB, async (req, res) => {
   try {
-    deleteFile(getFilePath(FOLDERS.ANNOUNCEMENTS, req.params.id));
+    await db.collection("announcements").doc(req.params.id).delete();
     res.json({ message: "Deleted" });
   } catch (error) {
     console.error("Announcements Delete Error:", error);
@@ -113,73 +182,66 @@ router.delete("/announcements/:id", (req, res) => {
   }
 });
 
-const handleDeptGet = (folder, req, res) => {
+// --- GENERIC RESOURCES ---
+
+const handleDeptGet = async (collection, req, res) => {
   try {
     const { dept, sem, shift } = req.params;
+    const snapshot = await db.collection(collection)
+      .where("department", "==", dept)
+      .where("semester", "==", sem)
+      .where("shift", "==", shift)
+      .get();
 
-    // Defensive check: if params are weird
-    if (!dept || !sem || !shift) return res.json([]);
-
-    const dir = path.join(folder, dept, sem, shift);
-
-    if (!fs.existsSync(dir)) return res.json([]);
-    if (!fs.statSync(dir).isDirectory()) return res.json([]);
-
-    const files = fs.readdirSync(dir);
-    const items = files
-      .filter(f => f.endsWith(".json"))
-      .map(f => readJSON(path.join(dir, f)))
-      .filter(Boolean);
-
+    const items = snapshot.docs.map(doc => doc.data());
     const computed = items.map(computeStatus).filter(Boolean);
     res.json(computed);
   } catch (error) {
-    console.error(`Dept Get Error at ${req.path}:`, error);
-    // Return empty array instead of 500 to keep UI alive
+    console.error(`Get ${collection} Error:`, error);
     res.json([]);
   }
 };
 
-const handleDeptSave = (folder, req, res) => {
+const handleDeptSave = async (collection, req, res) => {
   try {
     const { department, semester, shift, id } = req.body;
     if (!department || !semester || !shift) return res.status(400).json({ error: "Missing metadata" });
 
-    const entityId = id || uuidv4();
-    const filePath = getFilePath(path.join(folder, department, semester, shift), entityId);
-    const existing = readJSON(filePath) || {};
+    const ref = id ? db.collection(collection).doc(id) : db.collection(collection).doc();
     const data = {
-      ...existing,
       ...req.body,
-      id: entityId,
-      createdAt: existing.createdAt || new Date().toISOString()
+      id: ref.id,
+      createdAt: req.body.createdAt || new Date().toISOString()
     };
 
-    writeJSON(filePath, data);
+    await ref.set(data, { merge: true });
     res.json(computeStatus(data));
   } catch (error) {
-    console.error("Dept Save Error:", error);
+    console.error(`Save ${collection} Error:`, error);
     res.status(500).json({ error: "Failed to save data" });
   }
 };
 
-const handleDeptDelete = (folder, req, res) => {
+const handleDeptDelete = async (collection, req, res) => {
   try {
-    const { dept, sem, shift, id } = req.params;
-    deleteFile(getFilePath(path.join(folder, dept, sem, shift), id));
+    await db.collection(collection).doc(req.params.id).delete();
     res.json({ message: "Deleted" });
   } catch (error) {
-    console.error("Dept Delete Error:", error);
+    console.error(`Delete ${collection} Error:`, error);
     res.status(500).json({ error: "Failed to delete" });
   }
 };
 
-router.get("/events/:dept/:sem/:shift", (req, res) => handleDeptGet(FOLDERS.EVENTS, req, res));
-router.post("/events", (req, res) => handleDeptSave(FOLDERS.EVENTS, req, res));
-router.delete("/events/:dept/:sem/:shift/:id", (req, res) => handleDeptDelete(FOLDERS.EVENTS, req, res));
+router.get("/events/:dept/:sem/:shift", checkDB, (req, res) => handleDeptGet("events", req, res));
+router.post("/events", [
+  checkDB, body("title").trim().escape(), body("body").trim().escape()
+], validate([]), (req, res) => handleDeptSave("events", req, res));
+router.delete("/events/:dept/:sem/:shift/:id", checkDB, (req, res) => handleDeptDelete("events", req, res));
 
-router.get("/schedules/:dept/:sem/:shift", (req, res) => handleDeptGet(FOLDERS.SCHEDULES, req, res));
-router.post("/schedules", (req, res) => handleDeptSave(FOLDERS.SCHEDULES, req, res));
-router.delete("/schedules/:dept/:sem/:shift/:id", (req, res) => handleDeptDelete(FOLDERS.SCHEDULES, req, res));
+router.get("/schedules/:dept/:sem/:shift", checkDB, (req, res) => handleDeptGet("schedules", req, res));
+router.post("/schedules", [
+  checkDB, body("title").trim().escape()
+], validate([]), (req, res) => handleDeptSave("schedules", req, res));
+router.delete("/schedules/:dept/:sem/:shift/:id", checkDB, (req, res) => handleDeptDelete("schedules", req, res));
 
 module.exports = router;

@@ -1,47 +1,127 @@
+require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const multer = require("multer");
 const morgan = require("morgan");
-const { FOLDERS } = require("./utils/storage");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const { db, uploadToFirebase } = require("./utils/firebase");
 const apiRoutes = require("./routes");
 const socketManager = require("./sockets");
 
 const app = express();
 const server = http.createServer(app);
+
+// Production Security Headers
+app.use(helmet());
+
+// CORS Config - Strict in Production
+const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : ["http://localhost:5173", "http://localhost:3000"];
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 const io = new Server(server, {
-  cors: { origin: "*" },
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true
+  },
   path: "/socket.io"
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.use(morgan("dev"));
-app.use(cors());
+// Logging (Minimal in production)
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
-app.use("/uploads", express.static(FOLDERS.UPLOADS));
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, FOLDERS.UPLOADS),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname)
+// Rate Limiting to prevent brute force
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Too many requests from this IP, please try again later."
 });
-const upload = multer({ storage });
+app.use("/api", limiter);
+
+// Memory storage for Multer to stream directly to Firebase
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB Limit
+});
+
+// Check and Seed Admin
+const seedAdmin = async () => {
+  if (!db) return;
+  try {
+    const adminRef = db.collection("users").doc("admin");
+    const doc = await adminRef.get();
+    if (!doc.exists) {
+      console.log("🌱 Seeding default Admin account...");
+      // In production, you might want to force a random password logged to console instead
+      const initialPassword = process.env.ADMIN_INIT_PASS || "admin123";
+      await adminRef.set({
+        id: "admin",
+        password: initialPassword,
+        firstName: "System",
+        lastName: "Administrator",
+        fullName: "System Administrator",
+        role: "admin",
+        createdAt: new Date().toISOString()
+      });
+      console.log("✅ Admin created.");
+    }
+  } catch (error) {
+    console.error("Error seeding admin:", error);
+  }
+};
 
 app.use("/api", apiRoutes);
 
-app.post("/api/upload", upload.array("images", 3), (req, res) => {
-  const files = req.files ? req.files.map(f => f.filename) : [];
-  res.json({ files });
+// Upload Endpoint
+app.post("/api/upload", upload.array("images", 3), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) return res.json({ files: [] });
+
+    // Validate file types
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    for (const file of req.files) {
+      if (!allowedMimeTypes.includes(file.mimetype)) {
+        return res.status(400).json({ error: "Invalid file type. Only images allowed." });
+      }
+    }
+
+    const uploadPromises = req.files.map(file => uploadToFirebase(file));
+    const files = await Promise.all(uploadPromises);
+
+    res.json({ files });
+  } catch (error) {
+    console.error("Upload error:", error);
+    res.status(500).json({ error: "Upload failed" });
+  }
 });
 
 socketManager(io);
 
+// Handle React Routing in Production
+if (process.env.NODE_ENV === "production") {
+  const path = require("path");
+  app.use(express.static(path.join(__dirname, "app/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "app", "dist", "index.html"));
+  });
+}
+
 if (require.main === module) {
-  server.listen(PORT, () => {
+  server.listen(PORT, async () => {
     console.log(`\n🚀 Server running on port ${PORT}`);
-    console.log(`➜  Local:   http://localhost:${PORT}`);
-    console.log(`➜  Network: http://0.0.0.0:${PORT}\n`);
+    await seedAdmin();
   });
 }
 
