@@ -97,3 +97,17 @@ export default function AnnouncementPage({ student }) {
                             // Only show delete button if current user is the creator
                             canDelete={item.creatorId === userId}
                             onDelete={handleDelete}
+                        />
+                    ))
+                )}
+            </div>
+
+            {showModal && (
+                <AnnouncementFormModal
+                    onClose={() => setShowModal(false)}
+                    onSave={handleSave}
+                />
+            )}
+        </div>
+    );
+}
