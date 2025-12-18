@@ -13,7 +13,7 @@ export function useRealtime(table, onUpdate, filterField = null, filterValue = n
                 q = query(q, where(filterField, "==", filterValue));
             }
 
-            console.log(`Subscribing to Firestore: ${table}`);
+            // console.log(`Subscribing to Firestore: ${table}`);
 
             unsubscribe = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
