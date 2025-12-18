@@ -145,7 +145,13 @@ router.delete("/chat/:id", async (req, res) => {
   if (!msg) return res.status(404).send();
 
   // Ownership check
-  if (msg.senderId !== req.headers["x-user-id"]) return res.status(403).json({ error: "Unauthorized" });
+  if (msg.senderId !== req.headers["x-user-id"]) {
+    // Check if user is admin
+    const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+  }
 
   await supabase.from("chat").delete().eq("id", req.params.id);
   broadcast(`chat-${msg.room}`, { action: "delete", id: req.params.id });
@@ -166,7 +172,13 @@ router.post("/ask", async (req, res) => {
 router.delete("/ask/:id", async (req, res) => {
   const { data: q } = await supabase.from("ask").select("department, senderId").eq("id", req.params.id).single();
   if (!q) return res.status(404).send();
-  if (q.senderId !== req.headers["x-user-id"]) return res.status(403).json({ error: "Unauthorized" });
+  if (q.senderId !== req.headers["x-user-id"]) {
+    // Check if user is admin
+    const { data: user } = await supabase.from("users").select("role").eq("id", req.headers["x-user-id"]).single();
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+  }
 
   await supabase.from("ask").delete().eq("id", req.params.id);
   broadcast(`ask-${q.department}`, { action: "delete", id: req.params.id });

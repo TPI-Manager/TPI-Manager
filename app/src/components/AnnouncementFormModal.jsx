@@ -1,19 +1,44 @@
 import React, { useState } from "react";
+import Modal from "./Modal";
 
 export default function AnnouncementFormModal({ onClose, onSave }) {
     const [form, setForm] = useState({ title: "", body: "" });
 
+    const handleSave = () => {
+        if (!form.title || !form.body) return; // Simple validation
+        onSave(form);
+    };
+
     return (
-        <div className="modal-overlay">
-            <div className="modal">
-                <h3>New Announcement</h3>
-                <input placeholder="Title" onChange={e => setForm({ ...form, title: e.target.value })} />
-                <textarea placeholder="Message" onChange={e => setForm({ ...form, body: e.target.value })} />
-                <div className="actions">
-                    <button onClick={onClose}>Cancel</button>
-                    <button onClick={() => onSave(form)}>Post</button>
-                </div>
+        <Modal
+            isOpen={true}
+            onClose={onClose}
+            title="New Announcement"
+            footer={
+                <>
+                    <button className="secondary-btn" onClick={onClose}>Cancel</button>
+                    <button onClick={handleSave}>Post</button>
+                </>
+            }
+        >
+            <div className="form-group">
+                <label>Title</label>
+                <input
+                    type="text"
+                    placeholder="Brief title..."
+                    value={form.title}
+                    onChange={e => setForm({ ...form, title: e.target.value })}
+                />
             </div>
-        </div>
+            <div className="form-group">
+                <label>Message</label>
+                <textarea
+                    placeholder="Write your announcement..."
+                    rows={5}
+                    value={form.body}
+                    onChange={e => setForm({ ...form, body: e.target.value })}
+                />
+            </div>
+        </Modal>
     );
 }

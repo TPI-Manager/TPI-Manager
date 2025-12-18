@@ -2,11 +2,14 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
 import { useRealtime } from "../hooks/useRealtime";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 import "../Styles/schedule.css";
 
 export default function SchedulePage({ student }) {
     const [schedules, setSchedules] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null);
     const [form, setForm] = useState({ title: "", startTime: "", endTime: "", days: [] });
 
     const isAdmin = student.role === "admin" || student.role === "teacher";
@@ -45,49 +48,112 @@ export default function SchedulePage({ student }) {
                 creatorId: student.id || student.studentId || student.employeeId || student.adminId
             });
             setShowModal(false);
-        } catch (error) { console.error(error); }
+            setForm({ title: "", startTime: "", endTime: "", days: [] });
+            toast.success("Schedule Added");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to add schedule");
+        }
     };
 
-    const del = async (id) => {
+    const confirmDelete = async () => {
+        if (!deleteTarget) return;
         try {
             const userId = student.id || student.studentId || student.employeeId || student.adminId;
-            await axios.delete(`${API_BASE}/api/schedules/${id}`, {
+            await axios.delete(`${API_BASE}/api/schedules/${deleteTarget}`, {
                 headers: { 'x-user-id': userId }
             });
-        } catch { alert("Delete failed or unauthorized"); }
+            toast.success("Schedule Removed");
+            setDeleteTarget(null);
+        } catch {
+            toast.error("Delete failed or unauthorized");
+            setDeleteTarget(null);
+        }
     };
 
     return (
         <div className="page">
             <div className="header">
                 <h2>Schedule ({dept})</h2>
-                {isAdmin && <button onClick={() => setShowModal(true)}>+</button>}
+                {isAdmin && (
+                    <button className="add-btn" onClick={() => setShowModal(true)}>
+                        <i className="bi bi-calendar-plus"></i> Add Class
+                    </button>
+                )}
             </div>
             <div className="grid">
                 {schedules.length === 0 && <p>No schedule found.</p>}
                 {schedules.map(s => (
                     <div key={s.id} className="card">
                         <h3>{s.title}</h3>
-                        <p>{s.startTime} - {s.endTime}</p>
-                        <p>{Array.isArray(s.days) ? s.days.join(", ") : ""}</p>
-                        {isAdmin && <button onClick={() => del(s.id)}>Delete</button>}
+                        <p><i className="bi bi-clock"></i> {s.startTime} - {s.endTime}</p>
+                        <p><i className="bi bi-calendar-week"></i> {Array.isArray(s.days) ? s.days.join(", ") : ""}</p>
+                        {isAdmin && (
+                            <button className="delete-action" onClick={() => setDeleteTarget(s.id)}>
+                                <i className="bi bi-trash"></i> Remove
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>
-            {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <input placeholder="Class Name" onChange={e => setForm({ ...form, title: e.target.value })} />
-                        <input type="time" onChange={e => setForm({ ...form, startTime: e.target.value })} />
-                        <input type="time" onChange={e => setForm({ ...form, endTime: e.target.value })} />
-                        <input placeholder="Days (comma sep)" onChange={e => setForm({ ...form, days: e.target.value.split(',') })} />
-                        <div className="modal-actions">
-                            <button className="cancel-btn" onClick={() => setShowModal(false)}>Close</button>
-                            <button onClick={save}>Save</button>
-                        </div>
-                    </div>
+            <Modal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                title="Add Class Schedule"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setShowModal(false)}>Cancel</button>
+                        <button onClick={save}>Save Class</button>
+                    </>
+                }
+            >
+                <div className="form-group">
+                    <label>Class Name</label>
+                    <input
+                        placeholder="e.g. Mathematics"
+                        value={form.title}
+                        onChange={e => setForm({ ...form, title: e.target.value })}
+                    />
                 </div>
-            )}
+                <div className="form-group">
+                    <label>Start Time</label>
+                    <input
+                        type="time"
+                        value={form.startTime}
+                        onChange={e => setForm({ ...form, startTime: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>End Time</label>
+                    <input
+                        type="time"
+                        value={form.endTime}
+                        onChange={e => setForm({ ...form, endTime: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Days (comma separated)</label>
+                    <input
+                        placeholder="Sat,Sun,Mon..."
+                        value={form.days.join(',')}
+                        onChange={e => setForm({ ...form, days: e.target.value.split(',') })}
+                    />
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                title="Confirm Deletion"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                        <button style={{ backgroundColor: 'var(--error)' }} onClick={confirmDelete}>Delete</button>
+                    </>
+                }
+            >
+                <p>Are you sure you want to remove this class from the schedule?</p>
+            </Modal>
         </div>
     );
 }

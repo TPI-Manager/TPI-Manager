@@ -4,11 +4,14 @@ import { API_BASE } from "../config";
 import { useRealtime } from "../hooks/useRealtime"; // Updated Hook
 import AnnouncementCard from "../components/AnnouncementCard";
 import AnnouncementFormModal from "../components/AnnouncementFormModal";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 import "../Styles/announcement.css";
 
 export default function AnnouncementPage({ student }) {
     const [list, setList] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null); // ID of item to delete
 
     // Identify User and Role
     // Prioritize specific IDs, fallback to generic 'id'
@@ -52,27 +55,27 @@ export default function AnnouncementPage({ student }) {
                 creatorId: userId // Required for strict ownership
             });
             setShowModal(false);
-            // fetchAnnouncements handled by Realtime, but safe to call here too for UI snap
             fetchAnnouncements();
+            toast.success("Announcement Posted!");
         } catch (error) {
             console.error("Save error:", error);
-            alert("Failed to post announcement");
+            toast.error("Failed to post announcement");
         }
     };
 
-    // 4. Delete Announcement
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to remove this announcement?")) {
-            try {
-                // Must pass x-user-id header so backend validates ownership
-                await axios.delete(`${API_BASE}/api/announcements/${id}`, {
-                    headers: { 'x-user-id': userId }
-                });
-                // Realtime will handle the UI update
-            } catch (error) {
-                console.error("Delete error", error);
-                alert("Permission denied: You can only delete announcements you created.");
-            }
+    // 4. Confirm Delete
+    const confirmDelete = async () => {
+        if (!deleteTarget) return;
+        try {
+            await axios.delete(`${API_BASE}/api/announcements/${deleteTarget}`, {
+                headers: { 'x-user-id': userId }
+            });
+            toast.success("Announcement Removed");
+            setDeleteTarget(null);
+        } catch (error) {
+            console.error("Delete error", error);
+            toast.error("Permission denied or Error.");
+            setDeleteTarget(null);
         }
     };
 
@@ -97,9 +100,9 @@ export default function AnnouncementPage({ student }) {
                         <AnnouncementCard
                             key={item.id}
                             data={item}
-                            // Only show delete button if current user is the creator
-                            canDelete={item.creatorId === userId}
-                            onDelete={handleDelete}
+                            // Only show delete button if current user is the creator OR admin
+                            canDelete={isAdmin || item.creatorId === userId}
+                            onDelete={(id) => setDeleteTarget(id)}
                         />
                     ))
                 )}
@@ -111,6 +114,20 @@ export default function AnnouncementPage({ student }) {
                     onSave={handleSave}
                 />
             )}
+
+            <Modal
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                title="Confirm Deletion"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                        <button style={{ backgroundColor: 'var(--error)' }} onClick={confirmDelete}>Delete</button>
+                    </>
+                }
+            >
+                <p>Are you sure you want to remove this announcement? This action cannot be undone.</p>
+            </Modal>
         </div>
     );
 }

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
 import { useRealtime } from "../hooks/useRealtime";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 import "../Styles/chat.css";
 
 export default function ChatPage({ student }) {
@@ -10,11 +12,13 @@ export default function ChatPage({ student }) {
     const shift = student.shift || "General";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
     const room = `${"department"}-${department}-${semester || ""}-${shift || ""}`;
+    const isAdmin = student.role === "admin"; // Check admin role
 
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [selectedImages, setSelectedImages] = useState([]);
     const [viewerImage, setViewerImage] = useState(null);
+    const [deleteTarget, setDeleteTarget] = useState(null);
     const bottomRef = useRef();
 
     const fetchMessages = useCallback(async () => {
@@ -72,11 +76,14 @@ export default function ChatPage({ student }) {
         setText(""); setSelectedImages([]);
     };
 
-    const deleteMessage = async (id) => {
-        if (window.confirm("Delete?")) {
-            try {
-                await axios.delete(`${API_BASE}/api/chat/${id}`, { headers: { 'x-user-id': userId } });
-            } catch { alert("Can only delete own messages"); }
+    const confirmDelete = async () => {
+        if (!deleteTarget) return;
+        try {
+            await axios.delete(`${API_BASE}/api/chat/${deleteTarget}`, { headers: { 'x-user-id': userId } });
+            setDeleteTarget(null);
+        } catch {
+            toast.error("Can only delete own messages");
+            setDeleteTarget(null);
         }
     };
 
@@ -106,7 +113,11 @@ export default function ChatPage({ student }) {
                                 {m.text && <div className="msg-text">{m.text}</div>}
 
                                 <div className="msg-meta">
-                                    {isMe && <span className="delete-icon" onClick={() => deleteMessage(m.id)}>🗑</span>}
+                                    {(isMe || isAdmin) && (
+                                        <span className="delete-icon" onClick={() => setDeleteTarget(m.id)}>
+                                            <i className="bi bi-trash"></i>
+                                        </span>
+                                    )}
                                     <span className="time">{new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                 </div>
                             </div>
@@ -115,6 +126,20 @@ export default function ChatPage({ student }) {
                 })}
                 <div ref={bottomRef} />
             </div>
+
+            <Modal
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                title="Delete Message"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                        <button style={{ backgroundColor: 'var(--error)' }} onClick={confirmDelete}>Delete</button>
+                    </>
+                }
+            >
+                <p>Are you sure you want to delete this message?</p>
+            </Modal>
 
             <div className="input-area-wrapper">
                 {selectedImages.length > 0 && (

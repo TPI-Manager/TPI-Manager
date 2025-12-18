@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { toast } from "react-toastify";
 import "../Styles/signup.css";
 
 export default function Signup({ isPublic = false, onSwitchToLogin }) {
@@ -9,13 +10,12 @@ export default function Signup({ isPublic = false, onSwitchToLogin }) {
         id: "", password: "", firstName: "", lastName: "",
         department: "CST", semester: "1st", shift: "Morning",
     });
-    const [status, setStatus] = useState("");
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSave = async () => {
         if (!form.id || !form.password) {
-            setStatus("ID and Password required");
+            toast.error("ID and Password required");
             return;
         }
 
@@ -32,9 +32,9 @@ export default function Signup({ isPublic = false, onSwitchToLogin }) {
         try {
             const res = await axios.post(`${API_BASE}/api/auth/create`, payload);
             if (res.data.message === "duplicate") {
-                setStatus("Error: User ID already exists.");
+                toast.error("Error: User ID already exists.");
             } else {
-                setStatus("Success: Account created!");
+                toast.success("Success: Account created!");
                 if (isPublic) {
                     setTimeout(() => onSwitchToLogin(), 1500);
                 } else {
@@ -43,7 +43,7 @@ export default function Signup({ isPublic = false, onSwitchToLogin }) {
             }
         } catch (err) {
             console.error(err);
-            setStatus("Server Error.");
+            toast.error("Server Error.");
         }
     };
 
@@ -122,7 +122,7 @@ export default function Signup({ isPublic = false, onSwitchToLogin }) {
                     )}
                 </div>
 
-                {status && <div className={`status-msg ${status.includes("Success") ? "ok" : "err"}`}>{status}</div>}
+
 
                 <button className="save-btn" onClick={handleSave}>
                     {isPublic ? "Sign Up" : "Create Account"}

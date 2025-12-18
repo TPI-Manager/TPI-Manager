@@ -2,11 +2,14 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
 import { useRealtime } from "../hooks/useRealtime";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 import "../Styles/event.css";
 
 export default function EventPage({ student }) {
     const [events, setEvents] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null);
     const [form, setForm] = useState({ title: "", body: "" });
 
     const isAdmin = student.role === "admin" || student.role === "teacher";
@@ -41,23 +44,38 @@ export default function EventPage({ student }) {
                 creatorId: userId
             });
             setShowModal(false);
-        } catch (error) { console.error(error); }
+            setForm({ title: "", body: "" });
+            toast.success("Event Created");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to create event");
+        }
     };
 
-    const del = async (id) => {
+    const confirmDelete = async () => {
+        if (!deleteTarget) return;
         try {
             const userId = student.id || student.studentId || student.employeeId || student.adminId;
-            await axios.delete(`${API_BASE}/api/events/${id}`, {
+            await axios.delete(`${API_BASE}/api/events/${deleteTarget}`, {
                 headers: { 'x-user-id': userId }
             });
-        } catch { alert("Delete failed"); }
+            toast.success("Event Removed");
+            setDeleteTarget(null);
+        } catch {
+            toast.error("Delete failed");
+            setDeleteTarget(null);
+        }
     };
 
     return (
         <div className="page">
             <div className="header">
                 <h2>Events ({dept})</h2>
-                {isAdmin && <button onClick={() => setShowModal(true)}>+</button>}
+                {isAdmin && (
+                    <button className="add-btn" onClick={() => setShowModal(true)}>
+                        <i className="bi bi-calendar-plus"></i> New Event
+                    </button>
+                )}
             </div>
             <div className="grid">
                 {events.length === 0 && <p>No events found.</p>}
@@ -65,23 +83,57 @@ export default function EventPage({ student }) {
                     <div key={ev.id} className="card">
                         <h3>{ev.title}</h3>
                         <p>{ev.body}</p>
-                        {isAdmin && <button onClick={() => del(ev.id)}>Delete</button>}
+                        {isAdmin && (
+                            <button className="delete-action" onClick={() => setDeleteTarget(ev.id)}>
+                                <i className="bi bi-trash"></i> Remove
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>
-            {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <h3>New Event</h3>
-                        <input placeholder="Title" onChange={e => setForm({ ...form, title: e.target.value })} />
-                        <input placeholder="Details" onChange={e => setForm({ ...form, body: e.target.value })} />
-                        <div className="modal-actions">
-                            <button className="cancel-btn" onClick={() => setShowModal(false)}>Close</button>
-                            <button onClick={save}>Save</button>
-                        </div>
-                    </div>
+            <Modal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                title="New Event"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setShowModal(false)}>Cancel</button>
+                        <button onClick={save}>Save Event</button>
+                    </>
+                }
+            >
+                <div className="form-group">
+                    <label>Event Title</label>
+                    <input
+                        placeholder="e.g. Annual Sports Day"
+                        value={form.title}
+                        onChange={e => setForm({ ...form, title: e.target.value })}
+                    />
                 </div>
-            )}
+                <div className="form-group">
+                    <label>Details</label>
+                    <textarea
+                        rows={4}
+                        placeholder="Event description..."
+                        value={form.body}
+                        onChange={e => setForm({ ...form, body: e.target.value })}
+                    />
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={!!deleteTarget}
+                onClose={() => setDeleteTarget(null)}
+                title="Confirm Deletion"
+                footer={
+                    <>
+                        <button className="secondary-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                        <button style={{ backgroundColor: 'var(--error)' }} onClick={confirmDelete}>Delete</button>
+                    </>
+                }
+            >
+                <p>Are you sure you want to remove this event?</p>
+            </Modal>
         </div>
     );
 }

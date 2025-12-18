@@ -3,6 +3,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./Pages/Home";
 import "./index.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   const [loggedStudent, setLoggedStudent] = useState(() => {
@@ -31,6 +33,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme={theme} />
       {loggedStudent ? (
         <Home
           loggedStudent={loggedStudent}

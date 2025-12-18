@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { toast } from "react-toastify";
 import "../Styles/login.css";
 
 export default function Login({ setLoggedStudent, onSwitchToSignup }) {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError("");
         setLoading(true);
         try {
             // Pure API Login
@@ -25,7 +24,7 @@ export default function Login({ setLoggedStudent, onSwitchToSignup }) {
         } catch (err) {
             console.error("Login Error:", err);
             const msg = err.response?.data?.error || "Invalid ID or Password";
-            setError(msg);
+            toast.error(msg);
         } finally {
             setLoading(false);
         }
@@ -59,7 +58,7 @@ export default function Login({ setLoggedStudent, onSwitchToSignup }) {
                             required
                         />
                     </div>
-                    {error && <div className="error-msg">{error}</div>}
+                    {/* Error removed, handled by toast */}
                     <button type="submit" disabled={loading} className="primary-btn">
                         {loading ? "Verifying..." : "Sign In"}
                     </button>
