@@ -120,7 +120,7 @@ create table schedules (
 | `SUPABASE_URL` | Your Supabase Project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase **service_role** key |
 | `ADMIN_INIT_PASS` | `admin123` (Temporary password for the first admin login) |
-| `NODE_VERSION` | `20.x` |
+| `NODE_VERSION` | `24.x` |
 
 1. **Deploy**: Click **Deploy**.
 
