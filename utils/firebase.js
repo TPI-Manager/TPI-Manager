@@ -5,11 +5,17 @@ const fs = require("fs");
 let serviceAccount;
 
 try {
-    // Method 1: Environment Variable (Recommended for production/Vercel)
     if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+        let envVar = process.env.FIREBASE_SERVICE_ACCOUNT;
+        if (typeof envVar === "string") {
+            try {
+                serviceAccount = JSON.parse(envVar);
+            } catch (e) {
+                envVar = envVar.trim();
+                serviceAccount = JSON.parse(envVar);
+            }
+        }
     } else {
-        // Method 2: Local File (Development only)
         const serviceAccountPath = path.join(__dirname, "../serviceAccountKey.json");
         if (fs.existsSync(serviceAccountPath)) {
             serviceAccount = require(serviceAccountPath);
@@ -20,55 +26,50 @@ try {
 }
 
 if (serviceAccount) {
-    // Fix common formatting issues in private key
     if (serviceAccount.private_key) {
-        let pk = serviceAccount.private_key;
-
-        // Fix missing spaces in headers/footers (common env var issue)
-        pk = pk.replace(/-----BEGINPRIVATEKEY-----/g, '-----BEGIN PRIVATE KEY-----');
-        pk = pk.replace(/-----ENDPRIVATEKEY-----/g, '-----END PRIVATE KEY-----');
-
-        // Fix escaped newlines
-        pk = pk.replace(/\\n/g, '\n');
-
-        serviceAccount.private_key = pk;
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
 
     if (!admin.apps.length) {
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
-            storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${serviceAccount.project_id}.appspot.com`
-        });
-        console.log("✅ Firebase Admin initialized.");
+        try {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${serviceAccount.project_id}.appspot.com`
+            });
+            console.log("✅ Firebase Admin initialized.");
+        } catch (e) {
+            console.error("❌ Firebase Init Failed:", e.message);
+        }
     }
-} else {
-    console.error("🛑 CRITICAL: Firebase Service Account missing! Set FIREBASE_SERVICE_ACCOUNT env var or add serviceAccountKey.json");
 }
 
 const db = serviceAccount ? admin.firestore() : null;
 const bucket = serviceAccount ? admin.storage().bucket() : null;
 
-// Helper to upload file buffer to Firebase Storage
-const uploadToFirebase = async (file) => {
+// Updated to accept ownerId for metadata
+const uploadToFirebase = async (file, ownerId) => {
     if (!bucket) throw new Error("Firebase Storage not initialized");
 
-    const filename = `uploads/${Date.now()}-${file.originalname}`;
+    const filename = `uploads/${Date.now()}-${file.originalname.replace(/[^a-zA-Z0-9.]/g, "_")}`;
     const blob = bucket.file(filename);
 
     const blobStream = blob.createWriteStream({
         metadata: {
             contentType: file.mimetype,
+            metadata: {
+                ownerId: ownerId || "system" // Attach ownership
+            }
         },
+        resumable: false
     });
 
     return new Promise((resolve, reject) => {
         blobStream.on("error", (err) => reject(err));
         blobStream.on("finish", async () => {
             try {
-                // Get a signed URL valid for 100 years (effectively public for this use case)
                 const [url] = await blob.getSignedUrl({
                     action: "read",
-                    expires: "03-01-2100",
+                    expires: "01-01-2050",
                 });
                 resolve(url);
             } catch (err) {

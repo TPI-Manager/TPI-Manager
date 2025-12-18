@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import {
     collection, query, where, orderBy, onSnapshot,
-    setDoc, doc, updateDoc, arrayUnion
+    setDoc, doc, updateDoc, arrayUnion, deleteDoc
 } from "firebase/firestore";
 import { API_BASE, UPLOAD_URL } from "../config";
 import "../Styles/ask.css";
@@ -11,9 +11,6 @@ export default function AskPage({ student }) {
     const [questions, setQuestions] = useState([]);
     const [text, setText] = useState("");
     const [qImages, setQImages] = useState([]);
-    const [reply, setReply] = useState("");
-    const [rImages, setRImages] = useState([]);
-    const [activeQ, setActiveQ] = useState(null);
 
     const department = student.department || "CST";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
@@ -24,12 +21,9 @@ export default function AskPage({ student }) {
             where("department", "==", department),
             orderBy("createdAt", "desc")
         );
-
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            setQuestions(data);
+            setQuestions(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
         });
-
         return () => unsubscribe();
     }, [department]);
 
@@ -37,27 +31,20 @@ export default function AskPage({ student }) {
         if (!files || files.length === 0) return [];
         const formData = new FormData();
         files.forEach(file => formData.append("images", file));
+        formData.append("ownerId", userId); // Ownership enforcement
 
         try {
-            const res = await fetch(`${API_BASE}/api/upload`, {
-                method: "POST",
-                body: formData
-            });
-            const data = await res.json();
-            return data.files || [];
-        } catch (err) {
-            console.error("Upload failed", err);
-            return [];
-        }
+            const res = await fetch(`${API_BASE}/api/upload`, { method: "POST", body: formData });
+            return (await res.json()).files || [];
+        } catch (err) { return []; }
     };
 
     const ask = async () => {
         if ((!text && qImages.length === 0)) return;
-
         const uploadedImages = await uploadFiles(qImages);
         const ref = doc(collection(db, "ask"));
 
-        const newQ = {
+        await setDoc(ref, {
             id: ref.id,
             department,
             text,
@@ -66,113 +53,37 @@ export default function AskPage({ student }) {
             images: uploadedImages,
             answers: [],
             createdAt: new Date().toISOString()
-        };
-
-        await setDoc(ref, newQ);
-
-        setText("");
-        setQImages([]);
-    };
-
-    const answer = async (qid) => {
-        if ((!reply && rImages.length === 0)) return;
-
-        const uploadedImages = await uploadFiles(rImages);
-
-        const newAnswer = {
-            text: reply,
-            senderName: student.fullName,
-            senderId: userId,
-            images: uploadedImages,
-            createdAt: new Date().toISOString()
-        };
-
-        const qRef = doc(db, "ask", qid);
-        await updateDoc(qRef, {
-            answers: arrayUnion(newAnswer)
         });
-
-        setReply("");
-        setRImages([]);
-        setActiveQ(null);
+        setText(""); setQImages([]);
     };
 
-    const handleQFileChange = (e) => {
-        if (e.target.files) setQImages(Array.from(e.target.files));
-    };
-
-    const handleRFileChange = (e) => {
-        if (e.target.files) setRImages(Array.from(e.target.files));
+    const handleDelete = async (id) => {
+        if (window.confirm("Delete question?")) {
+            try { await deleteDoc(doc(db, "ask", id)); }
+            catch (e) { alert("You can only delete your own questions."); }
+        }
     };
 
     return (
         <div className="ask-page">
             <div className="ask-input-section">
-                <textarea
-                    value={text}
-                    onChange={e => setText(e.target.value)}
-                    placeholder="Ask a question..."
-                    className="ask-textarea"
-                />
+                <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Ask..." className="ask-textarea" />
                 <div className="file-controls">
-                    <label className="file-btn">
-                        Add Images
-                        <input type="file" multiple accept="image/*" onChange={handleQFileChange} style={{ display: 'none' }} />
-                    </label>
-                    <span className="file-count">{qImages.length} files selected</span>
-                    <button onClick={ask} className="post-btn">Post Question</button>
+                    <input type="file" multiple accept="image/*" onChange={e => setQImages(Array.from(e.target.files))} />
+                    <button onClick={ask} className="post-btn">Post</button>
                 </div>
             </div>
-
             <div className="questions-list">
                 {questions.map(q => (
                     <div key={q.id} className="question-card">
                         <div className="q-header">
-                            <span className="q-author">{q.senderName} ({q.senderId})</span>
-                            <span className="q-time">{new Date(q.createdAt).toLocaleString()}</span>
+                            <span>{q.senderName}</span>
+                            {q.senderId === userId && <button onClick={() => handleDelete(q.id)} style={{ color: 'red', border: 'none', background: 'none' }}>Delete</button>}
                         </div>
-                        <div className="q-content">
-                            <p>{q.text}</p>
-                            {q.images && q.images.length > 0 && (
-                                <div className="q-images">
-                                    {q.images.map((img, i) => (
-                                        <img key={i} src={`${UPLOAD_URL}${img}`} alt="question attachment" />
-                                    ))}
-                                </div>
-                            )}
+                        <p>{q.text}</p>
+                        <div className="q-images">
+                            {q.images && q.images.map((img, i) => <img key={i} src={`${UPLOAD_URL}${img}`} width="100" />)}
                         </div>
-
-                        <div className="answers-section">
-                            {q.answers && q.answers.map((a, i) => (
-                                <div key={i} className="answer-item">
-                                    <div className="a-header">
-                                        <strong>{a.senderName} ({a.senderId})</strong> says:
-                                    </div>
-                                    <p>{a.text}</p>
-                                    {a.images && a.images.length > 0 && (
-                                        <div className="a-images">
-                                            {a.images.map((img, idx) => (
-                                                <img key={idx} src={`${UPLOAD_URL}${img}`} alt="answer attachment" />
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-
-                        {activeQ === q.id ? (
-                            <div className="reply-box">
-                                <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Write a reply..." />
-                                <div className="reply-controls">
-                                    <label>
-                                        📷 <input type="file" multiple accept="image/*" onChange={handleRFileChange} style={{ display: 'none' }} />
-                                    </label>
-                                    <span>{rImages.length}</span>
-                                    <button onClick={() => answer(q.id)}>Send</button>
-                                    <button onClick={() => setActiveQ(null)} className="cancel-btn">Cancel</button>
-                                </div>
-                            </div>
-                        ) : <button onClick={() => setActiveQ(q.id)} className="reply-btn">Reply</button>}
                     </div>
                 ))}
             </div>

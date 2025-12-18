@@ -2,15 +2,64 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Helper function to check auth
-    // Since we are using Custom Auth logic in Node.js (Admin SDK), 
-    // the client reads data via Socket/API. 
-    // However, if we ever allow client SDK direct access:
+    // ---------------- HELPER FUNCTIONS ----------------
+    function isSignedIn() {
+      return request.auth != null;
+    }
     
-    // Lock everything by default.
-    // The Server (Node.js Admin SDK) bypasses these rules automatically.
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    // Check if the user is the owner of the document
+    // Field names vary by collection (senderId, creatorId, etc.)
+    function isOwner(field) {
+      return isSignedIn() && request.auth.uid == resource.data[field];
+    }
+
+    // Check if the user is creating a document and claiming it as their own
+    function isCreatingOwn(field) {
+      return isSignedIn() && request.resource.data[field] == request.auth.uid;
+    }
+    
+    // ---------------- COLLECTION RULES ----------------
+
+    // User Profiles
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if true; // Signup
+      allow update: if isSignedIn() && request.auth.uid == userId; // Only update own profile
+      allow delete: if false; // Users shouldn't delete accounts directly in this app logic
+    }
+
+    // Chat Messages
+    match /chat/{msgId} {
+      allow read: if isSignedIn();
+      allow create: if isCreatingOwn('senderId');
+      allow update, delete: if isOwner('senderId');
+    }
+
+    // Q&A (Ask)
+    match /ask/{qId} {
+      allow read: if isSignedIn();
+      allow create: if isCreatingOwn('senderId');
+      allow update, delete: if isOwner('senderId');
+    }
+
+    // Announcements
+    // Enforce that only the creator can delete/edit their announcement
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create: if isCreatingOwn('creatorId');
+      allow update, delete: if isOwner('creatorId');
+    }
+
+    // Events & Schedules
+    match /events/{document=**} {
+      allow read: if true;
+      allow create: if isCreatingOwn('creatorId');
+      allow update, delete: if isOwner('creatorId');
+    }
+    match /schedules/{document=**} {
+      allow read: if true;
+      allow create: if isCreatingOwn('creatorId');
+      allow update, delete: if isOwner('creatorId');
     }
   }
 }
