@@ -1,89 +1,93 @@
-import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
-import {
-    collection, query, where, orderBy, onSnapshot,
-    setDoc, doc, updateDoc, arrayUnion, deleteDoc
-} from "firebase/firestore";
-import { API_BASE, UPLOAD_URL } from "../config";
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { API_BASE } from "../config";
+import { useSSE } from "../hooks/useSSE";
 import "../Styles/ask.css";
 
 export default function AskPage({ student }) {
     const [questions, setQuestions] = useState([]);
     const [text, setText] = useState("");
     const [qImages, setQImages] = useState([]);
+    const [reply, setReply] = useState("");
+    const [activeQ, setActiveQ] = useState(null);
 
     const department = student.department || "CST";
     const userId = student.studentId || student.employeeId || student.adminId || student.id;
 
-    useEffect(() => {
-        const q = query(
-            collection(db, "ask"),
-            where("department", "==", department),
-            orderBy("createdAt", "desc")
-        );
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            setQuestions(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-        });
-        return () => unsubscribe();
+    const fetchQs = useCallback(async () => {
+        const res = await axios.get(`${API_BASE}/api/ask/${department}`);
+        setQuestions(res.data);
     }, [department]);
 
-    const uploadFiles = async (files) => {
-        if (!files || files.length === 0) return [];
-        const formData = new FormData();
-        files.forEach(file => formData.append("images", file));
-        formData.append("ownerId", userId); // Ownership enforcement
+    useEffect(() => { fetchQs(); }, [fetchQs]);
 
-        try {
-            const res = await fetch(`${API_BASE}/api/upload`, { method: "POST", body: formData });
-            return (await res.json()).files || [];
-        } catch (err) { return []; }
+    useSSE(useCallback((msg) => {
+        if (msg.type === `ask-${department}`) {
+            if (msg.data.action === "create") setQuestions(p => [msg.data.data, ...p]);
+            if (msg.data.action === "delete") setQuestions(p => p.filter(q => q.id !== msg.data.id));
+            if (msg.data.action === "update") {
+                setQuestions(p => p.map(q => q.id === msg.data.id ? { ...q, answers: msg.data.answers } : q));
+            }
+        }
+    }, [department]));
+
+    const upload = async (files) => {
+        const fd = new FormData();
+        files.forEach(f => fd.append("images", f));
+        fd.append("ownerId", userId);
+        const res = await axios.post(`${API_BASE}/api/upload`, fd);
+        return res.data.files;
     };
 
-    const ask = async () => {
-        if ((!text && qImages.length === 0)) return;
-        const uploadedImages = await uploadFiles(qImages);
-        const ref = doc(collection(db, "ask"));
-
-        await setDoc(ref, {
-            id: ref.id,
-            department,
-            text,
-            senderId: userId,
-            senderName: student.fullName,
-            images: uploadedImages,
-            answers: [],
-            createdAt: new Date().toISOString()
+    const postQ = async () => {
+        if (!text && qImages.length === 0) return;
+        const imgs = await upload(qImages);
+        await axios.post(`${API_BASE}/api/ask`, {
+            text, department, senderId: userId, senderName: student.fullName, images: imgs
         });
         setText(""); setQImages([]);
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Delete question?")) {
-            try { await deleteDoc(doc(db, "ask", id)); }
-            catch (e) { alert("You can only delete your own questions."); }
-        }
+    const postAns = async (qid) => {
+        if (!reply) return;
+        await axios.post(`${API_BASE}/api/ask/${qid}/answer`, {
+            text: reply, senderName: student.fullName, senderId: userId, createdAt: new Date().toISOString()
+        });
+        setReply(""); setActiveQ(null);
+    };
+
+    const deleteQ = async (id) => {
+        try { await axios.delete(`${API_BASE}/api/ask/${id}`, { headers: { 'x-user-id': userId } }); }
+        catch { alert("Owner only"); }
     };
 
     return (
         <div className="ask-page">
             <div className="ask-input-section">
-                <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Ask..." className="ask-textarea" />
-                <div className="file-controls">
-                    <input type="file" multiple accept="image/*" onChange={e => setQImages(Array.from(e.target.files))} />
-                    <button onClick={ask} className="post-btn">Post</button>
-                </div>
+                <textarea value={text} onChange={e => setText(e.target.value)} className="ask-textarea" />
+                <input type="file" multiple onChange={e => setQImages(Array.from(e.target.files))} />
+                <button onClick={postQ} className="post-btn">Post</button>
             </div>
             <div className="questions-list">
                 {questions.map(q => (
                     <div key={q.id} className="question-card">
                         <div className="q-header">
                             <span>{q.senderName}</span>
-                            {q.senderId === userId && <button onClick={() => handleDelete(q.id)} style={{ color: 'red', border: 'none', background: 'none' }}>Delete</button>}
+                            {q.senderId === userId && <button onClick={() => deleteQ(q.id)} style={{ color: 'red' }}>Del</button>}
                         </div>
                         <p>{q.text}</p>
-                        <div className="q-images">
-                            {q.images && q.images.map((img, i) => <img key={i} src={`${UPLOAD_URL}${img}`} width="100" />)}
+                        <div className="q-images">{q.images && q.images.map((img, i) => <img key={i} src={img} width="100" />)}</div>
+                        <div className="answers">
+                            {q.answers && q.answers.map((a, i) => (
+                                <div key={i} className="answer-item"><b>{a.senderName}:</b> {a.text}</div>
+                            ))}
                         </div>
+                        {activeQ === q.id ? (
+                            <div className="reply-box">
+                                <input value={reply} onChange={e => setReply(e.target.value)} />
+                                <button onClick={() => postAns(q.id)}>Reply</button>
+                            </div>
+                        ) : <button onClick={() => setActiveQ(q.id)}>Answer</button>}
                     </div>
                 ))}
             </div>

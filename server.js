@@ -7,7 +7,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const bcrypt = require("bcryptjs");
-const { db, uploadToFirebase } = require("./utils/firebase");
+// Import Supabase utils
+const { supabase, uploadToSupabase } = require("./utils/db");
 const apiRoutes = require("./routes");
 const { sseHandler } = require("./utils/sse");
 
@@ -29,12 +30,7 @@ const PORT = process.env.PORT || 5000;
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 200,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 }); // Increased for chat polling if needed
 app.use("/api", limiter);
 
 const upload = multer({
@@ -42,38 +38,24 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-// --- SMART ADMIN SEEDING ---
+// Seed Admin
 const seedAdmin = async () => {
-  if (!db) return;
   try {
-    // Check if ANY admin exists to avoid re-seeding if ID was changed
-    const snapshot = await db.collection("users").where("role", "==", "admin").limit(1).get();
-
-    if (snapshot.empty) {
-      console.log("🌱 No admin found. Seeding default 'admin' account...");
-      const adminRef = db.collection("users").doc("admin");
-
+    const { data } = await supabase.from("users").select("*").eq("role", "admin").limit(1);
+    if (!data || data.length === 0) {
+      console.log("🌱 Seeding Admin...");
       const salt = await bcrypt.genSalt(10);
-      // Default password: "admin123" (Change this immediately in UI)
       const hashedPassword = await bcrypt.hash(process.env.ADMIN_INIT_PASS || "admin123", salt);
-
-      await adminRef.set({
+      await supabase.from("users").insert({
         id: "admin",
         password: hashedPassword,
-        firstName: "System",
-        lastName: "Administrator",
-        fullName: "System Administrator",
+        "fullName": "System Administrator",
         role: "admin",
-        adminId: "admin",
-        createdAt: new Date().toISOString()
+        "adminId": "admin"
       });
-      console.log("✅ Default Admin created. ID: 'admin', Pass: 'admin123'");
-    } else {
-      // Admin already exists (could be custom ID)
+      console.log("✅ Admin Created");
     }
-  } catch (error) {
-    console.error("Error seeding admin:", error);
-  }
+  } catch (error) { console.error("Admin seed error", error); }
 };
 
 app.get("/api/stream", sseHandler);
@@ -88,10 +70,10 @@ app.post("/api/upload", upload.array("images", 3), async (req, res) => {
 
     const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     for (const file of req.files) {
-      if (!allowed.includes(file.mimetype)) return res.status(400).json({ error: "Invalid file type" });
+      if (!allowed.includes(file.mimetype)) return res.status(400).json({ error: "Invalid type" });
     }
 
-    const promises = req.files.map(file => uploadToFirebase(file, ownerId));
+    const promises = req.files.map(file => uploadToSupabase(file, ownerId));
     const files = await Promise.all(promises);
 
     res.json({ files });

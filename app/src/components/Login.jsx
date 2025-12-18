@@ -3,9 +3,6 @@ import axios from "axios";
 import { API_BASE } from "../config";
 import "../Styles/login.css";
 
-import { auth } from "../firebase";
-import { signInWithCustomToken } from "firebase/auth";
-
 export default function Login({ setLoggedStudent, onSwitchToSignup }) {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
@@ -17,36 +14,18 @@ export default function Login({ setLoggedStudent, onSwitchToSignup }) {
         setError("");
         setLoading(true);
         try {
+            // Pure API Login
             const res = await axios.post(`${API_BASE}/api/auth/login`, {
                 userId: loginId,
                 password: password
             });
 
-            const { firebaseToken, ...userData } = res.data;
-            if (firebaseToken) {
-                await signInWithCustomToken(auth, firebaseToken);
-            }
-
-            setLoggedStudent(userData);
+            // No Firebase Token handling needed anymore
+            setLoggedStudent(res.data);
         } catch (err) {
             console.error("Login Error:", err);
-
-            let errorMsg = "Invalid ID or Password";
-
-            // Safe error extraction to prevent React objects-as-children crash
-            if (err.response && err.response.data && err.response.data.error) {
-                const apiError = err.response.data.error;
-                if (typeof apiError === "string") {
-                    errorMsg = apiError;
-                } else if (typeof apiError === "object") {
-                    // If backend sends an object (e.g. {code, message}), extract message
-                    errorMsg = apiError.message || apiError.code || "An unknown error occurred";
-                }
-            } else if (err.message) {
-                errorMsg = err.message;
-            }
-
-            setError(errorMsg);
+            const msg = err.response?.data?.error || "Invalid ID or Password";
+            setError(msg);
         } finally {
             setLoading(false);
         }
